@@ -1,0 +1,67 @@
+:root {
+  --PrimaryColor: hsl(275, 100%, 32%);
+  --HoverColor: hsl(275, 100%, 32%);
+  --whiteColor: hsl(0, 0%, 100%);
+  --blackColor: hsl(0, 0%, 18%);
+  --textColor: hsl(240, 1%, 48%);
+  --whiteColorDeam: hsl(0, 0%, 93%);
+  --greyBg: hsl(0, 0%, 96%);
+  --greyText: rgb(190, 190, 190);
+  --inputColor: hsl(330, 12%, 97%) ;
+}
+
+.blog .mainContainer {
+  gap: 1rem;
+}
+.blog .mainContainer .singlePost {
+  gap: 2rem;
+}
+.blog .mainContainer .singlePost .imgDiv {
+  height: 200px;
+  width: 100%;
+  border-radius: 1rem;
+  border: 5px solid var(--greyBg);
+  box-shadow: 0 2px 8px 2px rgba(178, 178, 178, 0.406);
+  overflow: hidden;
+}
+.blog .mainContainer .singlePost .imgDiv:hover img {
+  transform: scale(1.1);
+  transition: 3s ease;
+}
+.blog .mainContainer .singlePost .imgDiv img {
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.blog .mainContainer .singlePost .postDetails h3 {
+  color: var(--blackColor);
+  font-weight: 600;
+  padding-bottom: 10px;
+}
+.blog .mainContainer .singlePost .postDetails p {
+  font-size: 13px;
+  color: var(--textColor);
+  font-weight: 500;
+}
+.blog .mainContainer .singlePost a {
+  font-size: 15px;
+  color: var(--PrimaryColor);
+  font-weight: 600;
+  padding-top: 0.5rem;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.blog .mainContainer .singlePost a:hover {
+  color: var(--HoverColor);
+  font-weight: 600;
+}
+.blog .mainContainer .singlePost a:hover .icon {
+  transform: translateX(10px);
+}
+
+@media screen and (min-width: 884px) {
+  .blog .mainContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}/*# sourceMappingURL=TravelTips.css.map */
