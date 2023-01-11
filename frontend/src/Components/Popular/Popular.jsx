@@ -13,7 +13,7 @@ const Data = [
         id:1,
         imgSrc:img1,
         descTitle:'Machu Picchu',
-        location:'Peru',
+        location:'Tokyo',
         grade:'Cultural Relax'
     },
     {
@@ -27,14 +27,14 @@ const Data = [
         id:3,
         imgSrc:img3,
         descTitle:'Machu Picchu',
-        location:'Peru',
+        location:'New Orleans',
         grade:'Cultural Relax'
     },
     {
         id:4,
         imgSrc:img4,
         descTitle:'Machu Picchu',
-        location:'Peru',
+        location:'New Zealand',
         grade:'Cultural Relax'
     }
 ]
@@ -76,18 +76,18 @@ function Popular() {
 
                         <div className="destFooter">
                             <div className="number">
-                                01
+                               0{id}
                             </div>
 
                             <div className="destText flex">
                                 <h6>
-                                    London
+                                   {location}
                                 </h6>
                                 <span className="flex">
                                     <span className="dot">
                                         <BsDot className="icon" />
                                     </span>
-                                    Dot
+                                   Travel Buff
                                 </span>
 
                             </div>
@@ -97,8 +97,6 @@ function Popular() {
 
                     })
                 }
-                   
-
                 </div>
             </div>
         </section>

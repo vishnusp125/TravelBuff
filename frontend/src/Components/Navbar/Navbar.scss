@@ -20,10 +20,11 @@
         width: 100%;
         padding: 1rem;
         z-index: 1000;
+      
 
         .logoDiv {
             .logo {
-                // color:var(--whiteColor);
+                color:var(--PrimaryColor);
                 font-weight: 500;
                 cursor: pointer;
                 align-items: center;
@@ -75,12 +76,13 @@
 
                         .btn {
                             margin-top: 1rem;
+                            color: var(--PrimaryColor);
 
                             a {
                                 font-weight: 600;
 
                                 &:hover {
-                                    color: var(--whiteColor);
+                                    color: var(--HoverColor);
                                 }
                             }
                         }
@@ -142,9 +144,6 @@
 
 @media screen and (min-width: 769px) {
     .navBarSection {
-
-
-
         .toggleNavbar,
         .closeNavbar {
             display: none;
@@ -162,13 +161,13 @@
 
                     .navItem {
                         .navLink {
-                            color: var(--whiteColor);
+                            color: var(--PrimaryColor);
                             padding: 0.45rem;
                             font-size: .9rem;
                             font-weight: 400;
 
                             &:hover {
-                                color: var(--PrimaryColor);
+                                color: var(--HoverColor);
                             }
                         }
                     }
@@ -184,11 +183,11 @@
 
 
                     .loginBtn {
-                        background: none;
+                        background: var(--PrimaryColor);
                         border: 1px solid var(--PrimaryColor);
 
                         &:hover {
-                            background: var(--PrimaryColor);
+                            background: var(--HoverColor);
 
                             a {
                                 color: var(--whiteColor);
@@ -217,5 +216,18 @@
 @media screen and (min-width:1024px) {
     .header{
        padding: 1rem 8.5rem;
+    }
+
+    .navBar {
+           .navLists{
+            .headerBtns {
+                   .loginBtn{
+                      background: var(--PrimaryColor);
+                      background-color: var(--PrimaryColor);
+                   }
+            }
+
+           }
+
     }
 }

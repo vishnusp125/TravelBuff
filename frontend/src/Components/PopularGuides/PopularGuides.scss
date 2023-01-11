@@ -31,14 +31,14 @@
                 }
 
                 .destImage{
-                    position: relative;
-                    height: 200px;
+                    height: 200px;      
                     width: 100%;
                     border-radius:1rem;
                     overflow: hidden;
                     object-fit: contain;
 
                     img{
+                        width: 50%;
                         height: 100%;
 
                     }
@@ -71,7 +71,7 @@
 
                         .status{
                             padding: 5px 10px;
-                            color: var(--HoverColor);
+                            color:#84c639;
                             background: var(--greyBg);
                             font-size: 10px;
                             font-weight: 600;

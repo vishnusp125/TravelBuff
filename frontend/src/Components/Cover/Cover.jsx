@@ -1,7 +1,7 @@
 import React from 'react'
-import "./home.css"
+import "./cover.css"
 
-function Home() {
+function Cover() {
   return (
     <section className='home'>
       <div className="secContainer container">
@@ -44,4 +44,4 @@ function Home() {
   )
 }
 
-export default Home
+export default Cover

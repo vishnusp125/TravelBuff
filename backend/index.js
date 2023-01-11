@@ -5,7 +5,7 @@ import morgan from 'morgan';
 import userRouter from "./routes/user.js";
 
 
-const app = express();
+const app = express();   
 
 app.use(morgan('dev'));
 app.use(express.json({limit:"30mb", extended:true}));

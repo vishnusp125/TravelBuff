@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import {
   MDBBtn, MDBCard, MDBCardBody, MDBCardFooter,
-  MDBIcon, MDBInput, MDBSpinner, MDBValidation
+  MDBContainer,
+  MDBIcon, MDBInput, MDBNavbar, MDBNavbarBrand, MDBSpinner, MDBValidation
 } from "mdb-react-ui-kit"
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { register } from '../redux/features/authSlice'
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import { SiYourtraveldottv } from 'react-icons/si';
 
 const initialState = {
   firstName:"",
@@ -47,10 +51,21 @@ function Register() {
 
 
   return (
+    <>
+              <MDBNavbar light bgColor='light'>
+        <MDBContainer fluid>
+          <MDBNavbarBrand style={{color:"#551a8b"}} href='/'>
+          <h1><SiYourtraveldottv className="icon" />
+                Travel Buff
+              </h1>
+          </MDBNavbarBrand>
+        </MDBContainer>
+      </MDBNavbar>
+  
     <div
       style={{
         margin: "auto", padding: "15px", maxWidth: "450px",
-        alignContent: "center", marginTop: "120px",color:"#3b71ca "
+        alignContent: "center", marginTop: "120px",color:"#551a8b"
       }}>
       <MDBCard alignment='center'>
         <MDBIcon fas icon='user-circle' className='fa-3x' />
@@ -153,11 +168,12 @@ function Register() {
         </MDBCardBody>
         <MDBCardFooter>
           <Link to='/login'>
-            <p>Already have an account ? Sign In</p>
+            <p style={{color: "#551a8b"}}>Already have an account ? <span style={{color: "red"}}>Sign In </span> </p>
           </Link>
         </MDBCardFooter>
       </MDBCard>
     </div>
+    </>
   )
 }
 

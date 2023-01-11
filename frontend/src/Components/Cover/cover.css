@@ -12,7 +12,7 @@
 
 .home {
   height: 80vh;
-  background: linear-gradient(rgba(33, 33, 33, 0.522), rgba(33, 33, 33, 0.522)), url("../../assets/images/Where-to-Buy2.webp");
+  background: url("../../assets/images/Where-to-Buy2.webp");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -26,16 +26,16 @@
   text-align: center;
 }
 .home .secContainer .homeText .title {
-  color: var(--whiteColor);
+  color: var(--PrimaryColor);
   font-size: 2rem;
   font-weight: 700;
   line-height: 2.5rem;
 }
 .home .secContainer .homeText .subTitle {
-  color: var(--whiteColor);
+  color: var(--blackColor);
   opacity: 0.9;
-  font-size: 13px;
-  font-weight: 300;
+  font-size: 18px;
+  font-weight: 700;
   padding: 1rem 0;
   max-width: 70%;
   text-align: center;
@@ -145,4 +145,4 @@
   .home .secContainer .homeCard {
     width: 70%;
   }
-}/*# sourceMappingURL=home.css.map */
+}/*# sourceMappingURL=cover.css.map */

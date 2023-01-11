@@ -14,7 +14,7 @@ const guides = [
     {
         id: 1,
         imgSrc: guide1,
-        destTitle: 'Guanajuato',
+        name: 'Rick',
         location: "Mexico",
         price: "Rs.1450/day"
 
@@ -22,7 +22,7 @@ const guides = [
     {
         id: 2,
         imgSrc: guide2,
-        destTitle: 'Guanajuato',
+        name: 'Aditi',
         location: "India",
         price: "Rs.1400/day"
 
@@ -30,15 +30,15 @@ const guides = [
     {
         id: 3,
         imgSrc: guide3,
-        destTitle: 'Guanajuato',
+        name: 'Rohan',
         location: "Canada",
-        price: "Rs.1400/day"
+        price: "Rs.1500/day"
 
     },
     {
         id: 4,
         imgSrc: guide4,
-        destTitle: 'Guanajuato',
+        name: 'Hanna',
         location: "Tokyo",
         price: "Rs.1500/day"
 
@@ -61,7 +61,7 @@ function PopularGuides() {
                 </div>
                 <div className="mainContent grid">
                     {
-                        guides.map(({id,imgSrc,destTitle,location,price}) => {
+                        guides.map(({id,imgSrc,name,location,price}) => {
                             return (
                                 <div className="singleOffer" id={id}>
                                     <div className="destImage">
@@ -73,7 +73,10 @@ function PopularGuides() {
                                     <div className="offerBody">
                                         <div className="price flex">
                                             <h4>
-                                               {price}
+                                               {name}
+                                            </h4>
+                                            <h4>
+                                                {price}
                                             </h4>
                                             <span className="status">
                                                 Available
