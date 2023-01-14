@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import {
     MDBBtn, MDBCard, MDBCardBody, MDBCardFooter,
     MDBContainer,
-    MDBIcon, MDBInput, MDBNavbar, MDBNavbarBrand, MDBSpinner, MDBValidation
+    MDBIcon, MDBInput, MDBNavbar, MDBNavbarBrand, MDBSpinner, MDBValidation, MDBValidationItem
 } from "mdb-react-ui-kit"
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +12,7 @@ import { login } from '../redux/features/authSlice';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { SiYourtraveldottv } from 'react-icons/si'
+import Footer from '../Components/Footer/Footer';
 
 const initialState = {
     email: "",
@@ -43,7 +44,7 @@ function Login() {
     }
 
     return (
-        <>
+        <div>
 
             <MDBNavbar light bgColor='light'>
                 <MDBContainer fluid>
@@ -58,39 +59,41 @@ function Login() {
             <div
                 style={{
                     margin: "auto", padding: "15px", maxWidth: "450px",
-                    alignContent: "center", marginTop: "120px", color: "#551a8b"
+                    alignContent: "center", marginTop: "100px", color: "#551a8b", minHeight: '70vh'
                 }}>
+                <h2 style={{ paddingLeft: "50px", paddingBottom: "15px", alignContent: "center" }} className="text-align-center">Welcome Back User !!!</h2>
                 <MDBCard alignment='center'>
+
                     <MDBIcon fas icon='user-circle' className='fa-3x' />
                     <h5>Sign In </h5>
                     <MDBCardBody>
                         <MDBValidation onSubmit={handleSubmit} noValidate className='row g-3'>
                             <div className="col-md-12">
-                                <MDBInput
-                                    label="Email"
-                                    type="email"
-                                    value={email}
-                                    name="email"
-                                    onChange={onInputChange}
-                                    required
-                                    invalid
-                                    validation="Please provide your email"
-                                />
+                                <MDBValidationItem className='col-md-12' feedback='Please provide your email.' invalid>
+                                    <MDBInput
+                                        label="Email"
+                                        type="email"
+                                        value={email}
+                                        name="email"
+                                        onChange={onInputChange}
+                                        required
+                                        validation="Please provide your email"
+                                        invalid
+                                    />
+                                </MDBValidationItem>
                             </div>
-
                             <div className="col-md-12">
-                                <MDBInput
-                                    label="Password"
-                                    type="password"
-                                    value={password}
-                                    name="password"
-                                    onChange={onInputChange}
-                                    required
-                                    invalid
-                                    validation="Please provide your password"
-                                />
+                                <MDBValidationItem className='col-md-12' feedback='Please provide a password.' invalid>
+                                    <MDBInput
+                                        label="Password"
+                                        type="password"
+                                        value={password}
+                                        name="password"
+                                        onChange={onInputChange}
+                                        required
+                                    />
+                                </MDBValidationItem>
                             </div>
-
                             <div className="col-12">
                                 <MDBBtn style={{ width: "100%" }} className="mt-2">
                                     {loading && (
@@ -113,7 +116,8 @@ function Login() {
                     </MDBCardFooter>
                 </MDBCard>
             </div>
-        </>
+            <Footer />
+        </div>
     )
 }
 

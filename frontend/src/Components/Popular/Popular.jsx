@@ -46,6 +46,8 @@ function Popular() {
                 <div className="secHeader flex">
                     <div className="textDiv">
                         <h2 className='secTitle'>
+                        <br/>
+                        <br/>
                             Popular Destinations
                         </h2>
                         <p>
@@ -61,7 +63,7 @@ function Popular() {
                 {
                     Data.map(({id,imgSrc,descTitle,location,grade}) => {
                         return (
-                            <div className="singleDestination">
+                            <div className="singleDestination" key={id}>
                         <div className="destImage">
                             <img src={imgSrc} alt="title" />
                             <div className="overlayInfo">
@@ -94,7 +96,6 @@ function Popular() {
                         </div>
                     </div>
                         )
-
                     })
                 }
                 </div>

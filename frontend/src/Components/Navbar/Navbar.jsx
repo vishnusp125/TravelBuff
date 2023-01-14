@@ -53,10 +53,10 @@ const Navbar = () => {
           <div className={active}>
             <ul className="navLists flex">
               <li className="navItem">
-                <a href="" className='navLink'>Home</a>
+                <a href="/" className='navLink'>Home</a>
               </li>
               <li className="navItem">
-                <a href="" className='navLink'>Travel Guides</a>
+                <a href="/guideList" className='navLink'>Travel Guides</a>
               </li>
               <li className="navItem">
                 <a href="" className='navLink'>Travel Tips</a>

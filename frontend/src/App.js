@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Register from './pages/Register';
 import { useDispatch } from 'react-redux'
 import { setUser } from './redux/features/authSlice';
+import GuideList from './pages/GuideList';
 
 
 
@@ -23,6 +24,7 @@ function App() {
         <Route exact path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/guideList' element={<GuideList/>} />
       </Routes>
     </div>
   );

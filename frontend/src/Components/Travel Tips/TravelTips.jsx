@@ -32,7 +32,8 @@ const Posts =[
         postImage:img4,
         title:"Best Travel Insurances for Backpackers",
         desc:"Planning a trip is an exciting part of your new upcoming travel adventure. It’s not for everyone as some swear by only booking a flight ticket."
-    }
+    },
+    
 ]
 
 
@@ -48,12 +49,12 @@ function TravelTips() {
                 An insight to the incredible experience in the world
             </p>
         </div>
-
+        <br/>
         <div className="mainContainer grid">
         {
             Posts.map(({id,postImage,title,desc}) => {
                 return(
-                    <div className="singlePost grid" id={id}>
+                    <div className="singlePost grid" key={id}>
                 <div className="imgDiv">
                     <img src={postImage} alt={title} />
                 </div>

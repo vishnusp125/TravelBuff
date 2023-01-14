@@ -1,5 +1,4 @@
 import React from 'react'
-import './PopularGuides.css'
 import { MdLocationOn } from 'react-icons/md'
 import { BsArrowRightShort } from 'react-icons/bs'
 
@@ -8,7 +7,6 @@ import guide1 from '../../assets/images/guide1.jpg'
 import guide2 from '../../assets/images/guide2.jpg'
 import guide3 from '../../assets/images/guide3.jpg'
 import guide4 from '../../assets/images/guide4.jpg'
-
 
 const guides = [
     {
@@ -40,41 +38,41 @@ const guides = [
         price: "Rs.1500/day"
     },
     {
+        id: 4,
+        imgSrc: guide4,
+        name: 'Hanna',
+        location: "Tokyo",
+        price: "Rs.1500/day"
+    },
+    {
         id: 1,
         imgSrc: guide1,
         name: 'Rick',
         location: "Mexico",
         price: "Rs.1450/day"
     },
-    {
-        id: 2,
-        imgSrc: guide2,
-        name: 'Aditi',
-        location: "India",
-        price: "Rs.1400/day"
-    }
 ]
 
-function PopularGuides() {
-    return (
-        <>
+function Guides() {
+  return (
+    <div>
         <section className='offer container section'>
             <div className="secContainer">
-                <div className="secIntro">
+                {/* <div className="secIntro">
                     <h2 className="secTitle">
                         Popular Guides
                     </h2>
                     <p>
                         Most rated Guides
                     </p>
-                </div>
+                </div> */}
                 <div className="mainContent grid">
                     {
                         guides.map(({id,imgSrc,name,location,price}) => {
                             return (
-                                <div className="singleOffer" key={id}>
+                                <div className="singleOffer" id={id}>
                                     <div className="destImage">
-                                        <img src={imgSrc} alt="images"/>
+                                        <img src={imgSrc} alt="images" />
                                         {/* <span className="discount">
                                 30% off
                             </span> */}
@@ -124,8 +122,8 @@ function PopularGuides() {
             </div>
 
         </section>
-        </>
-    )
+    </div>
+  )
 }
 
-export default PopularGuides
+export default Guides

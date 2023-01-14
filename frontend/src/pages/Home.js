@@ -16,7 +16,7 @@ function Home() {
       <Popular />
       <PopularGuides />
       <TravelTips />
-      <Footer />
+      <Footer/>
     </div>
   )
 }
