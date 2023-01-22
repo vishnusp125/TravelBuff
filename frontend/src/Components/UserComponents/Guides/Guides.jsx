@@ -70,7 +70,7 @@ function Guides() {
                     {
                         guides.map(({id,imgSrc,name,location,price}) => {
                             return (
-                                <div className="singleOffer" id={id}>
+                                <div className="singleOffer" key={id}>
                                     <div className="destImage">
                                         <img src={imgSrc} alt="images" />
                                         {/* <span className="discount">

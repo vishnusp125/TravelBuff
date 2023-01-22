@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { register } from '../../redux/features/authSlice'
+import { register } from '../../axios/services/UserServices'
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { SiYourtraveldottv } from 'react-icons/si';

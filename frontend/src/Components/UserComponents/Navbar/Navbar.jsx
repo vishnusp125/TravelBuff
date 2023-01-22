@@ -14,7 +14,9 @@ const Navbar = () => {
     dispatch(setLogout());
   }
 
-  const { user } = useSelector((state) => ({ ...state.auth }))
+  // const { user } = useSelector((state) => ({ ...state.auth }))
+  const user = localStorage.getItem("profile")
+  
 
   //toggle/show navbar
   const [active, setActive] = useState('navBar')
@@ -68,12 +70,12 @@ const Navbar = () => {
               </li>
               {user?.result?._id && (
                 <li className="navItem">
-                  <a href="" className='navLink'>Welcome {user?.result?.name}</a>
+                  <a href="" className='navLink'> Welcome {user?.result?.name}</a>
                 </li>
 
               )}
 
-              {user?.result?._id ? (
+              {user? (
                 <div className="headerBtns flex">
 
                   <button className='btn loginBtn' onClick={handleLogout}>

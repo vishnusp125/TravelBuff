@@ -13,7 +13,7 @@ function createData(name, trackingId, date, status) {
 }
 
 const rows = [
-  createData("TrainerId", 18908424, "2 Jan 2022", "Booked"),
+  createData("1", "John", "2 Jan 2022", "Booked"),
   // createData("Big Baza Bang ", 18908424, "2 March 2022", "Pending"),
   // createData("Mouth Freshner", 18908424, "2 March 2022", "Approved"),
   // createData("Cupcake", 18908421, "2 March 2022", "Delivered"),
@@ -54,8 +54,8 @@ export default function BasicTable() {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Product</TableCell>
-                <TableCell align="left">Tracking ID</TableCell>
+                <TableCell>Sl No</TableCell>
+                <TableCell align="left">Username</TableCell>
                 <TableCell align="left">Date</TableCell>
                 <TableCell align="left">Status</TableCell>
                 <TableCell align="left"></TableCell>

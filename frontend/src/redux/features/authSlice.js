@@ -1,30 +1,6 @@
-import { createSlice,createAsyncThunk } from "@reduxjs/toolkit"
-import * as api from '../api'
+import { createSlice } from "@reduxjs/toolkit"
+import { login, register } from '../../axios/services/UserServices'
 
-export const login = createAsyncThunk("auth/login", async({ formValue, navigate, toast },{rejectWithValue}) => {
-    try {
-        const response = await api.signIn(formValue)
-        toast.success("Login Successfully");
-        navigate('/')
-        return response.data;
-
-    } catch (err) {
-        return rejectWithValue(err.response.data)
-    }
-});
-
-export const register = createAsyncThunk("auth/register", 
-async({ formValue, navigate, toast },{rejectWithValue}) => {
-    try {
-        const response = await api.signUp(formValue)
-        toast.success("Register Successfully");
-        navigate('/')
-        return response.data;
-
-    } catch (err) {
-        return rejectWithValue(err.response.data)
-    }
-})
 
 const authSlice = createSlice({
     name: "auth",
@@ -38,7 +14,7 @@ const authSlice = createSlice({
             state.user = action.payload;
         },
         setLogout:(state, action) => {
-            localStorage.clear();
+            localStorage.removeItem("profile");
             state.user = null;
         },
     },

@@ -1,81 +1,104 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector} from 'react-redux'
-import { getUsers } from '../../../redux/api.js'
-import axios from 'axios';
-import Sidebar from '../../../Components/AdminComponents/Siderbar/Sidebar'
-import BasicTable from '../../../Components/AdminComponents/Table/Table'
-import styled from 'styled-components';
-import TableComponent from '../../../Components/AdminComponents/TableComponent';
+import { getUserInfo, blockUser, unblockUser } from '../../../axios/services/AdminServices'
+import DataTable from 'react-data-table-component';
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import { MDBBtn } from 'mdb-react-ui-kit';
+
 
 function UserManagement() {
 
-  const App = styled.div`
- color: var(--black);
- background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Inter', sans-serif;
-`;
+  const [details, setDetails] = useState([]);
 
-  const AppGlass = styled.div`
-  display: grid;
-  height: 97%;
-  width: 97%;
-  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
-  border-radius: 2rem;
-  gap: 16px;
-  grid-template-columns: 11rem auto 20rem;
-  overflow: hidden;
-  @media screen and (max-width: 1200px) {
-    grid-template-columns: 10% 50% auto;
-    overflow-y: scroll;
-}
-@media screen and (max-width: 768px) {
-    grid-template-columns: 1fr;
-}
-`;
-// const {users,loading} = useSelector((state) => ({...state.user}))
-// const dispatch = useDispatch();
+  useEffect(() => {
+    const token = localStorage.getItem('admin');
+    fetchData();
+    async function fetchData() {
+      const data = await getUserInfo(token);
+      setDetails(data);
+    }
+  }, []);
 
-// useEffect(() => {
-//   dispatch(getUsers());
-// },[]);
-// console.log(users);
-// // console.log(user); 
-// console.log('helooooooooo');
-// if(loading) {
-//   return <h2>Loading ....</h2>
-// }
+  async function unBlock(id) {
+    const token = localStorage.getItem('admin');
+    const data = await unblockUser(token, id);
+    console.log("unblock data",data);
+    if (data.userDetails) {
+        const newDetails = details.map(user => {
+            if(user._id === id) {
+                return {...user, isBlocked: false}
+            }
+            return user;
+        });
+        setDetails(newDetails);
+    }
+  }
 
+  async function block(id) {
+    const token = localStorage.getItem('admin');
+    const data = await blockUser(token, id);
+    console.log("block data",data);
+    if (data.userDetails) {
+        const newDetails = details.map(user => {
+            if(user._id === id) {
+                return {...user, isBlocked: true}
+            }
+            return user;
+        });
+        setDetails(newDetails);
+    }
+  }
 
-// const [userDetails, setuserDetails] = useState([]);
+  const columns = [
+    {
+      name: 'Name',
+      selector: (row) => row.name,
+    },
+    {
+      name: 'Email',
+      selector: (row) => row.email,
+    },
+    {
+      name: 'Phone',
+      selector: (row) => row.phone,
+    },
+    {
+      name: 'Block/Unblock',
+      selector: (row) => {
+        return (
+          <div>
+            {row.isBlocked ? (
+              <MDBBtn key={row._id} style={{background:"green"}}
+                onClick={() => unBlock(row._id)}
+              >
+                Un Block
+              </MDBBtn>
+            ) : (
+              <MDBBtn key={row._id} style={{background:"red"}}   onClick={() => block(row._id)}>
+                Block
+              </MDBBtn>
+            )}
+          </div>
+        );
+      },
+    }
+  ]
 
-// useEffect(() => {
-//   const getDetails = async () => {
-//     try{
-//       const response = await getUsers()
-//       console.log(response.data);
-//     } catch(error) {
-//       console.log(error);
-//     }
-//   }
-// })
   return (
-
-    <>
-    <App>
-    <AppGlass>
-      <Sidebar/>
-      {/* <div>
-        {users.map((item, index) => <h2>Users</h2>)}
-      </div> */}
-      <TableComponent/>
-      </AppGlass>
-      </App>
-    </>
+    <div >
+    <h1 style={{ marginLeft: "300px"}}>User Management</h1>
+      <DataTable
+        columns={columns}
+        data={details}
+        fixedHeader
+        fixedHeaderScrollHeight="500px"
+        // selectableRows
+        // selectableRowsHighlight
+        highlightOnHover
+        pagination 
+      />
+    </div>
   )
 }
+
 
 export default UserManagement

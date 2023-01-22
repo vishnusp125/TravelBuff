@@ -1,16 +1,23 @@
 import React, { useState } from "react";
 import "./Sidebar.css";
-import Logo from "../../../assets/images/adminIcon.png";
-import { UilSignOutAlt } from "@iconscout/react-unicons";
 import { SidebarData } from "../Data/Data";
 import { UilBars } from "@iconscout/react-unicons";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { setLogout } from "../../../redux/features/adminSlice";
+import { useDispatch } from "react-redux";
+import { MDBBtn } from "mdb-react-ui-kit";
+import { MdSecurityUpdateGood } from "react-icons/md";
 
-const Sidebar = () => {
+const Sidebar = ({setPage}) => {
   const [selected, setSelected] = useState(0);
-
   const [expanded, setExpaned] = useState(true)
+
+  const dispatch = useDispatch()
+
+  const HandleLogout = () => {
+    dispatch(setLogout())   
+  }
 
   const sidebarVariants = {
     true: {
@@ -33,8 +40,8 @@ const Sidebar = () => {
         {/* logo */}
         <div className="logo">
           {/* <img src={Logo} alt="logo" /> */}
-          <span>
-           Travel Buff
+          <span style={{color:"black"}}>
+            Travel Buff
           </span>
         </div>
 
@@ -44,18 +51,26 @@ const Sidebar = () => {
               <div
                 className={selected === index ? "menuItem active" : "menuItem"}
                 key={index}
-                onClick={() => setSelected(index)}
-              >
-                <item.icon />
-                <Link to ={item.url}><span>{item.heading}</span>
-              </Link>
+                onClick={() => {
+                setPage(item.page)
+                setSelected(index)}
+                }
+                >
+                <item.icon/>
+                <span>{item.heading}</span>
               </div>
             );
           })}
           {/* signoutIcon */}
           <div className="menuItem">
-            {/* <UilSignOutAlt /> */}
           </div>
+        </div>
+        <div>
+        <Link to="/adminLogin"
+          onClick={() => HandleLogout()}>
+          <MDBBtn style={{ marginLeft: "25px", marginTop: "25px" ,background:"black"}}> Log Out</MDBBtn>
+            {/* <UilSignOutAlt /> */}
+        </Link>
         </div>
       </motion.div>
     </>

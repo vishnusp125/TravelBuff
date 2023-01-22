@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import { login } from '../../redux/features/authSlice';
-import { adminlogin } from '../../../redux/features/adminSlice.js';
+import { adminlogin } from '../../../axios/services/AdminServices.js';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { SiYourtraveldottv } from 'react-icons/si'
@@ -43,12 +43,20 @@ function AdminLogin() {
         let { name, value } = e.target;
         setFormValue({ ...formValue, [name]: value });
     }
+    useEffect(() => {
+        const token = localStorage.getItem('admin');
+        if (!token) {
+          navigate('/adminLogin');
+        } else {
+          navigate('/admin');
+        }
+      }, [navigate])
 
     return (
         <div>
             <MDBNavbar light bgColor='light'>
                 <MDBContainer fluid>
-                    <MDBNavbarBrand style={{ color: "#551a8b" }} href='/'>
+                    <MDBNavbarBrand style={{ color: "black" }} href='/'>
                         <h1><SiYourtraveldottv className="icon" />
                             Travel Buff Admin Panel
                         </h1>
@@ -59,7 +67,7 @@ function AdminLogin() {
             <div
                 style={{
                     margin: "auto", padding: "15px", maxWidth: "450px",
-                    alignContent: "center", marginTop: "100px", color: "#551a8b", minHeight: '70vh'
+                    alignContent: "center", marginTop: "100px", color: "black", minHeight: '70vh'
                 }}>
                 <h2 style={{ paddingLeft: "50px", paddingBottom: "15px", alignContent: "center" }} className="text-align-center">Welcome Admin</h2>
                 <MDBCard alignment='center'>
@@ -95,7 +103,7 @@ function AdminLogin() {
                                 </MDBValidationItem>
                             </div>
                             <div className="col-12">
-                                <MDBBtn style={{ width: "100%" }} className="mt-2">
+                                <MDBBtn style={{ width: "100%", background:"black" }} className="mt-2">
                                     {loading && (
                                         <MDBSpinner
                                             size='sm'

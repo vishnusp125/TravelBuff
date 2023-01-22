@@ -1,26 +1,30 @@
 import { useEffect } from 'react'
 import { ToastContainer } from 'react-toastify'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import Login from './pages/UserPages/Login';
 import Home from './pages/UserPages/Home';
 import Register from './pages/UserPages/Register';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from './redux/features/authSlice';
 import GuideList from './pages/UserPages/GuideList';
 import AdminHome from './pages/AdminPages/AdminHome/AdminHome';
 import UserManagement from './pages/AdminPages/UserManagement/UserMangement';
 import AdminLogin from './pages/AdminPages/AdminLogin/AdminLogin';
-
-
+import GuideSignup from './pages/GuidePages/SignUp/GuideSignup';
+import GuideProfile from './pages/AdminPages/GuideProfile/GuideProfile';
 
 
 function App() {
-  const dispatch = useDispatch();
-  const user = JSON.parse(localStorage.getItem("profile"));
+  // const dispatch = useDispatch();
+  // const user = JSON.parse(localStorage.getItem("profile"));
+  // const isUserAuth = Boolean(window.localStorage.getItem("profile"));
+  // const isAdminAuth = Boolean(useSelector((state) => state.admin.token));
+  // const isAdminAuth = Boolean(useSelector((state) => state.admin.token));
 
-  useEffect(() => {
-    dispatch(setUser(user));
-  }, []);
+  // useEffect(() => {
+  //   // dispatch(setUser(user));
+  //   const isUserAuth = JSON.parse(localStorage.getItem("profile"));
+  // }, []);
   return (
     <div className="App">
       <ToastContainer />
@@ -30,9 +34,13 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/guideList' element={<GuideList/>} />
 
-        <Route path="/admindash" element={<AdminHome />}/>
+        <Route path="/admin" element={<AdminHome />}/>
         <Route path="/adminLogin" element={<AdminLogin />}/>
-        <Route path="/adminUserMgt" element={<UserManagement/>}/>
+
+        <Route path='/guideSignup' element={<GuideSignup />} />
+
+        <Route path='/guideProfile' element={<GuideProfile />} />
+        
       </Routes>
     </div>
   );

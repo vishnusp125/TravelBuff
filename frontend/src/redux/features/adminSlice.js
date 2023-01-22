@@ -1,29 +1,6 @@
-import { createSlice,createAsyncThunk } from "@reduxjs/toolkit"
-import * as api from '../api'
+import { createSlice } from "@reduxjs/toolkit"
+import { adminlogin } from '../../axios/services/AdminServices'
 
-export const adminlogin = createAsyncThunk("admin/login", async({ formValue, navigate, toast },{rejectWithValue}) => {
-    try {
-        const response = await api.adminsignIn(formValue)
-        toast.success("Login Successfully");
-        navigate('/admindash')
-        return response.data;
-
-    } catch (err) {
-        return rejectWithValue(err.response.data)
-    }
-});
-
-export const getUsers = createAsyncThunk("admin/getUsers", 
-async(_,{rejectWithValue}) => {
-    try {
-        const response = await api.getUsers()
-        return response.data;
-
-    } catch (err) {
-        console.log('in errorrr');
-        return rejectWithValue(err.response.data)
-    }
-})
 
 const adminSlice = createSlice({
     name: "admin",
@@ -37,7 +14,7 @@ const adminSlice = createSlice({
             state.admin = action.payload;
         },
         setLogout:(state, action) => {
-            localStorage.clear();
+            localStorage.removeItem("admin");
             state.admin = null;
         },
     },
@@ -54,18 +31,6 @@ const adminSlice = createSlice({
             state.loading = false;
             state.error = action.payload.message;
         },
-        [getUsers.pending]: (state, action) =>{
-            state.loading = true;
-        },
-        [getUsers.fulfilled]: (state,action) =>{
-            state.loading = false;
-            state.user = action.payload;
-        },
-        [getUsers.rejected]:(state, action) => {
-            state.loading = false;
-            state.error = action.payload.message;
-        },
-
     },
 });
 

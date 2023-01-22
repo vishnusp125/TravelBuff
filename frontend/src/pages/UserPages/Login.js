@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { login } from '../../redux/features/authSlice';
+import { login } from '../../axios/services/UserServices';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { SiYourtraveldottv } from 'react-icons/si'
@@ -27,6 +27,16 @@ function Login() {
     const { email, password } = formValue;
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+
+    useEffect(() => {
+      const token = localStorage.getItem('profile');
+      if (token) {
+          navigate('/');
+      } else {
+        navigate('/login');
+      }
+    }, [navigate]);
 
     useEffect(() => {
         error && toast.error(error)

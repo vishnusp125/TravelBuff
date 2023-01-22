@@ -5,6 +5,8 @@ import cors from 'cors';
 import morgan from 'morgan';
 import userRouter from "./routes/user.js";
 import adminRouter from "./routes/admin.js";
+import guideRouter from "./routes/guide.js";
+import fileUpload from 'express-fileupload'
 import { connect } from "mongoose";
 
 
@@ -17,9 +19,13 @@ app.use(morgan('dev'));
 app.use(express.json({limit:"30mb", extended:true}));
 app.use(express.urlencoded({limit:"30mb", extended:true}));
 app.use(cors());
+app.use(fileUpload({
+    useTempFiles:true
+}))
 
 app.use('/users', userRouter);
-app.use('/admin', adminRouter);         
+app.use('/admin', adminRouter);
+app.use('/guide', guideRouter);           
  
 
 const PORT = process.env.PORT || 5000
