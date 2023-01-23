@@ -12,6 +12,7 @@ import UserManagement from './pages/AdminPages/UserManagement/UserMangement';
 import AdminLogin from './pages/AdminPages/AdminLogin/AdminLogin';
 import GuideSignup from './pages/GuidePages/SignUp/GuideSignup';
 import GuideProfile from './pages/AdminPages/GuideProfile/GuideProfile';
+import GuideLogin from './pages/GuidePages/SignIn/GuideLogin';
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
         <Route path="/adminLogin" element={<AdminLogin />}/>
 
         <Route path='/guideSignup' element={<GuideSignup />} />
+        <Route path='/guideSignin' element={<GuideLogin />} />
 
         <Route path='/guideProfile' element={<GuideProfile />} />
         

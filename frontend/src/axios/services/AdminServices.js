@@ -77,21 +77,6 @@ export const getUserInfo = async (token) => {
     }
   };
 
-  export const verifyGuide = async (token, id) => {
-    const config = {
-      headers: {
-        Accept: 'application/json',
-        Authorization: 'Bearer ' + token,
-        'Content-Type': 'application/json',
-      },
-    };
-  
-    const { data } = await axiosAdminInstance.get(`/verifyGuide/${id}`, config);
-    if (data.status) {
-      return data;
-    }
-  };
-
   export const blockGuide = async (token, id) => {
     const config = {
       headers: {
@@ -121,3 +106,36 @@ export const getUserInfo = async (token) => {
       return data;
     }
   };
+
+  export const approveGuides = async (token) => {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axiosAdminInstance.get('/approveGuides', config);
+    console.log(data);
+    if (data) {     
+      return data;
+    }
+  };
+
+  export const verifyGuide = async (token, id) => {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    };
+  
+    const { data } = await axiosAdminInstance.get(`/verifyGuides/${id}`, config);
+    console.log('in verifyguide axiosssssss');
+    if (data.status) {
+      return data;
+    }
+  };
+
+  

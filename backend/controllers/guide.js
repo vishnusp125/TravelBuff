@@ -1,6 +1,5 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import guide from '../models/guide.js';
 import Guide from '../models/guide.js';
 import { v2 as cloudinary } from 'cloudinary';
 import dotenv from 'dotenv'
@@ -67,24 +66,27 @@ export const Guidesignup = async (req, res) => {
 
 export const Guidesignin = async (req, res) => {
     const { email, password } = req.body;
-
     try {
         const oldGuide = await Guide.findOne({ email });
-        if (!oldGuide)
+        if (!oldGuide) {
             return res.status(404).json({ message: "Guide doesn't exist" });
+        }
+
+        if (!oldGuide.isVerified) {
+            return res.status(404).json({ message: "Your are not approved by the admin" });
+        }
 
         const isPasswordCorrect = await bcrypt.compare(password, oldGuide.password);
         if (isPasswordCorrect) {
             const token = jwt.sign({ name: oldGuide.name, email: oldGuide.email, id: oldGuide._id }, secret, { expiresIn: "1h" });
-            console.log('guide login success');
-            return res.json({ status: 'ok', guide: token })
+            return res.json({ status: 'login success', guide: token });
         } else {
-            res.json({ status: 'error', guide: false })
-            console.log('login failed');
+            return res.json({ status: 'error', guide: false, message: "Invalid credentials" });
         }
+        
     } catch (error) {
         console.log('in error');
-        res.status(500).json({ message: "Something went wrong" });
         console.log(error);
+        res.status(500).json({ message: "Something went wrong" });
     }
 }

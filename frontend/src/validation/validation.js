@@ -2,10 +2,8 @@ import * as yup from 'yup';
 
 //password rule
 const passwordRule = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-const link =
-  /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
 
-//scheema
+//schema
 export const userSchema = yup.object().shape({
   fname: yup
     .string()
@@ -44,14 +42,13 @@ export const userUpdateSchema = yup.object().shape({
 });
 
 export const guideSchema = yup.object().shape({
-    firstName: yup
+  firstName: yup
     .string()
     .min(2, 'First name must be at least 2 characters')
     .max(20)
     .required('Required'),
-    lastName: yup.string().min(1).max(20).required('Required'),
+  lastName: yup.string().min(1).max(20).required('Required'),
   location: yup.string().required('Required'),
-//   gender: yup.string().required('Required'),
   email: yup.string().email('Please enter a valid email').required('Required'),
   phone: yup
     .number('Phone number must be a 10 digit number')
@@ -64,56 +61,23 @@ export const guideSchema = yup.object().shape({
     .max(16)
     .matches(passwordRule, 'please Create a stronger password')
     .required('Required'),
-    confirmPassword: yup
+  confirmPassword: yup
     .string()
     .oneOf([yup.ref('password'), null], 'Password must match')
     .required('Required'),
-  // link: yup
-  //   .string()
-  //   .matches(link, 'Please paste a valid youtube link here')
-  //   .required('Required'),
+  // image1: yup
+  // .mixed()
+  // .required('An image is required')
+  // .test('fileSize', 'File size must be less than 1MB', (value) => value && value.size <= 1024 * 1024)
+  // .test(
+  //   'fileType',
+  //   'File type must be one of: jpeg, jpg, png, gif',
+  //   (value) => value && ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'].includes(value.type)
+  // ),
+  // image2: yup.mixed().required('Required'),
 });
-export const uploadVideoSchema = yup.object().shape({
-  title: yup
-    .string()
-    .min(5, 'First name must be at least 2 characters')
-    .max(50)
-    .required('Required'),
-  discretion: yup.string().min(4).max(200).required('Required'),
-  type: yup.string().required('Required'),
-  thumbnail: yup.mixed().required('Required'),
-  // .test("FILE_ SIZE", "Too bigt!", (value)=> value && value < 2024 * 2024)
-  // .test ("FILE_TYPE", "Invalid!", (value) => value && ['Image/png', 'Image/jpeg'].includes(value.type))
-  link: yup
-    .string()
-    .matches(link, 'Please paste a valid youtube link here')
-    .required('Required'),
-});
-export const trainerBaseSchema = yup.object().shape({
-  aadharNumber: yup.number().positive().integer().required('Required'),
-  address: yup.string().min(4).max(500).required('Required'),
 
-  profilePic: yup.mixed().required('Required'),
-  aadharBack: yup.mixed().required('Required'),
-  aadharFront: yup.mixed().required('Required'),
-});
-export const newPlanSchema = yup.object().shape({
-  PackageName: yup
-    .string()
-    .min(2, 'Enter a valid package name.')
-    .max(20)
-    .required('Required'),
 
-  packageType: yup.string().required('Required'),
-  discretion: yup
-    .string()
-    .min(2, 'Enter a valid discretion name.')
-    .max(200)
-    .required('Required'),
-  proGymsTips: yup.string().required('Required'),
-  groupWorkouts: yup.string().required('Required'),
-  perstionalTrainer: yup.string().required('Required'),
-  smartWorkoutPlan: yup.string().required('Required'),
-  mrp: yup.number().positive().integer().required('Required'),
-  offerRate: yup.number().positive().integer().required('Required'),
-});
+
+
+

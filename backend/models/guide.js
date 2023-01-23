@@ -41,6 +41,10 @@ const guideSchema = new Schema({
         type: Boolean,
         default: false
     },
+    isRejected: {
+        type: Boolean,
+        default: false
+    },
     activities: {
         type: [String],
     },

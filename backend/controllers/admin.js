@@ -100,20 +100,6 @@ export const getAllGuides = async (req, res) => {
     }
 }
 
-export const verifyGuide = async (req, res) => {
-    try{
-        const guideId = req.params.id
-        console.log(guideId);
-        const guide = await Guides.findByIdAndUpdate({ _id: guideId }, { isVerified: true })
-        console.log(guide);
-        console.log('in tryyyy');
-        res.json({status: 'ok',block: true, guideDetails: guide});
-    } catch(error) {
-        console.log(error);
-        console.log('in catchhh');
-    }
-}
-
 export const blockGuide = async (req, res) => {
     try{
         const guideId = req.params.id
@@ -140,6 +126,31 @@ export const unblockGuide = async (req, res) => {
         console.log('in catchhh');
     }
 }
+
+export const approveGuide = async (req, res) => {
+    try{
+        const guides = await Guides.find({ isVerified: false });
+        res.status(200).json({guideDetails:guides, status:"ok"})
+    } catch (error) {
+        res.status(404).json({message:"Something went wrong"})
+    }
+}
+
+
+export const verifyGuide = async (req, res) => {
+    try{
+        const guideId = req.params.id
+        console.log(guideId);
+        const guide = await Guides.findByIdAndUpdate({ _id: guideId }, { isVerified: true })
+        console.log("backend",guide);
+        console.log('in tryyyy');
+        res.json({status: 'ok',verified: true, guideDetails: guide});
+    } catch(error) {
+        console.log(error);
+        console.log('in catchhh');
+    }
+}       
+
 
 
 

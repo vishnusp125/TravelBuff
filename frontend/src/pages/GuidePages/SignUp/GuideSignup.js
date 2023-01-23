@@ -3,12 +3,13 @@ import { useFormik } from 'formik';
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
 import { Guidesignup } from '../../../axios/services/GuideServices'
-import Footer from '../../../Components/UserComponents/Footer/Footer';
+import Footer from '../../../Components/UserComponents/Footer/Footer.jsx';
 import { guideSchema } from '../../../validation/validation';
 import { SiYourtraveldottv } from 'react-icons/si'
 import './GuideSignup.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { MDBContainer, MDBNavbar, MDBNavbarBrand } from 'mdb-react-ui-kit';
 
 function GuideSignup() {
 
@@ -77,8 +78,8 @@ function GuideSignup() {
         password: "",
         confirmPassword: "",
         phone: "",
-        image: "",
-        certificate: "",
+        image1: "",
+        image2: "",
         location: ""
       },
       validationSchema: guideSchema,
@@ -89,48 +90,57 @@ function GuideSignup() {
   return (
     <>
 
-      <div className="row Csignup-Main py-3 justify-content-center align-items-center" >
-        {/* <img src="" alt="modelimage" /> */}
-        <section className="py-5">
-          <div className="container py-5 h-100 justify-content-center align-items-center bg-dark">
+<MDBNavbar light bgColor='light'>
+                <MDBContainer fluid>
+                    <MDBNavbarBrand style={{ color: "#551a8b" }} href='/'>
+                        <h1><SiYourtraveldottv className="icon" />
+                            Travel Buff
+                        </h1>
+                    </MDBNavbarBrand>
+                </MDBContainer>
+            </MDBNavbar>
+            <h1 className='text-center font-weight-bold my-3'>Travel Guide Sign Up Form</h1>
+
+      <div className="row Csignup-Main py-3 px-5 justify-content-center align-items-center no-scroll" style={{ overflowX: 'hidden' }} >
+        <section>
+          <div className="container py-5 h-100 justify-content-center align-items-center" >
             <div className="row justify-content-center align-items-center h-100">
-              <div className="col-12 col-lg-12 col-xl-12">
+              <div className="col-md-8 col-lg-8 mx-auto">
                 <div className="card shadow-2-strong card-registration" style={{ borderRadius: '15px' }}>
                   <div className="card-body p-4 p-md-5">
-                    <h3 className="mb-3 text-start">
-                      Guide Sign Up Form
+                    <h3 className="mb-3 text-center">
+                      Join us Now !!!
                     </h3>
                     <form onSubmit={handleSubmit}>
                       {error ? <p className="red-error">{error}</p> : ''}
                       <div className="row">
                         <div className="col-md-6 mb-4">
-                          <div className="form-outline">
                             <label className="form-label">First Name</label>
                             <input
-                              style={{ background: "blue" }}
+                              // style={{ background: "beige" }}
                               type="text"
                               id="firstName"
-                              placeholder='first name'
+                              // placeholder='Enter your First name'
                               value={values.firstName}
                               onChange={handleChange}
                               onBlur={handleBlur}
                               className={
                                 errors.firstName && touched.firstName
-                                  ? 'form-control form-control-lg input-error'
-                                  : 'form-control form-control-lg'
+                                  ? 'form-control form-control-md sample'
+                                  : 'form-control form-control-m sample'
                               }
                             />
 
                             {errors.firstName && touched.firstName && (
                               <p className="red-error">{errors.firstName}</p>
                             )}
-                          </div>
+
                         </div>
                         <div className="col-md-6 mb-4">
-                          <div className="form-outline">
+          
                             <label className="form-label">Last Name</label>
                             <input
-                              style={{ background: "blue" }}
+                     
                               type="text"
                               id="lastName"
                               value={values.lastName}
@@ -138,29 +148,28 @@ function GuideSignup() {
                               onBlur={handleBlur}
                               className={
                                 errors.lastName && touched.lastName
-                                  ? 'form-control form-control-lg input-error'
-                                  : 'form-control form-control-lg'
+                                  ? 'form-control form-control-lg sample'
+                                  : 'form-control form-control-lg sample'
                               }
                             />
                             {errors.lastName && touched.lastName && (
                               <p className="red-error">{errors.lastName}</p>
                             )}
-                          </div>
+                
                         </div>
                       </div>
 
                       <div className="row">
-                        <div className="col-md-12 mb-4 d-flex align-items-center">
-                          <div className="form-outline datepicker w-100">
+                        <div className="col-md-12 mb-4 pb-2 ">      
                             <label className="form-label">Email</label>
-
-                            <input style={{ background: "blue" }}
+                            <br/>
+                            <input   
                               type="email"
 
                               className={
                                 errors.email && touched.email
-                                  ? 'form-control form-control-lg input-error'
-                                  : 'form-control form-control-lg'
+                                  ? 'form-control form-control-lg sample'
+                                  : 'form-control form-control-lg sample'
                               }
                               value={values.email}
                               onChange={handleChange}
@@ -169,19 +178,18 @@ function GuideSignup() {
                             />
                             {errors.email && touched.email && (
                               <p className="red-error">{errors.email}</p>
-                            )}
-                          </div>
+                            )}           
                         </div>
                       </div>
 
 
                       <div className="row">
                         <div className="col-md-6 mb-4 pb-2">
-                          <div className="form-outline">
-                            <label className="form-label">password</label>
+          
+                            <label className="form-label">Password</label>
 
                             <input
-                              style={{ background: "blue" }}
+         
                               type="password"
                               value={values.password}
                               onChange={handleChange}
@@ -189,20 +197,20 @@ function GuideSignup() {
                               id="password"
                               className={
                                 errors.password && touched.password
-                                  ? 'form-control form-control-lg input-error'
-                                  : 'form-control form-control-lg'
+                                  ? 'form-control form-control-lg sample'
+                                  : 'form-control form-control-lg sample'
                               }
                             />
                             {errors.password && touched.password && (
                               <p className="red-error">{errors.password}</p>
                             )}
-                          </div>
+           
                         </div>
                         <div className="col-md-6 mb-4 pb-2">
-                          <div className="form-outline">
+                 
                             <label className="form-label">Confirm password</label>
                             <input
-                              style={{ background: "blue" }}
+                      
                               type="password"
                               id="confirmPassword"
                               value={values.confirmPassword}
@@ -210,23 +218,23 @@ function GuideSignup() {
                               onBlur={handleBlur}
                               className={
                                 errors.confirmPassword && touched.confirmPassword
-                                  ? 'form-control form-control-lg input-error'
-                                  : 'form-control form-control-lg'
+                                  ? 'form-control form-control-lg sample'
+                                  : 'form-control form-control-lg sample'
                               }
                             />
                             {errors.confirmPassword && touched.confirmPassword && (
                               <p className="red-error">{errors.confirmPassword}</p>
                             )}
-                          </div>
+                  
                         </div>
                       </div>
                       <div className="row">
                         <div className="col-md-6 mb-4 pb-2">
-                          <div className="form-outline">
+             
                             <label className="form-label">Phone</label>
 
                             <input
-                              style={{ background: "blue" }}
+                           
                               type="number"
                               id="phone"
                               value={values.phone}
@@ -234,20 +242,20 @@ function GuideSignup() {
                               onBlur={handleBlur}
                               className={
                                 errors.phone && touched.phone
-                                  ? 'form-control form-control-lg input-error'
-                                  : 'form-control form-control-lg'
+                                  ? 'form-control form-control-lg sample'
+                                  : 'form-control form-control-lg sample'
                               }
                             />
                             {errors.phone && touched.phone && (
                               <p className="red-error">{errors.phone}</p>
                             )}
-                          </div>
+                    
                         </div>
                         <div className="col-md-6 mb-4 pb-2">
-                          <div className="form-outline">
-                            <label className="form-label">location</label>
+           
+                            <label className="form-label">Location</label>
                             <input
-                              style={{ background: "blue" }}
+                      
                               type="text"
                               id="location"
                               value={values.location}
@@ -255,75 +263,72 @@ function GuideSignup() {
                               onBlur={handleBlur}
                               className={
                                 errors.location && touched.location
-                                  ? 'form-control form-control-lg input-error'
-                                  : 'form-control form-control-lg'
+                                  ? 'form-control form-control-lg sample'
+                                  : 'form-control form-control-lg sample'
                               }
                             />
-
                             {errors.location && touched.location && (
                               <p className="red-error">{errors.location}</p>
                             )}
-                          </div>
+              
                         </div>
                       </div>
+
                       <div className="row">
                         <div className="col-md-6 mb-4 pb-2">
-                          <div className="form-outline">
-                            <label className="form-label">image</label>
+         
+                            <label className="form-label">Upload your Image</label>
                             <input
-                              style={{ background: "blue" }}
                               type="file"
                               id="image1"
                               name='image1'
-                              // value={values.image}
+                              // value={values.image1}
                               onChange={handleImage1}
                               onBlur={handleBlur}
                               className={
-                                errors.image && touched.image
-                                  ? 'form-control form-control-lg input-error'
-                                  : 'form-control form-control-lg'
+                                errors.image1 && touched.image1
+                                  ? 'form-control form-control-lg sample'
+                                  : 'form-control form-control-lg sample'
                               }
                             />
 
-                            {errors.image && touched.image && (
-                              <p className="red-error">{errors.image}</p>
+                            {errors.image1 && touched.image1 && (
+                              <p className="red-error">{errors.image1}</p>
                             )}
-                          </div>
+          
                         </div>
+
                         <div className="col-md-6 mb-4 pb-2">
-                          <div className="form-outline">
-                            <label className="form-label">certificate</label>
+               
+                            <label className="form-label">Upload your guide certificate</label>
                             <input
-                              style={{ background: "blue" }}
                               type="file"
                               name='image2'
                               id="image2"
-                              // value={values.certificate}
+                              // value={values.image2}
                               onChange={handleImage2}
                               onBlur={handleBlur}
                               className={
-                                errors.certificate && touched.certificate
-                                  ? 'form-control form-control-lg input-error'
-                                  : 'form-control form-control-lg'
+                                errors.image2 && touched.image2
+                                  ? 'form-control form-control-lg sample'
+                                  : 'form-control form-control-lg sample'
                               }
                             />
-                            {errors.certificate && touched.certificate && (
-                              <p className="red-error">{errors.certificate}</p>
+                            {errors.image2 && touched.image2 && (
+                              <p className="red-error">{errors.image2}</p>
                             )}
-                          </div>
+                
                         </div>
                       </div>
                       <div className="mt-4 pt-2">
                         <input
                           className="btn btn-lg"
                           type="submit"
-                          value="Submit"
+                          value="Sign Up"
                         />
                       </div>
                     </form>
-                    <h5 className='pt-5'>Already have an account ?<Link to='/guideLogin' className='btnhover'> Sign In</Link></h5>
-                    <h5>Or</h5>
-                    <h5 className=''>Join as a Guide ?<Link to='/guidesignup' className='btnhover'> Register</Link></h5>
+                    <h5 className='pt-5'>Already have an account ?<Link to='/guideSignin' className='btnhover'> Sign In</Link></h5>
                   </div>
                 </div>
               </div>

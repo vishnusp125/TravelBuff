@@ -7,5 +7,4 @@ router.post('/guidesignup', Guidesignup);
 router.post('/guidesignin', Guidesignin);
 
 
-
 export default router;   

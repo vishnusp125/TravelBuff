@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { blockGuide, getGuidesInfo, unblockGuide, verifyGuide } from '../../../axios/services/AdminServices'
+import { blockGuide, getGuidesInfo, unblockGuide } from '../../../axios/services/AdminServices'
 import DataTable from 'react-data-table-component';
 import { MDBBtn } from 'mdb-react-ui-kit';
 
