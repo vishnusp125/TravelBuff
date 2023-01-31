@@ -66,9 +66,7 @@ export const getAllUsers = async (req, res) => {
 export const blockUser = async (req, res) => {
     try{
         const userId = req.params.id
-        console.log(userId);
         const user = await Users.findByIdAndUpdate({ _id: userId }, { isBlocked: true })
-        console.log(user);
         console.log('in tryyyy');
         res.json({status: 'ok',block: true, userDetails: user});
     } catch(error) {
@@ -87,7 +85,6 @@ export const unblockUser = async (req, res) => {
     } catch(error) {
         console.log(error);
         console.log('in catchhh');
-
     }
 }
 

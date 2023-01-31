@@ -20,8 +20,7 @@ function GuideMangement() {
       async function unBlock(id) {
         const token = localStorage.getItem('admin');
         const data = await unblockGuide(token, id);
-        console.log(data);
-        console.log("unblock data",data);
+        
         if (data.guideDetails) {
             const newDetails = details.map(guide => {
                 if(guide._id === id) {
@@ -36,7 +35,6 @@ function GuideMangement() {
       async function block(id) {
         const token = localStorage.getItem('admin');
         const data = await blockGuide(token, id);
-        console.log("block data",data);
         if (data.guideDetails) {
             const newDetails = details.map(guide => {
                 if(guide._id === id) {

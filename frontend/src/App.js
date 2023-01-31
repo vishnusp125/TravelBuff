@@ -8,11 +8,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from './redux/features/authSlice';
 import GuideList from './pages/UserPages/GuideList';
 import AdminHome from './pages/AdminPages/AdminHome/AdminHome';
-import UserManagement from './pages/AdminPages/UserManagement/UserMangement';
 import AdminLogin from './pages/AdminPages/AdminLogin/AdminLogin';
 import GuideSignup from './pages/GuidePages/SignUp/GuideSignup';
-import GuideProfile from './pages/AdminPages/GuideProfile/GuideProfile';
 import GuideLogin from './pages/GuidePages/SignIn/GuideLogin';
+import GuideHome from './pages/GuidePages/GuideHome/GuideHome';
+import AddPost from './pages/GuidePages/AddPost/AddPost';
+import GuideSinglePage from './pages/UserPages/GuideSinglepage/GuideSinglePage';
 
 
 function App() {
@@ -34,14 +35,15 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/guideList' element={<GuideList/>} />
+        <Route path='/guideSingle/:id' element={<GuideSinglePage/>} />
 
         <Route path="/admin" element={<AdminHome />}/>
         <Route path="/adminLogin" element={<AdminLogin />}/>
 
         <Route path='/guideSignup' element={<GuideSignup />} />
         <Route path='/guideSignin' element={<GuideLogin />} />
-
-        <Route path='/guideProfile' element={<GuideProfile />} />
+        <Route path='/guideHome' element={<GuideHome />} />
+        <Route path='/guideAddPost' element={<AddPost/>} />
         
       </Routes>
     </div>

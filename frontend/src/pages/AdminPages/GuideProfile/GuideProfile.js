@@ -52,7 +52,7 @@ function GuideProfile() {
                   </p>
                   <button className="btn btn-primary align-self-end" style={{ background: "green", marginRight: "10px" }}
                     onClick={() => verify(item._id)}>Approve</button>
-                  <button className="btn btn-primary align-self-end" style={{ background: "red" }}>Reject</button>
+                  {/* <button className="btn btn-primary align-self-end" style={{ background: "red" }}>Reject</button> */}
                 </div>
               </div>
             </div>

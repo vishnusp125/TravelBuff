@@ -20,8 +20,7 @@ function UserManagement() {
 
   async function unBlock(id) {
     const token = localStorage.getItem('admin');
-    const data = await unblockUser(token, id);
-    console.log("unblock data",data);
+    const data = await unblockUser(token, id)
     if (data.userDetails) {
         const newDetails = details.map(user => {
             if(user._id === id) {
@@ -36,7 +35,6 @@ function UserManagement() {
   async function block(id) {
     const token = localStorage.getItem('admin');
     const data = await blockUser(token, id);
-    console.log("block data",data);
     if (data.userDetails) {
         const newDetails = details.map(user => {
             if(user._id === id) {

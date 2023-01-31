@@ -8,14 +8,14 @@ const guideSlice = createSlice({
         guide: null,
         error: "",
         loading: false
-    },
+    },  
     reducers:{
-        setUser:(state, action) => {
-            state.user = action.payload;
-        },
+        // setGuide:(state, action) => {
+        //     state.guide = action.payload;
+        // },
         setLogout:(state, action) => {
-            localStorage.removeItem("profile");
-            state.user = null;
+            localStorage.removeItem("guide");
+            state.guide = null;
         },
     },
     extraReducers:{
@@ -25,7 +25,7 @@ const guideSlice = createSlice({
         [Guidesignin.fulfilled]: (state,action) =>{
             state.loading = false;
             localStorage.setItem("guide",JSON.stringify({...action.payload}));
-            state.user = action.payload
+            state.guide = action.payload
         },
         [Guidesignin.rejected]:(state, action) => {
             state.loading = false;
@@ -35,5 +35,5 @@ const guideSlice = createSlice({
 });
 
 
-export const { setUser, setLogout } = guideSlice.actions;
+export const { setGuide, setLogout } = guideSlice.actions;
 export default guideSlice.reducer;

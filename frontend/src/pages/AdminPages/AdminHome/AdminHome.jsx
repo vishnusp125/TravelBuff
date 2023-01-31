@@ -38,7 +38,7 @@ const AdminHome = () => {
   gap: 16px;
   grid-template-columns: 11rem auto 1rem;
   overflow: hidden;
-  @media screen and (max-width: 1200px) {
+@media screen and (max-width: 1200px) {
     grid-template-columns: 20% 50% auto;
     overflow-y: scroll;
 }

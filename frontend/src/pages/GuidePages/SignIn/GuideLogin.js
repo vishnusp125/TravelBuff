@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import GuideNavbar from '../../../Components/GuideComponents/Navbar/GuideNavbar'
+import { Guidesignin } from '../../../axios/services/GuideServices'
+import 'react-toastify/dist/ReactToastify.css';
 import Footer from '../../../Components/UserComponents/Footer/Footer.jsx';
+
 
 const initialState = {
     email: "",
@@ -13,10 +17,37 @@ function GuideLogin() {
 
 
     const [formValue, setFormValue] = useState(initialState);
-    const { loading, error } = useSelector((state) => ({ ...state.auth }));
+    const { loading, error } = useSelector((state) => ({ ...state.guide }));
     const { email, password } = formValue;
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    
+    useEffect(() => {
+      console.log("in useeffect at guide loginnn");
+      const token = localStorage.getItem('guide');
+      console.log(token)
+      console.log("tokennn",token);
+      if (token) {
+          navigate('/guideHome');
+      } 
+    }, [navigate]);
+
+    useEffect(() => {
+      error && toast.error(error)
+  }, [error])
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (email && password) {
+        dispatch(Guidesignin({ formValue, navigate, toast }))
+    }
+};
+
+const onInputChange = (e) => {
+  let { name, value } = e.target;
+  setFormValue({ ...formValue, [name]: value });
+}
 
 
   return (
@@ -31,13 +62,17 @@ function GuideLogin() {
                     <h3 className="mb-3 text-center">
                      Welcome !!!
                     </h3>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                       <div className="row">
                             <label className="form-label">Email</label>
                             <br />
                             <input
-                              type="text"
-                              id="Name"
+                              type="email"
+                              id="email"
+                              value={email}
+                              name="email"
+                              onChange={onInputChange}
+                              required
                             />
                       </div>
                       <div className="row">
@@ -46,6 +81,10 @@ function GuideLogin() {
                             <input
                               type="password"
                               id="password"
+                              value={password}
+                              name="password"
+                              onChange={onInputChange}
+                              required
                             />
                           </div>
                           <div className="mt-3 pt-2 d-flex justify-content-center align-items-center ">

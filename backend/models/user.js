@@ -6,6 +6,7 @@ const userSchema = mongoose.Schema({
     password:{type:String, required:true},
     phone:{type:String, required:true, unique:true},
     isBlocked: {type: Boolean,default: false},
+    isVerified:{type:Boolean, default:false},
     id:{type:String},
 });
 

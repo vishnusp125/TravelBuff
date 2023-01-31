@@ -1,0 +1,8 @@
+a{
+    color: black;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  a:hover {
+    color:red;
+  } 

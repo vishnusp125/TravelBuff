@@ -34,7 +34,7 @@ function Login() {
       if (token) {
           navigate('/');
       } else {
-        navigate('/login');
+        navigate('/login');   
       }
     }, [navigate]);
 
@@ -124,7 +124,7 @@ function Login() {
                             <p style={{ color: "#551a8b" }}>Don't have an account ? <span style={{ color: "red" }}>Sign Up </span> </p>
                         </Link>
                         <h5>Or</h5>
-                        <Link to='/register'>
+                        <Link to='/guideSignup'>
                         <p style={{ color: "#551a8b" }}>Tour Guide<span style={{ color: "red" }}> Sign Up </span> </p>
                         </Link>
                         

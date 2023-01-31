@@ -1,129 +1,93 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './PopularGuides.css'
 import { MdLocationOn } from 'react-icons/md'
 import { BsArrowRightShort } from 'react-icons/bs'
-
-//import image
-import guide1 from '../../../assets/images/guide1.jpg'
-import guide2 from '../../../assets/images/guide2.jpg'
-import guide3 from '../../../assets/images/guide3.jpg'
-import guide4 from '../../../assets/images/guide4.jpg'
+import { Link, useNavigate } from 'react-router-dom'
+import { getGuides } from '../../../axios/services/UserServices'
 
 
-const guides = [
-    {
-        id: 1,
-        imgSrc: guide1,
-        name: 'Rick',
-        location: "Mexico",
-        price: "Rs.1450/day"
-    },
-    {
-        id: 2,
-        imgSrc: guide2,
-        name: 'Aditi',
-        location: "India",
-        price: "Rs.1400/day"
-    },
-    {
-        id: 3,
-        imgSrc: guide3,
-        name: 'Rohan',
-        location: "Canada",
-        price: "Rs.1500/day"
-    },
-    {
-        id: 4,
-        imgSrc: guide4,
-        name: 'Hanna',
-        location: "Tokyo",
-        price: "Rs.1500/day"
-    },
-    {
-        id: 1,
-        imgSrc: guide1,
-        name: 'Rick',
-        location: "Mexico",
-        price: "Rs.1450/day"
-    },
-    {
-        id: 2,
-        imgSrc: guide2,
-        name: 'Aditi',
-        location: "India",
-        price: "Rs.1400/day"
+function PopularGuides(props) {
+
+    const [details, setDetails] = useState([])
+    const navigate = useNavigate();
+
+    async function fetchData() {
+        const data = await getGuides()
+        setDetails(data);
     }
-]
 
-function PopularGuides() {
+    useEffect(() => {
+        fetchData();
+    }, [])
+
     return (
         <>
-        <section className='offer container section'>
-            <div className="secContainer">
-                <div className="secIntro">
-                    <h2 className="secTitle">
-                        Popular Guides
-                    </h2>
-                    <p>
-                        Most rated Guides
-                    </p>
-                </div>
-                <div className="mainContent grid">
-                    {
-                        guides.map(({id,imgSrc,name,location,price}) => {
-                            return (
-                                <div className="singleOffer" key={id}>
-                                    <div className="destImage">
-                                        <img src={imgSrc} alt="images"/>
-                                        {/* <span className="discount">
+            <section className='offer container section'>
+                <div className="secContainer">
+                    <div className="secIntro">
+                        <h2 className="secTitle">
+                            {props.heading}
+                        </h2>
+                        <p>
+                            {props.subheading}
+                        </p>
+                    </div>
+                    <div className="mainContent grid">
+                        {
+                            details.map(({ _id, image, name, location, price, activities }) => {
+                                return (
+                                    <div className="singleOffer" key={_id}>
+                                        <div className="destImage">
+                                            <img style={{ maxHeight: "250px", maxWidth: "300px" }} src={image} alt="images" />
+                                            {/* <span className="discount">
                                 30% off
                             </span> */}
+                                        </div>
+                                        <div className="offerBody">
+                                            <div className="price flex space-between">
+                                                <h4>
+                                                    Rs.1000/D
+                                                </h4>
+                                                <h4>
+                                                    {name}
+                                                </h4>
+                                                <span className="status">
+                                                    Available
+                                                </span>
+                                            </div>
+
+                                            <div className="amenities flex">
+                                                {activities?.slice(0, 3).map((activity, index) => {
+                                                    return (
+                                                        <div key={index} className="singleAmenity flex">
+                                                            <small>{activity}</small>
+                                                        </div>
+                                                    )
+                                                })
+                                                }
+                                            </div>
+
+                                            <div className="location flex">
+                                                <MdLocationOn className='icon' />
+                                                <small>
+                                                    {location}
+                                                </small>
+                                            </div>
+                                            <button className='btn flex'>
+                                                <Link to={`/guideSingle/${_id}`}>
+                                                    View Details
+                                                    <BsArrowRightShort />
+                                                </Link>
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div className="offerBody">
-                                        <div className="price flex">
-                                            <h4>
-                                               {name}
-                                            </h4>
-                                            <h4>
-                                                {price}
-                                            </h4>
-                                            <span className="status">
-                                                Available
-                                            </span>
-                                        </div>
-
-                                        <div className="amenities flex">
-                                            <div className="singleAmenity flex">
-                                                <small>Sight seeing</small>
-                                            </div>
-                                            <div className="singleAmenity flex">
-                                                <small>Trekking</small>
-                                            </div>
-                                            <div className="singleAmenity flex">
-                                                <small>Food</small>
-                                            </div>
-                                        </div>
-
-                                        <div className="location flex">
-                                            <MdLocationOn className='icon' />
-                                            <small>
-                                            {location}
-                                            </small>
-                                        </div>
-
-                                        <button className='btn flex'>
-                                            View Details
-                                            <BsArrowRightShort />
-                                        </button>
-                                    </div>
-                                </div>
-                            )
-                        })
-                    }
+                                )
+                            })
+                        }
+                    </div>
                 </div>
-            </div>
 
-        </section>
+            </section>
         </>
     )
 }

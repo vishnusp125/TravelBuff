@@ -1,3 +1,7 @@
+body {
+    overflow-x: hidden; /* Hide scrollbars */
+  }
+
 
 .placeholder{
     color:black!important;

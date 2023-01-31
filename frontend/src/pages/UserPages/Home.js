@@ -39,7 +39,8 @@ function Home() {
       <Navbar />
       <Cover />
       <Popular />
-      <PopularGuides />
+      <PopularGuides 
+      heading="Popular Guides"  subheading="Most rated Guides"/>
       <TravelTips />
       <Footer/>
     </div>

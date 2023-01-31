@@ -25,6 +25,9 @@ const guideSchema = new Schema({
         type: String,
         required: true
     },
+    description: {
+        type: String,
+    },
     image: {
         type: String,
         required: true
@@ -47,6 +50,9 @@ const guideSchema = new Schema({
     },
     activities: {
         type: [String],
+    },
+    price: {
+        type: String,
     },
     languages: {
         type: [String],

@@ -61,14 +61,14 @@
   }
   
   .active {
-    background: lightslategray;
+    /* background: lightslategray; */
     margin-left: 0;
   }
   .active::before {
     content: "";
     width: 8px;
     height: 100%;
-    background: grey;
+    /* background: grey; */
     margin-right: calc(1rem - 8px);
   }
   

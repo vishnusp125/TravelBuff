@@ -26,7 +26,7 @@ export const SidebarData = [
     page:'dashboard'
   },
   {
-    icon: UilClipboardAlt,
+    icon: UilUsersAlt,
     heading: "users",
     url:'/users',
     page:"users"
@@ -38,7 +38,7 @@ export const SidebarData = [
     page:"guides"
   },
   {
-    icon: UilUsersAlt,
+    icon: UilClipboardAlt,
     heading: "Guide Requests",
     page:'approvals'
   },
