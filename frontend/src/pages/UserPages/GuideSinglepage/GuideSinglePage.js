@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { guideSingle } from '../../../axios/services/UserServices';
 import Navbar from '../../../Components/UserComponents/Navbar/Navbar';
+import image from '../../../assets/images/istockphoto-958510852-170667a.jpg';
 import {
   MDBCol,
   MDBRow,
@@ -38,7 +39,7 @@ function GuideSinglePage() {
             <div className="row d-flex justify-content-center align-items-center h-100">
               <div className="col col-lg-12 col-xl-12">
                 <div className="card">
-                  <div className="rounded-top text-white d-flex flex-row" style={{ backgroundColor: "#000", height: "200px" }}>
+                  <div className="rounded-top text-white d-flex flex-row" style={{height: "300px",backgroundImage:`url(${image})`, backgroundSize: "cover", backgroundPosition: "center"}}>
                     <div className="ms-4 d-flex flex-column" style={{ width: "150px" }}>
                       <img src={details.image} className="img-fluid img-thumbnail mt-4 mb-2"
                         style={{ width: "150px", zIndex: 1 }} />
@@ -55,7 +56,7 @@ function GuideSinglePage() {
                   <div className="p-4 text-black" style={{ backgroundColor: "#f8f9fa" }}>
                     <div className="d-flex justify-content-end text-center py-1">
                       <div>
-                        <p className="mb-1 h5">9/10</p>
+                        <p className="mb-1 h5">-/10</p>
                         <p className="small text-muted mb-0">Rating</p>
                       </div>
                       {/* <div className="px-3">

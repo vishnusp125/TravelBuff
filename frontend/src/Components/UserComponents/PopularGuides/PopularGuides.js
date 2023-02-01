@@ -46,7 +46,7 @@ function PopularGuides(props) {
                                         <div className="offerBody">
                                             <div className="price flex space-between">
                                                 <h4>
-                                                    Rs.1000/D
+                                                   Rs. {price}/D
                                                 </h4>
                                                 <h4>
                                                     {name}

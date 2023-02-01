@@ -22,18 +22,18 @@ function Cover() {
         
         <div className="locationDiv">
           <label htmlFor="location">Location</label>
-          <input type="text" placeholder='' />
+          <input type="text" placeholder='Enter the location' />
         </div>
         
-        <div className="locationDiv">
+        {/* <div className="locationDiv">
           <label htmlFor="Date">Date</label>
           <input type="date" placeholder='01-01-2023' />
-        </div>
+        </div> */}
 
         
         <div className="locationDiv">
           <label htmlFor="Price">Price Range</label>
-          <input type="text" placeholder='' />
+          <input type="text" placeholder='Enter price' />
         </div>
 
         <button className='btn'>Search</button>

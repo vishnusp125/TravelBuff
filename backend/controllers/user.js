@@ -8,6 +8,7 @@ import { sendEmail } from '../utils/sendEmail.js'
 import crypto from 'crypto';
 import nodemailer from 'nodemailer'
 import dotenv from 'dotenv'
+import { log } from 'console';
 
 dotenv.config();
 
@@ -25,15 +26,14 @@ let transporter = nodemailer.createTransport({
 })
 
 // send otp verification email
-const sendOTPVerificationEmail = async ({ _id, email }, res) => {
+const sendOTPVerificationEmail = async (result, res) => {
     try {
         const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
-        console.log(otp, "otppp");
 
         //mail options
         const mailOptions = {
             from: "travelbuff@gmail.com",
-            to: email,
+            to: result.email,
             subject: "Verify your Email",
             html: `<p>Thank You for joining Travell Buff !!! <p>
             <p>Enter this OTP <b>${otp}</b> in the app to verify your account</p>`
@@ -43,7 +43,7 @@ const sendOTPVerificationEmail = async ({ _id, email }, res) => {
         const saltRounds = 10;
         const hashedOTP = await bcrypt.hash(otp, saltRounds);
         const newOTPVerification = await new UserOTPVerification({
-            userId: _id,
+            userId: result._id,
             otp: hashedOTP,
             createdAt: Date.now(),
             expiresAt: Date.now() + 3600000,
@@ -54,10 +54,10 @@ const sendOTPVerificationEmail = async ({ _id, email }, res) => {
         await transporter.sendMail(mailOptions)
         res.json({
             status: "Pending",
-            message: "Verification otp email sent",
+            message: "Verification OTP has been sent to your email",
             data: {
-                userId: _id,
-                email,
+                userId: result._id,
+                email: result.email,
             }
         })
     } catch (error) {
@@ -68,7 +68,6 @@ const sendOTPVerificationEmail = async ({ _id, email }, res) => {
         })
     }
 }
-
 
 export const signup = async (req, res) => {
     const { email, password, firstName, lastName, phone } = req.body;
@@ -87,8 +86,8 @@ export const signup = async (req, res) => {
             password: hashedPassword,
             name: `${firstName} ${lastName}`
         });
-        sendOTPVerificationEmail(result, res)
-        const token = jwt.sign({ email: result.email, id: result._id }, secret, { expiresIn: "1h" });
+        await sendOTPVerificationEmail(result, res)
+        // const token = jwt.sign({ email: result.email, id: result._id }, secret, { expiresIn: "1h" });
         // const token = await new Token({
         //     userId: result._id,
         //     token: crypto.randomBytes(32).toString("hex"),
@@ -103,6 +102,57 @@ export const signup = async (req, res) => {
         console.log(error);
     }
 }
+
+export const verifyOtp = async (req, res) => {
+    try {
+        const userId = req.body.id;
+        const otp = req.body.otp;
+
+        if (!userId || !otp) {
+            throw Error("Empty otp details are not allowed")
+        } else {
+            const UserOTPVerificationRecords = await UserOTPVerification.find({
+                userId,
+            });
+            if (UserOTPVerification.length <= 0) {
+                throw new Error("Account doesn't exist or already registered")
+            } else {
+                // user otp record exists
+                const { expiresAt } = UserOTPVerificationRecords[0];
+                const hashedOTP = UserOTPVerificationRecords[0].otp;
+
+                if (expiresAt < Date.now()) {
+                    // expired
+                    await UserOTPVerification.deleteMany({ userId })
+                    throw new Error("Code has expired. Request again")
+                } else {
+                    const validOTP = await bcrypt.compare(otp, hashedOTP)
+
+                    if (!validOTP) {
+                        throw new Error("Invalid OTP")
+
+                    } else {
+                        await User.updateOne({ _id: userId }, { isVerified: true })
+                        await UserOTPVerification.deleteMany({ userId });
+                        res.json({
+                            status: "Success",
+                            message: "Email verified successfully"
+                        })
+                    }
+                }
+
+            }
+        }
+
+    } catch (error) {
+        console.log(error);
+        res.json({
+            status: "Failed",
+            message: error.message
+        })
+    }
+}
+
 
 export const verifyUser = async (req, res) => {
     try {
@@ -120,7 +170,6 @@ export const verifyUser = async (req, res) => {
         res.status(200).send({ message: "Email verified successfully" })
     } catch (error) {
         res.status(500).send({ message: "Internal Server Error" })
-        // console.log(error);
     }
 
 }

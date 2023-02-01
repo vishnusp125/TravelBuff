@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import PulseLoader from "react-spinners/PulseLoader";
 import {
   MDBCol,
   MDBContainer,
@@ -19,8 +20,16 @@ import { guideDetails } from '../../../axios/services/GuideServices';
 
 
 function GuideHome() {
+  const [loading, setLoading] = useState(false);
   const [details, setDetails] = useState([]);
   const [guideData, setGuideData] = useState([]);
+
+      useEffect(() => {
+        setLoading(true)
+        setTimeout(() => {
+            setLoading(false)
+        }, 500)
+    }, [])
 
 
   const navigate = useNavigate();
@@ -62,7 +71,21 @@ function GuideHome() {
   console.log("guideDatraaa", guideData);
 
   return (
-    <div>
+    <>
+
+    {
+                loading ?
+
+                    <PulseLoader
+                        color={"#551a8b"}
+                        loading={loading}
+                        style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+                        size={30}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                    />
+                    :
+                    <div>
       <NavbarGuide />
 
       <MDBContainer className="py-5">
@@ -143,7 +166,10 @@ function GuideHome() {
                     <MDBCardText>Description</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{guideData?.description}</MDBCardText>
+                    <MDBCardText className="text-muted">
+                    {/* {guideData?.description} */}
+                    {guideData && guideData.description ? guideData.description : "Please enter your description"}
+                    </MDBCardText>
                   </MDBCol>
                 </MDBRow>
               </MDBCardBody>
@@ -217,6 +243,8 @@ function GuideHome() {
         </MDBRow>
       </MDBContainer>
     </div>
+    }
+    </>
   )
 }
 

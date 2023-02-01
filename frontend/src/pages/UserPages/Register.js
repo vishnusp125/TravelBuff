@@ -42,6 +42,7 @@ function Register() {
     }
     if (email && password && firstName && lastName && confirmPassword && phone) {
       dispatch(register({ formValue, navigate, toast }))
+      // navigate(`/verification/${id}`)
     }
   };
 

@@ -50,7 +50,7 @@
             }
         }
         .homeCard{
-            width: 80%;
+            width: 50%;
             border-radius: 1rem;
             padding: 2rem;
             background: var(--whiteColor);
@@ -64,7 +64,6 @@
 
             .locationDiv, .distDiv, .priceDiv{
                 width: 100%;
-
                 label{
                     display: block;
                     color: var(--textColor);
@@ -74,7 +73,7 @@
                 }
 
                 input{
-                    width: 100%;
+                    width: 80%;
                     background: var(--inputColor);
                     border-radius: 10px;
                     border: none;
@@ -93,7 +92,7 @@
                 }
             }
             .btn{
-                width: 100%;
+                width: 70%;
                 padding: .6rem 1.5rem;
                 color: var(--whiteColor);
                 font-weight: 600;
@@ -140,7 +139,7 @@
         .secContainer{
             .homeCard{
                 bottom: -10%;
-                grid-template-columns: repeat(4,1fr);
+                grid-template-columns: repeat(3,1fr);
             }
         }
     }

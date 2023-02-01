@@ -14,6 +14,7 @@ import GuideLogin from './pages/GuidePages/SignIn/GuideLogin';
 import GuideHome from './pages/GuidePages/GuideHome/GuideHome';
 import AddPost from './pages/GuidePages/AddPost/AddPost';
 import GuideSinglePage from './pages/UserPages/GuideSinglepage/GuideSinglePage';
+import OTPVerification from './pages/UserPages/OTPVerification/OTPVerification';
 
 
 function App() {
@@ -34,8 +35,10 @@ function App() {
         <Route exact path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/verification/:id' element={<OTPVerification />} />
         <Route path='/guideList' element={<GuideList/>} />
         <Route path='/guideSingle/:id' element={<GuideSinglePage/>} />
+
 
         <Route path="/admin" element={<AdminHome />}/>
         <Route path="/adminLogin" element={<AdminLogin />}/>
