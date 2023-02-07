@@ -4,16 +4,17 @@ import User from '../models/user.js';
 import UserOTPVerification from '../models/UserOTPVerification.js';
 import Guides from '../models/guide.js';
 import Token from '../models/token.js';
+import { v4 as uuidv4 } from 'uuid';
+import Booking from '../models/booking.js'
 import { sendEmail } from '../utils/sendEmail.js'
 import crypto from 'crypto';
 import nodemailer from 'nodemailer'
 import dotenv from 'dotenv'
-import { log } from 'console';
+import moment from 'moment'
+import Stripe from 'stripe';
 
 dotenv.config();
-
-
-const secret = "test";
+const stripe = new Stripe(process.env.STRIPE_KEY);
 
 let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
@@ -140,10 +141,8 @@ export const verifyOtp = async (req, res) => {
                         })
                     }
                 }
-
             }
         }
-
     } catch (error) {
         console.log(error);
         res.json({
@@ -153,12 +152,10 @@ export const verifyOtp = async (req, res) => {
     }
 }
 
-
 export const verifyUser = async (req, res) => {
     try {
         const user = await User.findOne({ _id: req.params.id })
         if (!user) return res.status(400).send({ message: "Invalid Link" });
-
         const token = await Token.findOne({
             userId: user._id,
             token: req.params.token
@@ -171,7 +168,6 @@ export const verifyUser = async (req, res) => {
     } catch (error) {
         res.status(500).send({ message: "Internal Server Error" })
     }
-
 }
 
 
@@ -187,7 +183,7 @@ export const signin = async (req, res) => {
 
         if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" });
 
-        const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, { expiresIn: "1h" })
+        const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, process.env.JWTSECRET, { expiresIn: "3h" })
 
         res.status(200).json({ result: oldUser, token })
     } catch (error) {
@@ -204,7 +200,6 @@ export const getGuides = async (req, res) => {
     } catch (error) {
         res.status(404).json({ message: "Something went wrong" })
     }
-
 }
 
 export const guideSingle = async (req, res) => {
@@ -213,7 +208,115 @@ export const guideSingle = async (req, res) => {
         const guide = await Guides.findById({ _id: guideId })
         res.status(200).json(guide)
     } catch (err) {
-
+        console.log(err);
     }
 }
+function toPascalCase(string) {
+    return string
+        .split(" ")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join("");
+}
+
+export const guideSearch = async (req, res) => {
+    try {
+        const location = toPascalCase(req.query.location);
+        const result = await Guides.find({ location, isVerified: true })
+        if (result.length === 0) {
+            res.send({ error: "No guides found for the location" });
+        } else {
+            res.status(200).send(result);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const guideBooking = async (req, res) => {
+
+    try {
+        const { username, guidedetails, userid, fromDate, toDate, totalAmount, totalDays, token } = req.body.bookingDetails;
+        const customer = await stripe.customers.create({
+            email: token.email,
+            source: token.id
+        })
+
+        const payment = await stripe.charges.create(
+            {
+                amount: totalAmount,
+                customer: customer.id,
+                currency: "inr",
+                receipt_email: token.email
+            }, {
+            idempotencyKey: uuidv4()
+        }
+        )
+        if (payment) {
+            const newBooking = new Booking({
+                username,
+                guidename: guidedetails.name,
+                guideid: guidedetails._id,
+                location: guidedetails.location,
+                userid,
+                fromDate: moment(fromDate).format('DD-MM-YYYY'),
+                toDate: moment(toDate).format('DD-MM-YYYY'),
+                totalAmount,
+                totalDays,
+                transactionId: "1234"
+            })
+            const booking = await newBooking.save()
+
+            const guideBooking = await Guides.findOne({ _id: guidedetails._id });
+            guideBooking.bookings.push({
+                bookingid: booking._id,
+                fromDate: moment(fromDate).format('DD-MM-YYYY'),
+                toDate: moment(toDate).format('DD-MM-YYYY'),
+                userid: userid,
+                status: booking.status
+            });
+
+            await guideBooking.save()
+        }
+        res.status(200).send("Payment Successfull")
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({ error })
+    }
+
+    // try {
+    //     const newBooking = new Booking({
+    //         username,
+    //         guidename: guidedetails.name,
+    //         guideid: guidedetails._id,
+    //         location: guidedetails.location,
+    //         userid,
+    //         fromDate: moment(fromDate).format('DD-MM-YYYY'),
+    //         toDate: moment(toDate).format('DD-MM-YYYY'),
+    //         totalAmount,
+    //         totalDays,
+    //         transactionId: "1234"
+    //     })
+    //     const booking = await newBooking.save()
+
+    //     const guideBooking = await Guides.findOne({ _id: guidedetails._id });
+    //     guideBooking.bookings.push({
+    //         bookingid: booking._id,
+    //         fromDate: moment(fromDate).format('DD-MM-YYYY'),
+    //         toDate: moment(toDate).format('DD-MM-YYYY'),
+    //         userid: userid,
+    //         status: booking.status
+    //     });
+
+    //     await guideBooking.save()
+
+    //     // res.status(200).send("Booking Successfull")
+    // } catch (error) {
+    //     console.log(error);
+    //     return res.status(400).json({ error })
+    // }
+}
+
+
+
+
 

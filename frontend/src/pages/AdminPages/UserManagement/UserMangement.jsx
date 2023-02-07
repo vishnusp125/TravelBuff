@@ -10,10 +10,10 @@ function UserManagement() {
   const [details, setDetails] = useState([]);
 
   useEffect(() => {
-    const token = localStorage.getItem('admin');
+    const jwtToken = JSON.parse(localStorage.getItem('admin')).token
     fetchData();
     async function fetchData() {
-      const data = await getUserInfo(token);
+      const data = await getUserInfo(jwtToken); 
       setDetails(data);
     }
   }, []);

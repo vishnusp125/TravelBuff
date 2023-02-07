@@ -12,7 +12,7 @@
 
 .home {
     height: 80vh;
-    background:url('../../../assets//images//cover.webp');
+    background: url('../../../assets//images//cover.webp');
     // linear-gradient(rgba(33, 33, 33, 0.522), rgba(33, 33, 33, 0.522))
     background-position: center;
     background-size: cover;
@@ -49,7 +49,8 @@
                 padding: .6rem 1.5rem;
             }
         }
-        .homeCard{
+
+        .homeCard {
             width: 50%;
             border-radius: 1rem;
             padding: 2rem;
@@ -60,11 +61,14 @@
             bottom: -35%;
             transform: translate(-50%);
             left: 50%;
-            box-shadow: 0 2px 8px 4px rgba(178,178,178,0.45);
+            box-shadow: 0 2px 8px 4px rgba(178, 178, 178, 0.45);
 
-            .locationDiv, .distDiv, .priceDiv{
+            .locationDiv,
+            .distDiv,
+            .priceDiv {
                 width: 100%;
-                label{
+
+                label {
                     display: block;
                     color: var(--textColor);
                     font-weight: 500;
@@ -72,26 +76,28 @@
                     padding-bottom: .4rem;
                 }
 
-                input{
+                input {
                     width: 80%;
                     background: var(--inputColor);
                     border-radius: 10px;
-                    border: none;
+                    border: none;   
                     padding: 10px;
                     font-size: 13px;
                     font-weight: 500;
 
-                    &::placeholder{
+                    &::placeholder {
                         font-size: 13px;
                         opacity: .5;
                         font-weight: 400;
                     }
-                    &:focus{
+
+                    &:focus {
                         outline: none;
                     }
                 }
             }
-            .btn{
+
+            .btn {
                 width: 70%;
                 padding: .6rem 1.5rem;
                 color: var(--whiteColor);
@@ -105,13 +111,14 @@
 // media queries
 
 @media screen and (min-width:480px) {
-    .home{
-        .secContainer{
-            .homeCard{
+    .home {
+        .secContainer {
+            .homeCard {
                 bottom: -100px;
-                width: 90%;
-                grid-template-columns: repeat(2,1fr);
-                .btn{
+                width: 50%;
+                grid-template-columns: repeat (1,1fr);
+
+                .btn {
                     transform: translateY(15px);
                 }
             }
@@ -120,62 +127,63 @@
 }
 
 @media screen and (min-width:556px) {
-    .home{
-        .secContainer{
-            .homeText{
-                .title{
+    .home {
+        .secContainer {
+            .homeText {
+                .title {
                     font-size: 2.5rem;
                 }
-                .subTitle{
+
+                .subTitle {
                     font-size: 18px;
                 }
-            }  
+            }
         }
     }
 }
 
 @media screen and (min-width:720px) {
-    .home{
-        .secContainer{
-            .homeCard{
+    .home {
+        .secContainer {
+            .homeCard {
                 bottom: -10%;
-                grid-template-columns: repeat(3,1fr);
+                grid-template-columns: repeat(1, 1fr);
             }
         }
     }
 }
 
 @media screen and (min-width:720px) {
-   .home{
-    .secContainer{
-        .homeText{
-            padding: 1rem 10rem;
+    .home {
+        .secContainer {
+            .homeText {
+                padding: 1rem 10rem;
 
-            .title{
-                font-size: 3.5rem;
-                margin: auto;
-                line-height: 4rem;
-            }
-            .subTitle{
-                width: 70%;
+                .title {
+                    font-size: 3.5rem;
+                    margin: auto;
+                    line-height: 4rem;
+                }
+
+                .subTitle {
+                    width: 70%;
+                }
             }
         }
     }
-   }
 }
 
 @media screen and (min-width:1024px) {
-    .home{
-        .secContainer{
-            .homeText{
-                .subTitle{
+    .home {
+        .secContainer {
+            .homeText {
+                .subTitle {
                     font-size: 20px;
                 }
             }
-            .homeCard{
-                width: 70%;
-
+            .homeCard {
+                width: 30%;
             }
         }
     }
- }
+}

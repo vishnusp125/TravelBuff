@@ -53,7 +53,7 @@ export const Guidesignup = async (req, res) => {
                 location: values.location,
             });
 
-            const token = jwt.sign({ email: result.email, id: result._id }, secret, { expiresIn: "1h" });
+            const token = jwt.sign({ email: result.email, id: result._id }, process.env.GUIDE_JWTSECRET, { expiresIn: "1h" });
             console.log('signup success');
             res.status(201).json({ status: 'success' })
         }

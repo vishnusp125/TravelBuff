@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import PulseLoader from "react-spinners/PulseLoader";
 import './userpage.css'
 import Cover from '../../Components/UserComponents/Cover/Cover'
 import Navbar from '../../Components/UserComponents/Navbar/Navbar'
@@ -11,39 +12,51 @@ import { useNavigate } from 'react-router-dom';
 
 
 function Home() {
+  const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   if(window.localStorage.getItem("profile")){
-  //     useNavi
+  useEffect(() => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+    }, 500)
+  }, [])
 
-  //   }
-  // })
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('profile');
-    if (token) {
-      // const user = jwt(token);
-      // console.log('iam here');
-      // console.log(user);
-      // console.log(token);
-      // if (user) {
-        navigate('/');
-      // }
+    const jwtToken = JSON.parse(localStorage.getItem('profile')).token
+   
+    if (jwtToken) {
+      navigate('/');
     } else {
       navigate('/login');
     }
-  }, [navigate]);
+  }, []);
   return (
-    <div>
-      <Navbar />
-      <Cover />
-      <Popular />
-      <PopularGuides 
-      heading="Popular Guides"  subheading="Most rated Guides"/>
-      <TravelTips />
-      <Footer/>
-    </div>
+    <>
+      {
+        loading ?
+
+          <PulseLoader
+            color={"#551a8b"}
+            loading={loading}
+            style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+            size={30}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+          :
+          <div>
+            <Navbar />
+            <Cover />
+            <Popular />
+            <PopularGuides
+              heading="Popular Guides" subheading="Most rated Guides" />
+            <TravelTips />
+            <Footer />
+          </div>
+      }
+    </>
   )
 }
 

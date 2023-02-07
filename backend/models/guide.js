@@ -57,6 +57,9 @@ const guideSchema = new Schema({
     languages: {
         type: [String],
     },
+    bookings: [],
+}, {
+    timestamps: true
 });
 
 export default mongoose.model('Guide', guideSchema);

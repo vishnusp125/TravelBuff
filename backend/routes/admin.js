@@ -1,14 +1,14 @@
 import express from 'express';
-const router = express.Router();
-
+import { adminProtect } from '../middleware/authMiddleware.js';
 import { Adminsignin, Adminsignup, approveGuide, blockGuide, blockUser,
-         getAllGuides, getAllUsers,unblockGuide,unblockUser, verifyGuide, 
-         } from '../controllers/admin.js'
+    getAllGuides, getAllUsers,unblockGuide,unblockUser, verifyGuide, 
+} from '../controllers/admin.js'
+const router = express.Router();
 
 router.post('/adminsignup', Adminsignup);
 router.post('/adminsignin', Adminsignin);
 
-router.get('/users', getAllUsers);
+router.get('/users',adminProtect,getAllUsers);
 router.get('/blockUser/:id', blockUser);
 router.get('/unblockUser/:id', unblockUser);
 

@@ -3,8 +3,12 @@ import jwt from 'jsonwebtoken';
 import AdminModel from '../models/admin.js';
 import Users from '../models/user.js';
 import Guides from '../models/guide.js';
+import dotenv from 'dotenv'
 
-const secret = "testadmin";
+
+dotenv.config();
+
+
 
 export const Adminsignup = async (req, res) => {
     const { email, password} = req.body;
@@ -23,7 +27,7 @@ export const Adminsignup = async (req, res) => {
             password: hashedPassword,
         });
 
-        const token = jwt.sign({ email: result.email, id: result._id }, secret, { expiresIn: "1h" });
+        const token = jwt.sign({ email: result.email, id: result._id }, process.env.ADMIN_JWTSECRET, { expiresIn: "1h" });
         res.status(201).json({ result, token })
     } catch (error) {
         res.status(500).json({ message: "Something went wrong" });
@@ -45,7 +49,7 @@ export const Adminsignin = async (req, res) => {
         if (!isPasswordCorrect) 
         return res.status(400).json({ message: "Invalid credentials" });
 
-        const token = jwt.sign({ email: oldAdmin.email, id: oldAdmin._id }, secret, { expiresIn: "1h" })
+        const token = jwt.sign({ email: oldAdmin.email, id: oldAdmin._id }, process.env.ADMIN_JWTSECRET, { expiresIn: "1h" })
         res.status(200).json({ result: oldAdmin._id, token })
     } catch (error) {   
         console.log('in error');

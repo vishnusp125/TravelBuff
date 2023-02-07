@@ -57,17 +57,23 @@
   left: 50%;
   box-shadow: 0 2px 8px 4px rgba(178, 178, 178, 0.45);
 }
-.home .secContainer .homeCard .locationDiv, .home .secContainer .homeCard .distDiv, .home .secContainer .homeCard .priceDiv {
+.home .secContainer .homeCard .locationDiv,
+.home .secContainer .homeCard .distDiv,
+.home .secContainer .homeCard .priceDiv {
   width: 100%;
 }
-.home .secContainer .homeCard .locationDiv label, .home .secContainer .homeCard .distDiv label, .home .secContainer .homeCard .priceDiv label {
+.home .secContainer .homeCard .locationDiv label,
+.home .secContainer .homeCard .distDiv label,
+.home .secContainer .homeCard .priceDiv label {
   display: block;
   color: var(--textColor);
   font-weight: 500;
   font-size: 13px;
   padding-bottom: 0.4rem;
 }
-.home .secContainer .homeCard .locationDiv input, .home .secContainer .homeCard .distDiv input, .home .secContainer .homeCard .priceDiv input {
+.home .secContainer .homeCard .locationDiv input,
+.home .secContainer .homeCard .distDiv input,
+.home .secContainer .homeCard .priceDiv input {
   width: 80%;
   background: var(--inputColor);
   border-radius: 10px;
@@ -86,12 +92,16 @@
   opacity: 0.5;
   font-weight: 400;
 }
-.home .secContainer .homeCard .locationDiv input::placeholder, .home .secContainer .homeCard .distDiv input::placeholder, .home .secContainer .homeCard .priceDiv input::placeholder {
+.home .secContainer .homeCard .locationDiv input::placeholder,
+.home .secContainer .homeCard .distDiv input::placeholder,
+.home .secContainer .homeCard .priceDiv input::placeholder {
   font-size: 13px;
   opacity: 0.5;
   font-weight: 400;
 }
-.home .secContainer .homeCard .locationDiv input:focus, .home .secContainer .homeCard .distDiv input:focus, .home .secContainer .homeCard .priceDiv input:focus {
+.home .secContainer .homeCard .locationDiv input:focus,
+.home .secContainer .homeCard .distDiv input:focus,
+.home .secContainer .homeCard .priceDiv input:focus {
   outline: none;
 }
 .home .secContainer .homeCard .btn {
@@ -104,8 +114,8 @@
 @media screen and (min-width: 480px) {
   .home .secContainer .homeCard {
     bottom: -100px;
-    width: 90%;
-    grid-template-columns: repeat(2, 1fr);
+    width: 50%;
+    grid-template-columns: repeat 1, 1fr;
   }
   .home .secContainer .homeCard .btn {
     transform: translateY(15px);
@@ -122,7 +132,7 @@
 @media screen and (min-width: 720px) {
   .home .secContainer .homeCard {
     bottom: -10%;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 @media screen and (min-width: 720px) {
@@ -143,6 +153,6 @@
     font-size: 20px;
   }
   .home .secContainer .homeCard {
-    width: 70%;
+    width: 30%;
   }
 }/*# sourceMappingURL=cover.css.map */

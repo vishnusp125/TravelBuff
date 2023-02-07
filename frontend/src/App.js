@@ -15,6 +15,8 @@ import GuideHome from './pages/GuidePages/GuideHome/GuideHome';
 import AddPost from './pages/GuidePages/AddPost/AddPost';
 import GuideSinglePage from './pages/UserPages/GuideSinglepage/GuideSinglePage';
 import OTPVerification from './pages/UserPages/OTPVerification/OTPVerification';
+import GuideSearch from './pages/UserPages/GuideSearch/GuideSearch';
+import BookingPage from './pages/UserPages/BookingPage/BookingPage';
 
 
 function App() {
@@ -38,6 +40,9 @@ function App() {
         <Route path='/verification/:id' element={<OTPVerification />} />
         <Route path='/guideList' element={<GuideList/>} />
         <Route path='/guideSingle/:id' element={<GuideSinglePage/>} />
+        <Route path='/guideSearch/:id' element={<GuideSearch/>} />
+        <Route path='/bookingPage/:id/:from/:to' element={<BookingPage/>} />
+
 
 
         <Route path="/admin" element={<AdminHome />}/>

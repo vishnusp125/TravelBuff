@@ -31,12 +31,12 @@ export const register = createAsyncThunk("auth/register",
   })
 
 
-export const getGuides = async () => {
+export const getGuides = async (token) => {
 
   const config = {
     headers: {
       Accept: 'application/json',
-      Authorization: 'Bearer ',
+      Authorization: 'Bearer ' + token,
       'Content-Type': 'application/json',
     },
   };
@@ -47,11 +47,11 @@ export const getGuides = async () => {
   }
 };
 
-export const guideSingle = async (id) => {
+export const guideSingle = async (id, token) => {
   const config = {
     headers: {
       Accept: 'application/json',
-      Authorization: 'Bearer ',
+      Authorization: 'Bearer ' + token,
       'Content-Type': 'application/json',
     },
   };
@@ -80,6 +80,46 @@ export const verifyOtp = async (otp, id) => {
     return data;
   }
 }
+
+export const guideSearch = async (location) => {
+
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ',
+      'Content-Type': 'application/json',
+    },
+  };
+  try {
+    const response = await axiosUserInstance.get(`/guideSearch?location=${location}`, config);
+    if (response.data) {
+      // navigate('/guideList')
+      return response.data;
+    }
+  } catch (error) {
+    return error.response.data.error;
+  }
+}
+
+export const guideBooking = async (bookingDetails) => {
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ',
+      'Content-Type': 'application/json',
+    },
+  };
+  try {
+    const response = await axiosUserInstance.post('/guideBooking',{config,bookingDetails});
+    if (response.data) {
+      return response.data;
+    }
+  } catch (error) {
+    return error;
+  }
+}
+
+
 
 
 

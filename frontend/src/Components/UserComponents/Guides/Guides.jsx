@@ -1,24 +1,80 @@
 import React, { useEffect, useState } from 'react'
-import { MdLocationOn } from 'react-icons/md'
-import { BsArrowRightShort } from 'react-icons/bs'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { getGuides } from '../../../axios/services/UserServices'
+// import SearchFilter from '../SearchFilter/SearchFilter'
+import { MDBCard, MDBCardBody, MDBInput } from 'mdb-react-ui-kit'
+// import { DatePicker, Space } from 'antd'
+// import moment from 'moment';
+import GuideCard from '../GuideCard/GuideCard'
+import { height } from '@mui/system'
+// const { RangePicker } = DatePicker;
 
 function Guides() {
 
     const [details, setDetails] = useState([])
-    const navigate = useNavigate();
+    const [query, setQuery] = useState("")
 
-
+    const jwtToken = JSON.parse(localStorage.getItem('profile')).token
     async function fetchData() {
-        const data = await getGuides()
+        const data = await getGuides(jwtToken)
         setDetails(data);
     }
-
     useEffect(() => {
         fetchData();
     }, [])
+    const search = (details) => {
+        return details.filter((item) => item.location.toLowerCase().includes(query.toLowerCase()))
+    }
 
+    // const [fromDate, setfromDate] = useState()
+    // const [toDate, settoDate] = useState()
+    // const [filterGuide, setFilterGuide] = useState([])
+
+
+    // useEffect(() => {
+    //     setFilterGuide(details);
+    // }, []);
+
+    // const disabledDate = current => {
+    //     // Disable all days that are earlier than today
+    //     return current && current < moment().endOf('day');
+    // };
+    // console.log("in filter",details)
+
+    // function filterByDates(dates) {
+    //     setfromDate(dates[0].format("DD-MM-YYYY"))
+    //     settoDate(dates[1].format("DD-MM-YYYY"))
+
+    //     var tempguides = []
+    //     // console.log(tempguides)
+    //     var availability = false;
+
+    //     for (const details of filterGuide) {
+    //         if (details.bookings.length > 0) {
+    //             for (const booking of details.bookings) {
+
+    //                 if (!moment(dates[0].format("DD-MM-YYYY")).isBetween(booking.fromDate, booking.toDate) &&
+    //                     moment(dates[1].format("DD-MM-YYYY")).isBetween(booking.fromDate, booking.toDate)
+    //                 ) {
+
+    //                     if (
+    //                         (dates[0]).format("DD-MM-YYYY") !== booking.fromDate &&
+    //                         (dates[0]).format("DD-MM-YYYY") !== booking.toDate &&
+    //                         (dates[1]).format("DD-MM-YYYY") !== booking.fromDate &&
+    //                         (dates[1]).format("DD-MM-YYYY") !== booking.toDate
+    //                     ) {
+    //                         availability = true;
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //         if (availability === true || details.bookings.length === 0) {
+    //             tempguides.push(details)
+    //             // setFilterGuide([...filterGuide, details])
+    //         }
+    //         setDetails(tempguides)
+    //     }
+    // }
 
     return (
         <div>
@@ -32,62 +88,22 @@ function Guides() {
                             Find your guides !!!
                         </p>
                     </div>
-                    <div className="mainContent grid">
-                        {
-                            details.map(({ _id, image, name, location, price, activities }) => {
-                                return (
-                                    <div className="singleOffer" key={_id}>
-                                        <div className="destImage">
-                                            <img src={image} alt="images" />
-                                            {/* <span className="discount">
-                                30% off
-                            </span> */}
-                                        </div>
-                                        <div className="offerBody">
-                                            <div className="price flex">
-                                                <h4>
-                                                    Rs. {price}/D
-                                                </h4>
-                                                <h4>
-                                                    {name}
-                                                </h4>
-                                                <span className="status">
-                                                    Available
-                                                </span>
-                                            </div>
-
-                                            <div className="amenities flex">
-                                                {activities?.slice(0, 3).map((activity, index) => {
-                                                    return (
-                                                        <div key={index} className="singleAmenity flex">
-                                                            <small>{activity}</small>
-                                                        </div>
-                                                    )
-                                                })
-                                                }
-                                            </div>
-
-                                            <div className="location flex">
-                                                <MdLocationOn className='icon' />
-                                                <small>
-                                                    {location}
-                                                </small>
-                                            </div>
-
-                                            <button className='btn flex'>
-                                            <Link to={`/guideSingle/${_id}`}>
-                                                View Details
-                                                <BsArrowRightShort />
-                                                </Link>
-                                            </button>
-                                        </div>
+                    <div style={{ display: 'flex', justifyContent: 'center' }} className="mb-5">
+                        <MDBCard style={{ width: '55%' }}>
+                            <MDBCardBody>
+                                <div style={{ display: "flex" }}>
+                                    <div>
+                                        <p className='text-dark mx-4 mt-1'>Enter your location to search</p>
                                     </div>
-                                )
-                            })
-                        }
+                                    <div>
+                                        <MDBInput label='Location' id='form1' type='text' onChange={e => setQuery(e.target.value)} />
+                                    </div>
+                                </div>
+                            </MDBCardBody>
+                        </MDBCard>
                     </div>
+                    <GuideCard guide={search(details)} />
                 </div>
-
             </section>
         </div>
     )

@@ -140,7 +140,7 @@ input {
   .secIntro,
   .secTitle {
     line-height: 2rem;
-    padding-bottom: 1rem;
+    /* padding-bottom: 1rem; */
     font-size: 2, 2rem;
   }
 
