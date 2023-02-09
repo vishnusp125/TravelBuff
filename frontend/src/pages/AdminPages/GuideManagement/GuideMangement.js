@@ -48,6 +48,12 @@ function GuideMangement() {
 
       const columns = [
         {
+          name: "No",
+          selector: (row, i) => i + 1,
+          width: "60px"
+    
+        },
+        {
           name: 'Name',
           selector: (row) => row.name,
         },
@@ -96,14 +102,12 @@ function GuideMangement() {
 
   return (
     <div>
-        <h1 style={{ marginLeft: "300px"}}>Guides Management</h1>
+        <h1 style={{color:"black"}} className='text-center m-5'>Guides Management</h1>
       <DataTable
         columns={columns}
         data ={details}
         fixedHeader
         fixedHeaderScrollHeight="500px"
-        // selectableRows
-        // selectableRowsHighlight
         highlightOnHover
         pagination 
       />

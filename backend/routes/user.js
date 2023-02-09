@@ -1,18 +1,23 @@
 import express from 'express';
 const router = express.Router();
-
-import { signup,signin, getGuides, guideSingle, verifyOtp, guideSearch, guideBooking } from '../controllers/user.js'
-import { protect } from '../middleware/authMiddleware.js';
+import {
+    signup, signin, getGuides, guideSingle, verifyOtp, guideSearch,
+    guideBooking, verifyPayment, getAllBookings, resentOtp   
+} from '../controllers/user.js'    
+import { protect } from '../middleware/authMiddleware.js';   
 
 router.post('/signup', signup);
-router.post('/verifyOtp',verifyOtp)
+router.post('/verifyOtp', verifyOtp)
 router.post('/signin', signin);
 router.get('/getGuides', getGuides);
-router.get('/guideSingle/:id',protect, guideSingle);  
-router.get('/guideSearch',guideSearch)
-router.post('/guideBooking',guideBooking)
+router.get('/guideSingle/:id', protect, guideSingle);
+router.get('/guideSearch', guideSearch)
+router.post('/guideBooking', guideBooking)
+router.post('/verifyPayment', verifyPayment)
+router.get('/getAllBookings/:id', getAllBookings)
+router.post('/resentOtp', resentOtp)
 
-
+resentOtp
 
 
 export default router;

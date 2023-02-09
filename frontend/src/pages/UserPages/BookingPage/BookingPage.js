@@ -1,13 +1,16 @@
 import { MDBCard, MDBCardBody, MDBCardImage, MDBCardText, MDBCardTitle, MDBCol, MDBRow } from 'mdb-react-ui-kit'
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
-import { guideBooking, guideSingle } from '../../../axios/services/UserServices';
+import React, { useCallback, useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { guideBooking, guideSingle, orderVerifyPayment } from '../../../axios/services/UserServices';
 import Navbar from '../../../Components/UserComponents/Navbar/Navbar'
 import moment from 'moment';
-import StripeCheckout from 'react-stripe-checkout';
+import useRazorpay from 'react-razorpay';
 import Footer from '../../../Components/UserComponents/Footer/Footer';
 
 function BookingPage() {
+    const navigate = useNavigate();
     const { id } = useParams();
     const { from } = useParams();
     const { to } = useParams();
@@ -20,7 +23,6 @@ function BookingPage() {
         guideDetails()
     }, [])
 
-
     const toDate = moment(to, "DD-MM-YYYY")
     const fromDate = moment(from, "DD-MM-YYYY")
     const totalDays = moment.duration(toDate.diff(fromDate)).asDays() + 1;
@@ -31,27 +33,9 @@ function BookingPage() {
     const [guidedetails, setGuideDetails] = useState()
     const totalAmount = totalDays * guidedetails?.price
 
-    async function bookGuide() {
-        const bookingDetails = {
-            username,
-            guidedetails,
-            userid,
-            fromDate,
-            toDate,
-            totalAmount,
-            totalDays
-        }
-        try {
-            const result = await guideBooking(bookingDetails)
+    const Razorpay = useRazorpay();
 
-        } catch {
-
-        }
-
-    }
-
-    async function onToken(token) {
-        console.log(token);
+    const doPayment = useCallback(async () => {
         const bookingDetails = {
             username,
             guidedetails,
@@ -60,22 +44,67 @@ function BookingPage() {
             toDate,
             totalAmount,
             totalDays,
-            token
         }
+
         try {
-            const result = await guideBooking(bookingDetails)
 
+            const result = await guideBooking(bookingDetails, jwtToken)
+            const options = {
+                key: 'rzp_test_BBlNJOeGGPkzYf',
+                amount: result.order.amount,
+                currency: 'INR',
+                name: 'TravelBuff',
+                description: 'Test Transaction',
+                image: 'https://example.com/your_logo',
+                order_id: result.order.id,
+                handler: (res) => {
+                    verifyPayment(res, result.order);
+                },
+                prefill: {
+                    name: 'Piyush Garg',
+                    email: 'youremail@example.com',
+                    contact: '9999999999',
+                },
+                notes: {
+                    address: 'Razorpay Corporate Office',
+                },
+                theme: {
+                    color: '#551a8b',
+                },
+            };
+
+            const rzpay = new Razorpay(options);
+            rzpay.open();
+            async function verifyPayment(res, order) {
+                const verification = await orderVerifyPayment(jwtToken, res, order);
+                if (verification.status) {
+                    toast.success("Booking Successfull !!!")
+                    navigate('/bookings');
+                } else {
+                    toast.error("Payment failed please try again")
+                }
+            }
         } catch (error) {
-            console.log(error);
+            console.log(error)
         }
-    }
-
+    }, [
+        Razorpay,
+        fromDate,
+        guidedetails,
+        toDate,
+        totalAmount,
+        totalDays,
+        userid,
+        username,
+        navigate,
+        jwtToken
+    ])
     return (
         <div >
             <div style={{ height: "100px" }}>
                 <Navbar />
             </div>
-            <MDBCard style={{}} className="m-5">
+            <MDBCard className="m-5">
                 <MDBRow className='g-0'>
                     <MDBCol md='4'>
                         <MDBCardImage style={{ height: "200px", width: "150px" }} className="mx-5 my-5" src={guidedetails?.image} alt='...' fluid />
@@ -98,15 +127,7 @@ function BookingPage() {
                                 <b><p className='text-dark'>Total Amount: Rs.{totalAmount}/-</p></b>
                             </div>
                             <div style={{ float: "right" }}>
-
-                                <StripeCheckout
-                                    token={onToken}
-                                    amount={totalAmount}
-                                    currency="INR"
-                                    stripeKey="pk_test_51MYixKSFRPUBWQdzfRc2ZuER1DJa7as4V5b1Yk76nA6E117owWRR5EvhSGh1m0G0Fc612qaDtHmIZFBl9RhzVkcl00iG2mLcjI"
-                                >
-                                    <button className="btn btn-outline-dark mb-4">Pay Now</button>
-                                </StripeCheckout>
+                                <button className="btn btn-outline-dark mb-4" onClick={doPayment}>Pay Now</button>
                             </div>
                         </MDBCardBody>
                     </MDBCol>

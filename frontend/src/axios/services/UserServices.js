@@ -101,16 +101,16 @@ export const guideSearch = async (location) => {
   }
 }
 
-export const guideBooking = async (bookingDetails) => {
+export const guideBooking = async (bookingDetails, token) => {
   const config = {
     headers: {
       Accept: 'application/json',
-      Authorization: 'Bearer ',
+      Authorization: 'Bearer ' + token,
       'Content-Type': 'application/json',
     },
   };
   try {
-    const response = await axiosUserInstance.post('/guideBooking',{config,bookingDetails});
+    const response = await axiosUserInstance.post('/guideBooking', { config, bookingDetails });
     if (response.data) {
       return response.data;
     }
@@ -118,6 +118,66 @@ export const guideBooking = async (bookingDetails) => {
     return error;
   }
 }
+
+export const orderVerifyPayment = async (token, res, order) => {
+
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+
+  try {
+    const value = {}
+    value.res = res;
+    value.order = order;
+    const { data } = await axiosUserInstance.post('/verifyPayment', value, config);
+    if (data) {
+      console.log("orderverify axios", data)
+      return data;
+    }
+  } catch (error) {
+    return error;
+  }
+}
+
+export const getAllBookings = async (id, token) => {
+
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const { data } = await axiosUserInstance.get(`/getAllBookings/${id}`, config);
+  if (data) {
+    return data;
+  }
+
+}
+
+export const resendOTP = async (values) => {
+
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ',
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const { data } = await axiosUserInstance.post('/resentOtp', {values, config})
+  if (data) {
+    return data
+  }
+
+}
+
+
 
 
 

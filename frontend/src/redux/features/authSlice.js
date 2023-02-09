@@ -6,7 +6,7 @@ const authSlice = createSlice({
     name: "auth",
     initialState: {
         user: null,
-        error: "",
+        error: null,
         loading: false    
     },
     reducers:{
@@ -15,7 +15,8 @@ const authSlice = createSlice({
         },
         setLogout:(state, action) => {
             localStorage.removeItem("profile");
-            state.user = null;
+            state.user = null
+            state.error=null;
         },
     },
     extraReducers:{

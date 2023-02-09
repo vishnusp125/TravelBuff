@@ -1,40 +1,41 @@
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardTitle, MDBCol, MDBContainer, MDBInput, MDBNavbar, MDBNavbarBrand } from 'mdb-react-ui-kit'
 import React, { useEffect, useRef, useState } from 'react'
 import { SiYourtraveldottv } from 'react-icons/si'
-import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { verifyOtp } from '../../../axios/services/UserServices'
+import { resendOTP } from '../../../axios/services/UserServices'
 import Footer from '../../../Components/UserComponents/Footer/Footer'
 
 
-function OTPVerification() {
-
+function ResendOTP() {
     // const [details, setDetails] = useState("")
-    const [otp, setOtp] = useState('');
+    const [email, setEmail] = useState('');
     const formRef = useRef(null);
     const navigate = useNavigate()
 
     const { id } = useParams();
 
     const handleChange = (e) => {
-        setOtp(e.target.value);
+        setEmail(e.target.value);
     }
 
-    const otpPst = async (e) => {
+    const emailPost = async (e) => {
         e.preventDefault();
-        // const otpData = { otp, id };
-        console.log(otp);
-        console.log(id);
         try {
-            const response = await verifyOtp(otp, id);
+            const response = await resendOTP(email);
             console.log(response);
-            if (response.status==="Success") {
+            // console.log(response.message);
+            if  (response.status==="Pending") {
+                const id = response.data.userId;
+                console.log(id);
                 toast.success(response.message)
-                navigate('/login')
-            } else {
+                navigate(`/verification/${id}`)
+                formRef.current.reset()
+            }
+            else if(response.message) {
                 toast.error(response.message)
             }
-            formRef.current.reset()
+        
         } catch (error) {
             console.log(error);
         }
@@ -50,15 +51,15 @@ function OTPVerification() {
                     </MDBNavbarBrand>
                 </MDBContainer>
             </MDBNavbar>
-
+            
             <div className="h-100 d-flex justify-content-center align-items-center mt-4" style={{ minHeight: "600px" }}>
 
                 <MDBCol className='px-3' lg="4">
                     <MDBCard>
                         <MDBCardBody >
-                            <MDBCardTitle className="text-center m-4">Enter Your OTP</MDBCardTitle>
-                            <form ref={formRef} onSubmit={otpPst}>
-                                <MDBInput type={"number"} required label="Enter the OTP" onChange={handleChange} />
+                            <MDBCardTitle className="text-center m-4">Enter Your Email</MDBCardTitle>
+                            <form ref={formRef} onSubmit={emailPost}>
+                                <MDBInput type={"email"} required label="Enter the email" onChange={handleChange} />
                                 <div className='m-2 text-center'>
                                     <MDBBtn className='m-4'>Submit</MDBBtn>
                                 </div>
@@ -74,4 +75,4 @@ function OTPVerification() {
     )
 }
 
-export default OTPVerification
+export default ResendOTP

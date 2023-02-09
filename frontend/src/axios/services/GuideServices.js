@@ -111,9 +111,11 @@ export const guideDetails = async (token, id) => {
   };
 
   const { data } = await axiosGuideInstance.get(`/guideHome/${id}`, config);
-  // console.log(data);
   if (data) {
-    // console.log("at guideservices",data);
     return data;
   }
 };
+
+
+
+

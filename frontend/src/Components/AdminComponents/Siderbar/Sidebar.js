@@ -51,6 +51,7 @@ const Sidebar = ({setPage}) => {
               <div
                 className={selected === index ? "menuItem active" : "menuItem"}
                 key={index}
+                style={{color:"black"}}
                 onClick={() => {
                 setPage(item.page)
                 setSelected(index)}

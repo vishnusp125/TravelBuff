@@ -4,17 +4,16 @@ import User from '../models/user.js';
 import UserOTPVerification from '../models/UserOTPVerification.js';
 import Guides from '../models/guide.js';
 import Token from '../models/token.js';
-import { v4 as uuidv4 } from 'uuid';
 import Booking from '../models/booking.js'
-import { sendEmail } from '../utils/sendEmail.js'
+import Razorpay from 'razorpay'
 import crypto from 'crypto';
+import { sendEmail } from '../utils/sendEmail.js'
 import nodemailer from 'nodemailer'
 import dotenv from 'dotenv'
 import moment from 'moment'
-import Stripe from 'stripe';
+import { raw } from 'express';
 
 dotenv.config();
-const stripe = new Stripe(process.env.STRIPE_KEY);
 
 let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
@@ -178,6 +177,8 @@ export const signin = async (req, res) => {
         const oldUser = await User.findOne({ email })
         console.log("olduser", oldUser);
         if (!oldUser) return res.status(404).json({ message: "User doesn't exist" });
+        if (oldUser.isVerified===false) return res.status(404).json({ message: "User is not verified" });
+        if (oldUser.isBlocked) return res.status(404).json({ message: "You have been blocked by the admin" });
 
         const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
 
@@ -211,17 +212,12 @@ export const guideSingle = async (req, res) => {
         console.log(err);
     }
 }
-function toPascalCase(string) {
-    return string
-        .split(" ")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join("");
-}
 
 export const guideSearch = async (req, res) => {
     try {
-        const location = toPascalCase(req.query.location);
-        const result = await Guides.find({ location, isVerified: true })
+        const location = req.query.location;
+        const regex = new RegExp(location, "i"); // case-insensitive regex
+        const result = await Guides.find({ location: { $regex: regex }, isVerified: true });
         if (result.length === 0) {
             res.send({ error: "No guides found for the location" });
         } else {
@@ -230,91 +226,136 @@ export const guideSearch = async (req, res) => {
     } catch (error) {
         console.log(error);
     }
-}
+};
+
 
 export const guideBooking = async (req, res) => {
-
     try {
-        const { username, guidedetails, userid, fromDate, toDate, totalAmount, totalDays, token } = req.body.bookingDetails;
-        const customer = await stripe.customers.create({
-            email: token.email,
-            source: token.id
+        const { username, guidedetails, userid, fromDate, toDate, totalAmount, totalDays } = req.body.bookingDetails;
+        const newBooking = new Booking({
+            username,
+            guidename: guidedetails.name,
+            guideid: guidedetails._id,
+            location: guidedetails.location,
+            userid,
+            fromDate: moment(fromDate).format('DD-MM-YYYY'),
+            toDate: moment(toDate).format('DD-MM-YYYY'),
+            totalAmount,
+            totalDays,
         })
+        const booking = await newBooking.save()
 
-        const payment = await stripe.charges.create(
-            {
-                amount: totalAmount,
-                customer: customer.id,
-                currency: "inr",
-                receipt_email: token.email
-            }, {
-            idempotencyKey: uuidv4()
-        }
-        )
-        if (payment) {
-            const newBooking = new Booking({
-                username,
-                guidename: guidedetails.name,
-                guideid: guidedetails._id,
-                location: guidedetails.location,
-                userid,
-                fromDate: moment(fromDate).format('DD-MM-YYYY'),
-                toDate: moment(toDate).format('DD-MM-YYYY'),
-                totalAmount,
-                totalDays,
-                transactionId: "1234"
-            })
-            const booking = await newBooking.save()
-
-            const guideBooking = await Guides.findOne({ _id: guidedetails._id });
-            guideBooking.bookings.push({
-                bookingid: booking._id,
-                fromDate: moment(fromDate).format('DD-MM-YYYY'),
-                toDate: moment(toDate).format('DD-MM-YYYY'),
-                userid: userid,
-                status: booking.status
-            });
-
-            await guideBooking.save()
-        }
-        res.status(200).send("Payment Successfull")
+        const guideBooking = await Guides.findOne({ _id: guidedetails._id });
+        guideBooking.bookings.push({
+            bookingid: booking._id,
+            fromDate: moment(fromDate).format('DD-MM-YYYY'),
+            toDate: moment(toDate).format('DD-MM-YYYY'),
+            userid: userid,
+            status: booking.status
+        });
+        await guideBooking.save()
+        await generateRazorpay(booking._id, totalAmount, res)
     } catch (error) {
         console.log(error);
         return res.status(400).json({ error })
     }
-
-    // try {
-    //     const newBooking = new Booking({
-    //         username,
-    //         guidename: guidedetails.name,
-    //         guideid: guidedetails._id,
-    //         location: guidedetails.location,
-    //         userid,
-    //         fromDate: moment(fromDate).format('DD-MM-YYYY'),
-    //         toDate: moment(toDate).format('DD-MM-YYYY'),
-    //         totalAmount,
-    //         totalDays,
-    //         transactionId: "1234"
-    //     })
-    //     const booking = await newBooking.save()
-
-    //     const guideBooking = await Guides.findOne({ _id: guidedetails._id });
-    //     guideBooking.bookings.push({
-    //         bookingid: booking._id,
-    //         fromDate: moment(fromDate).format('DD-MM-YYYY'),
-    //         toDate: moment(toDate).format('DD-MM-YYYY'),
-    //         userid: userid,
-    //         status: booking.status
-    //     });
-
-    //     await guideBooking.save()
-
-    //     // res.status(200).send("Booking Successfull")
-    // } catch (error) {
-    //     console.log(error);
-    //     return res.status(400).json({ error })
-    // }
 }
+const instance = new Razorpay({
+    key_id: process.env.KEY_ID,
+    key_secret: process.env.KEY_SECRET,
+});
+
+const generateRazorpay = async (id, amount, res) => {
+    try {
+        instance.orders.create(
+            {
+                amount: amount * 100,
+                currency: "INR",
+                receipt: `${id}`
+            }, (err, order) => {
+                res.json({ status: true, order: order })
+            })
+    } catch (error) {
+        res.json({ status: "Failed", message: error.message })
+    }
+}
+
+export const verifyPayment = async (req, res) => {
+    try {
+        // Creating hmac object
+        let hmac = crypto.createHmac('sha256', process.env.KEY_SECRET)
+
+        //passing the data to be hashed
+        hmac.update(req.body.res.razorpay_order_id + "|" + req.body.res.razorpay_payment_id)
+        //creating the hmac in the required format
+        const generated_signature = hmac.digest('hex')
+
+        var response = { signatureIsValid: "false" }
+        if (generated_signature === req.body.res.razorpay_signature) {
+            response = { signatureIsValid: "true" }
+            console.log('signatureIsValid');
+            changeStatus(req.body.order, res)
+            // res.json(response)
+        } else {
+            res.send(response)
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const changeStatus = async (req, res) => {
+    try {
+        await Booking.findOneAndUpdate({ _id: req.receipt }, {
+            $set: {
+                status: "Booked"
+            }
+        })
+        res.json({ status: true, message: "Payment Successfull" })
+    } catch (error) {
+        console.log(error);
+        res.json({ error: "Payment failed" })
+    }
+}
+
+
+export const getAllBookings = async (req, res) => {
+    try {
+        const userid = req.params.id
+        const bookings = await Booking.find({ userid })
+        res.status(200).send(bookings)
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+export const resentOtp = async (req, res) => {
+    try {
+        const email = req.body.values;
+        const user = await User.findOne({ email })
+        if (!user) {
+            return res.json({ message: "User doesn't exist" })
+        }
+        if (user.isVerified === true) {
+
+            return res.json({ message: "User already verified please Login" })
+        }
+
+        const userid = user._id
+
+        await UserOTPVerification.deleteMany({userid})
+        sendOTPVerificationEmail(user, res)
+    
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+
+
+
 
 
 

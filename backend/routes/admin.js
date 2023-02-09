@@ -1,6 +1,7 @@
 import express from 'express';
 import { adminProtect } from '../middleware/authMiddleware.js';
 import { Adminsignin, Adminsignup, approveGuide, blockGuide, blockUser,
+    getAllBookings,
     getAllGuides, getAllUsers,unblockGuide,unblockUser, verifyGuide, 
 } from '../controllers/admin.js'
 const router = express.Router();
@@ -15,8 +16,9 @@ router.get('/unblockUser/:id', unblockUser);
 router.get('/guides', getAllGuides);
 router.get('/blockGuides/:id', blockGuide);
 router.get('/unblockGuides/:id', unblockGuide);
-router.get('/approveGuides', approveGuide);
+router.get('/approveGuides', approveGuide); 
 router.get('/verifyGuides/:id', verifyGuide);
+router.get('/getAllBookings', getAllBookings);
 
 // router.get('/rejectGuides/:id', rejectGuide);
 

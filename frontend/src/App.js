@@ -17,6 +17,8 @@ import GuideSinglePage from './pages/UserPages/GuideSinglepage/GuideSinglePage';
 import OTPVerification from './pages/UserPages/OTPVerification/OTPVerification';
 import GuideSearch from './pages/UserPages/GuideSearch/GuideSearch';
 import BookingPage from './pages/UserPages/BookingPage/BookingPage';
+import Bookings from './pages/UserPages/MyBookings/Bookings';
+import ResendOTP from './pages/UserPages/ResendOTP/ResendOTP';
 
 
 function App() {
@@ -38,10 +40,12 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/verification/:id' element={<OTPVerification />} />
+        <Route path='/resentOtp' element={<ResendOTP />} />
         <Route path='/guideList' element={<GuideList/>} />
         <Route path='/guideSingle/:id' element={<GuideSinglePage/>} />
         <Route path='/guideSearch/:id' element={<GuideSearch/>} />
         <Route path='/bookingPage/:id/:from/:to' element={<BookingPage/>} />
+        <Route path='/bookings' element={<Bookings/>} />
 
 
 
@@ -52,6 +56,8 @@ function App() {
         <Route path='/guideSignin' element={<GuideLogin />} />
         <Route path='/guideHome' element={<GuideHome />} />
         <Route path='/guideAddPost' element={<AddPost/>} />
+
+        <Route path='/*' element={<AddPost/>} />
         
       </Routes>
     </div>

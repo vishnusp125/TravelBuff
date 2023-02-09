@@ -1,13 +1,11 @@
 import React from "react";
 // import Cards from "../Cards/Cards";
-import Table from "../Table/Table";
 import "./MainDash.css";
 const MainDash = () => {
   return (
-    <div className="MainDash">
-      <h2>Dashboard</h2>
+    <div className="text-center m-5">
+      <h1 style={{color:"black"}}>Dashboard</h1>
       {/* <Cards /> */}
-      <Table />
     </div>
   );
 };

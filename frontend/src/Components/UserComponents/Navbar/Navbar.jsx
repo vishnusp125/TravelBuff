@@ -45,34 +45,44 @@ const Navbar = () => {
       <div className='navBarSection'>
         <div className={transparent}>
           <div className="logoDiv">
-            <a href="/" className="logo">
+          <Link to ='/'>
+            <li  className="logo">
               <h1><SiYourtraveldottv className="icon" />
                 Travel Buff
               </h1>
-            </a>
+            </li>
+            </Link>
           </div>
 
           <div className={active}>
             <ul className="navLists flex">
               <li className="navItem">
-              <Link to="/"><a className='navLink'>Home</a></Link>
+              <Link to="/"><li className='navLink'>Home</li></Link>
                 
               </li>
               <li className="navItem">
-              <Link to="/guideList"><a className='navLink'>Travel Guides</a></Link>
+              <Link to="/guideList"><li className='navLink'>Travel Guides</li></Link>
               </li>
               <li className="navItem">
-                <a href="" className='navLink'>Travel Tips</a>
+                <li href="" className='navLink'>Travel Tips</li>
               </li>
-              <li className="navItem">
-                <a href="" className='navLink'>About Us</a>
-              </li>
+            
               {user?.result?._id && (
+                <div style={{display:"flex"}}>
+
                 <li className="navItem">
-                  <a href="" className='navLink'> Welcome {user?.result?.name}</a>
+                <Link to="/bookings"><li className='navLink'>Account</li></Link>
                 </li>
+                
+                <li className="navItem">
+                  <li href="" className='navLink'> Welcome {user?.result?.name}</li>
+                </li>
+                </div>
 
               )}
+              {/* <li className="navItem">
+                <li href="" className='navLink'>About Us</li>
+              </li> */}
 
               {user? (
                 <div className="headerBtns flex">
@@ -96,17 +106,14 @@ const Navbar = () => {
                   </button>
                 </div>
               )}
-
             </ul>
             <div onClick={removeNav} className="closeNavbar">
               <AiFillCloseCircle className="icon" />
             </div>
           </div>
-
           <div onClick={showNav} className="toggleNavbar">
             <TbGridDots className="icon" />
           </div>
-
         </div>
       </div>
     </section>

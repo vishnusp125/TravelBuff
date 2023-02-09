@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import AdminModel from '../models/admin.js';
 import Users from '../models/user.js';
 import Guides from '../models/guide.js';
+import Booking from '../models/booking.js'
 import dotenv from 'dotenv'
 
 
@@ -49,7 +50,7 @@ export const Adminsignin = async (req, res) => {
         if (!isPasswordCorrect) 
         return res.status(400).json({ message: "Invalid credentials" });
 
-        const token = jwt.sign({ email: oldAdmin.email, id: oldAdmin._id }, process.env.ADMIN_JWTSECRET, { expiresIn: "1h" })
+        const token = jwt.sign({ email: oldAdmin.email, id: oldAdmin._id }, process.env.ADMIN_JWTSECRET, { expiresIn: "3h" })
         res.status(200).json({ result: oldAdmin._id, token })
     } catch (error) {   
         console.log('in error');
@@ -150,7 +151,20 @@ export const verifyGuide = async (req, res) => {
         console.log(error);
         console.log('in catchhh');
     }
-}       
+}  
+
+export const getAllBookings = async (req, res) => {
+    try {
+        const bookings = await Booking.find()
+        console.log(bookings);
+        res.send(bookings)
+
+    }catch (error) {
+        console.log(error);
+    }
+}
+
+
 
 
 

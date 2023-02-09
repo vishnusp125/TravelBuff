@@ -136,3 +136,18 @@ export const verifyGuide = async (token, id) => {
   }
 };
 
+export const getAllBookings = async (token) => {
+
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosAdminInstance.get('/getAllBookings', config);
+  if (data) {
+    return data;
+  }
+} 
+

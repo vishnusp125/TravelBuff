@@ -10,13 +10,14 @@ function UserManagement() {
   const [details, setDetails] = useState([]);
 
   useEffect(() => {
-    const jwtToken = JSON.parse(localStorage.getItem('admin')).token
     fetchData();
-    async function fetchData() {
-      const data = await getUserInfo(jwtToken); 
-      setDetails(data);
-    }
   }, []);
+  
+  const jwtToken = JSON.parse(localStorage.getItem('admin')).token
+  async function fetchData() {
+    const data = await getUserInfo(jwtToken); 
+    setDetails(data);
+  }
 
   async function unBlock(id) {
     const token = localStorage.getItem('admin');
@@ -47,6 +48,12 @@ function UserManagement() {
   }
 
   const columns = [
+    {
+      name: "No",
+      selector: (row, i) => i + 1,
+      width: "60px"
+
+    },
     {
       name: 'Name',
       selector: (row) => row.name,
@@ -83,7 +90,7 @@ function UserManagement() {
 
   return (
     <div >
-    <h1 style={{ marginLeft: "300px"}}>User Management</h1>
+    <h1 style={{color:"black"}} className='text-center m-5'>User Management</h1>
       <DataTable
         columns={columns}
         data={details}

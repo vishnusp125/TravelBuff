@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import UserManagement from "../UserManagement/UserMangement";
 import GuideMangement from "../GuideManagement/GuideMangement";
 import GuideProfile from "../GuideProfile/GuideProfile";
+import BookingsMgt from "../BookingsMgt/BookingsMgt";
 
 const AdminHome = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const AdminHome = () => {
 
   const App = styled.div`
  color: "black";
- background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+ background-image: linear-gradient(120deg, #ffff 0%, #ffff 100%);
   height: 100vh;
   display: flex;
   align-items: center;
@@ -33,17 +34,18 @@ const AdminHome = () => {
   display: grid;
   height: 97%;
   width: 97%;
-  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+  background-image: linear-gradient(to top, #eee5fc 0%, #eee5fc 100%);
   border-radius: 2rem;
   gap: 16px;
   grid-template-columns: 11rem auto 1rem;
-  overflow: hidden;
+  overflow-y:scroll;
 @media screen and (max-width: 1200px) {
     grid-template-columns: 20% 50% auto;
     overflow-y: scroll;
 }
 @media screen and (max-width: 768px) {
     grid-template-columns: 1fr;
+    overflow-y:scroll;
 }
 `;
 
@@ -56,6 +58,7 @@ const AdminHome = () => {
           {pages === 'users' && <UserManagement />}
           {pages === 'guides' && <GuideMangement />}
           {pages === 'approvals' && <GuideProfile />}
+          {pages === 'bookings' && <BookingsMgt />}
         </AppGlass>
       </App>
     </>

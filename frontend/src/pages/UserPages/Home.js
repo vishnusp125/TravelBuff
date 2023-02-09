@@ -24,13 +24,13 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const jwtToken = JSON.parse(localStorage.getItem('profile')).token
-   
+    const jwtToken = JSON.parse(localStorage.getItem('profile'))?.token
     if (jwtToken) {
       navigate('/');
-    } else {
-      navigate('/login');
     }
+    //  else {
+    //   navigate('/');
+    // }
   }, []);
   return (
     <>

@@ -68,7 +68,6 @@ export const Guidesignin = async (req, res) => {
     const { email, password } = req.body;
     try {
         const oldGuide = await Guide.findOne({ email });
-        console.log("inguidesigninnn", oldGuide);
 
         if (!oldGuide) {
             return res.status(404).json({ message: "Guide doesn't exist" });
@@ -77,10 +76,13 @@ export const Guidesignin = async (req, res) => {
         if (!oldGuide.isVerified) {
             return res.status(400).json({ message: "Your are not approved by the admin" });
         }
+        if (oldGuide.isBlocked) {
+            return res.status(400).json({ message: "Your are blocked by the admin" });
+        }
 
         const isPasswordCorrect = await bcrypt.compare(password, oldGuide.password);
         if (isPasswordCorrect) {
-            const token = jwt.sign({ name: oldGuide.name, email: oldGuide.email, id: oldGuide._id }, secret, { expiresIn: "1h" });
+            const token = jwt.sign({ name: oldGuide.name, email: oldGuide.email, id: oldGuide._id }, secret, { expiresIn: "3h" });
             return res.status(200).json({ status: 'login success', guide: token, result: oldGuide });
         } else {
             return res.status(400).json({ message: "Invalid credentials" });

@@ -36,7 +36,7 @@ function Login() {
       } else {
         navigate('/login');   
       }
-    }, [navigate]);
+    }, []);
 
     useEffect(() => {
         error && toast.error(error)
@@ -119,15 +119,14 @@ function Login() {
                             </div>
                         </MDBValidation>
                     </MDBCardBody>
+                    <p style={{ textAlign: "center" }}><Link to="/resentOtp" >Resent OTP</Link></p>
                     <MDBCardFooter>
                         <Link to='/register'>
-                            <p style={{ color: "#551a8b" }}>Don't have an account ? <span style={{ color: "red" }}>Sign Up </span> </p>
                         </Link>
                         <h5>Or</h5>
                         <Link to='/guideSignup'>
-                        <p style={{ color: "#551a8b" }}>Tour Guide<span style={{ color: "red" }}> Sign Up </span> </p>
+                            <p style={{ color: "#551a8b" }}>Tour Guide<span style={{ color: "red" }}> Sign Up </span> </p>
                         </Link>
-                        
                     </MDBCardFooter>
                 </MDBCard>
             </div>

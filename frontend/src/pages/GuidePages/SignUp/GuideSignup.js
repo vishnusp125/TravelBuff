@@ -29,7 +29,7 @@ function GuideSignup() {
 
   const [error, setError] = useState('');
   const onSubmit = async (values, actions) => {
-
+    setLoading(true)
     const status = await Guidesignup({ values, img1: image1, img2: image2 });
   
     if (status.status === 'error') {
@@ -40,6 +40,7 @@ function GuideSignup() {
         autoClose: 4000
       });
       navigate('/guideSignin')
+      setLoading(false)
     }
   };
 
