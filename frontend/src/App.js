@@ -19,6 +19,8 @@ import GuideSearch from './pages/UserPages/GuideSearch/GuideSearch';
 import BookingPage from './pages/UserPages/BookingPage/BookingPage';
 import Bookings from './pages/UserPages/MyBookings/Bookings';
 import ResendOTP from './pages/UserPages/ResendOTP/ResendOTP';
+import ErrorPage from './pages/UserPages/404/ErrorPage';
+import GuideBookings from './pages/GuidePages/Bookings/GuideBookings';
 
 
 function App() {
@@ -48,7 +50,6 @@ function App() {
         <Route path='/bookings' element={<Bookings/>} />
 
 
-
         <Route path="/admin" element={<AdminHome />}/>
         <Route path="/adminLogin" element={<AdminLogin />}/>
 
@@ -56,9 +57,10 @@ function App() {
         <Route path='/guideSignin' element={<GuideLogin />} />
         <Route path='/guideHome' element={<GuideHome />} />
         <Route path='/guideAddPost' element={<AddPost/>} />
-
-        <Route path='/*' element={<AddPost/>} />
+        <Route path='/guideBookings' element={<GuideBookings/>} />
         
+        
+        <Route path='/*' element={<ErrorPage/>} /> 
       </Routes>
     </div>
   );

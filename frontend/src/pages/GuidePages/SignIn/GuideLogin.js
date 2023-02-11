@@ -24,13 +24,12 @@ function GuideLogin() {
 
     
     useEffect(() => {
-      console.log("in useeffect at guide loginnn");
       const token = localStorage.getItem('guide');
-      console.log(token)
-      console.log("tokennn",token);
-      if (token) {
-          navigate('/guideHome');
-      } 
+      if (!token) {
+          navigate('/guideSignin');
+      } else {
+        navigate('/guideHome')
+      }
     }, [navigate]);
 
     useEffect(() => {

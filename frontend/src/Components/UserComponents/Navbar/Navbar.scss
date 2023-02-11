@@ -64,9 +64,11 @@
                             color: var(--textColor);
                             font-size: .9rem;
                             font-weight: 600;
+                            text-decoration: none !important;
 
                             &:hover {
-                                color: var(--PrimaryColor)
+                                color: var(--PrimaryColor);
+                                text-decoration: none !important;
                             }
                         }
                     }

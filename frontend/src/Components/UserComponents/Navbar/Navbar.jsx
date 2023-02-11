@@ -63,16 +63,17 @@ const Navbar = () => {
               <li className="navItem">
               <Link to="/guideList"><li className='navLink'>Travel Guides</li></Link>
               </li>
-              <li className="navItem">
-                <li href="" className='navLink'>Travel Tips</li>
-              </li>
-            
+                        
               {user?.result?._id && (
                 <div style={{display:"flex"}}>
 
                 <li className="navItem">
-                <Link to="/bookings"><li className='navLink'>Account</li></Link>
+                <Link to="/bookings"><li className='navLink'>Bookings</li></Link>
                 </li>
+
+                <li className="navItem">
+                <li href="" className='navLink'>Travel Tips</li>
+              </li>
                 
                 <li className="navItem">
                   <li href="" className='navLink'> Welcome {user?.result?.name}</li>

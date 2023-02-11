@@ -12,6 +12,7 @@ import nodemailer from 'nodemailer'
 import dotenv from 'dotenv'
 import moment from 'moment'
 import { raw } from 'express';
+import booking from '../models/booking.js';
 
 dotenv.config();
 
@@ -171,20 +172,19 @@ export const verifyUser = async (req, res) => {
 
 
 export const signin = async (req, res) => {
-    const { email, password } = req.body;
 
     try {
+        const { email, password } = req.body;
         const oldUser = await User.findOne({ email })
-        console.log("olduser", oldUser);
         if (!oldUser) return res.status(404).json({ message: "User doesn't exist" });
-        if (oldUser.isVerified===false) return res.status(404).json({ message: "User is not verified" });
+        if (oldUser.isVerified === false) return res.status(404).json({ message: "User is not verified" });
         if (oldUser.isBlocked) return res.status(404).json({ message: "You have been blocked by the admin" });
 
         const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
 
         if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" });
 
-        const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, process.env.JWTSECRET, { expiresIn: "3h" })
+        const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, process.env.JWTSECRET, { expiresIn: "3d" })
 
         res.status(200).json({ result: oldUser, token })
     } catch (error) {
@@ -329,6 +329,7 @@ export const getAllBookings = async (req, res) => {
         console.log(error);
     }
 }
+
 export const resentOtp = async (req, res) => {
     try {
         const email = req.body.values;
@@ -343,13 +344,37 @@ export const resentOtp = async (req, res) => {
 
         const userid = user._id
 
-        await UserOTPVerification.deleteMany({userid})
+        await UserOTPVerification.deleteMany({ userid })
         sendOTPVerificationEmail(user, res)
-    
+
     } catch (error) {
         console.log(error);
     }
 }
+
+export const cancelBooking = async (req, res) => {
+
+    try {
+        const { bookingid, guideid } = req.body;
+        const bookingItem = await Booking.findOne({ _id: bookingid })
+        bookingItem.status = "Cancelled"
+        await bookingItem.save()
+
+        const guide = await Guides.findOne({ _id: guideid })
+
+        const bookings = guide.bookings
+        const temp = bookings.filter(booking => booking.bookingid.toString() !== bookingid)
+        guide.bookings = temp;
+        await guide.save()
+        const bookingIte = await Booking.findOne({ _id: bookingid })
+        res.json({ status: true, message: "Your booking cancelled successfully", bookingIte })
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({ error })
+    }
+}
+
+
 
 
 

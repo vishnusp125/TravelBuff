@@ -62,9 +62,11 @@ function NavbarGuide() {
                         </MDBNavbarItem>
 
                         <MDBNavbarItem>
+                        <Link to="/guideBookings">
                             <a active aria-current='page' className='p-3'>
                                 Bookings
                             </a>
+                            </Link>
                         </MDBNavbarItem>
 
 

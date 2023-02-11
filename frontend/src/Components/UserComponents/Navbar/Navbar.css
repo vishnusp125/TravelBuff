@@ -36,7 +36,6 @@
   .navBarSection .header .navBar {
     background: var(--greyBg);
     position: absolute;
-    height: -webkit-max-content;
     height: -moz-max-content;
     height: max-content;
     padding: 1rem;
@@ -60,9 +59,11 @@
     color: var(--textColor);
     font-size: 0.9rem;
     font-weight: 600;
+    text-decoration: none !important;
   }
   .navBarSection .header .navBar .navLists .navItem .navLink:hover {
     color: var(--PrimaryColor);
+    text-decoration: none !important;
   }
   .navBarSection .header .navBar .navLists .headerBtns {
     flex-direction: column;
@@ -117,7 +118,7 @@
 
 @media screen and (min-width: 769px) {
   .navBarSection .toggleNavbar,
-.navBarSection .closeNavbar {
+  .navBarSection .closeNavbar {
     display: none;
   }
   .navBarSection .header {

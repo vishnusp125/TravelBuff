@@ -1,5 +1,6 @@
-import { MDBCard, MDBCardBody, MDBCardImage, MDBCardText, MDBCardTitle, MDBCol, MDBRow } from 'mdb-react-ui-kit'
 import React, { useCallback, useEffect, useState } from 'react'
+import { MDBCard, MDBCardBody, MDBCardImage, MDBCardText, MDBCardTitle, MDBCol, MDBRow } from 'mdb-react-ui-kit'
+import PulseLoader from "react-spinners/PulseLoader";
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,12 +9,22 @@ import Navbar from '../../../Components/UserComponents/Navbar/Navbar'
 import moment from 'moment';
 import useRazorpay from 'react-razorpay';
 import Footer from '../../../Components/UserComponents/Footer/Footer';
+import img from '../../../assets/images/icon.png'
 
 function BookingPage() {
     const navigate = useNavigate();
     const { id } = useParams();
     const { from } = useParams();
     const { to } = useParams();
+
+
+    const [loading, setLoading] = useState(false);
+    useEffect(() => {
+        setLoading(true)
+        setTimeout(() => {
+            setLoading(false)
+        }, 500)
+    }, [])
 
     async function guideDetails() {
         const data = await guideSingle(id, jwtToken);
@@ -55,7 +66,7 @@ function BookingPage() {
                 currency: 'INR',
                 name: 'TravelBuff',
                 description: 'Test Transaction',
-                image: 'https://example.com/your_logo',
+                image: `${img}`,
                 order_id: result.order.id,
                 handler: (res) => {
                     verifyPayment(res, result.order);
@@ -100,41 +111,56 @@ function BookingPage() {
         jwtToken
     ])
     return (
-        <div >
-            <div style={{ height: "100px" }}>
-                <Navbar />
-            </div>
-            <MDBCard className="m-5">
-                <MDBRow className='g-0'>
-                    <MDBCol md='4'>
-                        <MDBCardImage style={{ height: "200px", width: "150px" }} className="mx-5 my-5" src={guidedetails?.image} alt='...' fluid />
-                    </MDBCol>
-                    <MDBCol md='8'>
-                        <MDBCardBody>
-                            <MDBCardTitle className='text-danger'>Booking Details</MDBCardTitle>
-                            <hr />
-                            <div>
-                                <p className='text-dark'>Name of the guide: <b>{guidedetails?.name}</b> </p>
-                                <p className='text-dark'>From Date: <b>{from} </b></p>
-                                <p className='text-dark'>To Date: <b>{to}</b></p>
-                                <p className='text-dark'>Location: <b>{guidedetails?.location} </b></p>
-                            </div>
-                            <div>
-                                <MDBCardTitle className='text-danger'>Amount Details</MDBCardTitle>
-                                <hr />
-                                <p className='text-dark'>Amount per day: Rs.{guidedetails?.price}/-</p>
-                                <p className='text-dark'>No: of days: {totalDays}</p>
-                                <b><p className='text-dark'>Total Amount: Rs.{totalAmount}/-</p></b>
-                            </div>
-                            <div style={{ float: "right" }}>
-                                <button className="btn btn-outline-dark mb-4" onClick={doPayment}>Pay Now</button>
-                            </div>
-                        </MDBCardBody>
-                    </MDBCol>
-                </MDBRow>
-            </MDBCard>
-            <Footer />
-        </div>
+        <>
+            {
+                loading ?
+
+                    <PulseLoader
+                        color={"#551a8b"}
+                        loading={loading}
+                        style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+                        size={30}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                    />
+                    :
+                    <div>
+                        <div style={{ height: "100px" }}>
+                            <Navbar />
+                        </div>
+                        <MDBCard className="m-5">
+                            <MDBRow className='g-0'>
+                                <MDBCol md='4'>
+                                    <MDBCardImage style={{ height: "200px", width: "150px" }} className="mx-5 my-5" src={guidedetails?.image} alt='...' fluid />
+                                </MDBCol>
+                                <MDBCol md='8'>
+                                    <MDBCardBody>
+                                        <MDBCardTitle className='text-danger'>Booking Details</MDBCardTitle>
+                                        <hr />
+                                        <div>
+                                            <p className='text-dark'>Name of the guide: <b>{guidedetails?.name}</b> </p>
+                                            <p className='text-dark'>From Date: <b>{from} </b></p>
+                                            <p className='text-dark'>To Date: <b>{to}</b></p>
+                                            <p className='text-dark'>Location: <b>{guidedetails?.location} </b></p>
+                                        </div>
+                                        <div>
+                                            <MDBCardTitle className='text-danger'>Amount Details</MDBCardTitle>
+                                            <hr />
+                                            <p className='text-dark'>Amount per day: Rs.{guidedetails?.price}/-</p>
+                                            <p className='text-dark'>No: of days: {totalDays}</p>
+                                            <b><p className='text-dark'>Total Amount: Rs.{totalAmount}/-</p></b>
+                                        </div>
+                                        <div style={{ float: "right" }}>
+                                            <button className="btn btn-outline-dark mb-4" onClick={doPayment}>Pay Now</button>
+                                        </div>
+                                    </MDBCardBody>
+                                </MDBCol>
+                            </MDBRow>
+                        </MDBCard>
+                        <Footer />
+                    </div>
+            }
+        </>
     )
 }
 

@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken';
 import Guide from '../models/guide.js';
 import { v2 as cloudinary } from 'cloudinary';
 import dotenv from 'dotenv'
+import Booking from '../models/booking.js'
+
 
 const secret = "testguide";
 dotenv.config();
@@ -186,5 +188,20 @@ export const descriptionPost = async (req, res) => {
         res.status(500).json({ message: 'Server Error' });
     }
 };
+
+export const guideBookings = async (req, res) => {
+
+    try {
+        const guideId = req.params.id;
+        console.log('at backenddd');
+        const guide = await Booking.find({ guideid: guideId });
+        if (!guide) return res.status(404).send('Guide not found');
+        res.json(guide);
+    } catch (err) {
+        res.status(500).send(err.message);    
+    }
+}
+
+
 
 

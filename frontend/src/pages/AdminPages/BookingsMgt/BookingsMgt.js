@@ -55,11 +55,26 @@ function BookingsMgt() {
       sortable:true
     },
     {
-      name: 'Status',
-      selector: (row) => row.status,
+      name: "Status",
+      selector: "status",
       sortable:true
     },
   ]
+
+  const conditionalRowStyles = [
+    {
+      when: (row) => row.status === "Cancelled",
+      style: {
+        color: "red",
+      },
+    },
+    {
+      when: (row) => row.status === "Confirmed",
+      style: {
+        color: "green",
+      },
+    },
+  ];
 
   return (
     <div>
@@ -67,6 +82,7 @@ function BookingsMgt() {
       <DataTable
         columns={columns}
         data ={details}
+        conditionalRowStyles={conditionalRowStyles}
         fixedHeader
         fixedHeaderScrollHeight="500px"
         highlightOnHover

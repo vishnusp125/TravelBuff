@@ -54,10 +54,10 @@ function Popular() {
                             From historical cities to natural spectaculars , come see the best of the world!!
                         </p>
                     </div>
-                    <div className="iconsDiv flex">
+                    {/* <div className="iconsDiv flex">
                         <BsArrowLeftShort className="icon leftIcon" />
                         <BsArrowRightShort className="icon" />
-                    </div>
+                    </div> */}
                 </div>
                 <div className="mainContent grid">
                 {
@@ -71,7 +71,7 @@ function Popular() {
                                 <p>
                                     Lorem ipsum dolor sit amet.
                                 </p>
-                                <BsArrowRightShort className='icon' />
+                                {/* <BsArrowRightShort className='icon' /> */}
                             </div>
                         </div>
 

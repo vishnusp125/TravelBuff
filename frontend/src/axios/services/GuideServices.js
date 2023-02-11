@@ -116,6 +116,21 @@ export const guideDetails = async (token, id) => {
   }
 };
 
+export const guideBookings = async (token, id) => {
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' +token,
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const { data } = await axiosGuideInstance.get(`/guideBookings/${id}`, config);
+  if (data) {
+    return data;
+  }
+};
+
 
 
 

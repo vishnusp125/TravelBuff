@@ -48,7 +48,6 @@
   color: var(--PrimaryColor);
   font-weight: 600;
   padding-top: 0.5rem;
-  width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }

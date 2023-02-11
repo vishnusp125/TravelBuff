@@ -6,6 +6,17 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
   transition: .3s ease;
+  text-decoration: none;
+
+}
+link{
+    text-decoration: none !important;
+  }
+a {
+  text-decoration: none !important;
+}
+li {
+  text-decoration: none !important;
 }
 
 /* Colors */

@@ -118,7 +118,6 @@
   font-weight: 700;
   color: var(--blackColor);
   position: relative;
-  width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }

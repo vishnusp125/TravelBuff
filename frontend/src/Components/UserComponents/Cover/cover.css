@@ -87,11 +87,6 @@
   opacity: 0.5;
   font-weight: 400;
 }
-.home .secContainer .homeCard .locationDiv input:-ms-input-placeholder, .home .secContainer .homeCard .distDiv input:-ms-input-placeholder, .home .secContainer .homeCard .priceDiv input:-ms-input-placeholder {
-  font-size: 13px;
-  opacity: 0.5;
-  font-weight: 400;
-}
 .home .secContainer .homeCard .locationDiv input::placeholder,
 .home .secContainer .homeCard .distDiv input::placeholder,
 .home .secContainer .homeCard .priceDiv input::placeholder {

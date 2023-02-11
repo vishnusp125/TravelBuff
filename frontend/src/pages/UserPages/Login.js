@@ -72,7 +72,7 @@ function Login() {
                     alignContent: "center", marginTop: "100px", color: "#551a8b", minHeight: '70vh'
                 }}>
                 <h2 style={{ paddingLeft: "50px", paddingBottom: "15px", alignContent: "center" }} className="text-align-center">Welcome Back User !!!</h2>
-                <MDBCard alignment='center'>
+                <MDBCard alignment='center' className='mb-5'>
 
                     <MDBIcon fas icon='user-circle' className='fa-3x' />
                     <h5>Sign In </h5>
@@ -120,8 +120,9 @@ function Login() {
                         </MDBValidation>
                     </MDBCardBody>
                     <p style={{ textAlign: "center" }}><Link to="/resentOtp" >Resent OTP</Link></p>
-                    <MDBCardFooter>
+                    <MDBCardFooter className='mb-2'>
                         <Link to='/register'>
+                        <p style={{ color: "#551a8b" }}>Not a User?<span style={{ color: "red" }}> Sign Up </span> </p>
                         </Link>
                         <h5>Or</h5>
                         <Link to='/guideSignup'>

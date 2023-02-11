@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 import {
     signup, signin, getGuides, guideSingle, verifyOtp, guideSearch,
-    guideBooking, verifyPayment, getAllBookings, resentOtp   
+    guideBooking, verifyPayment, getAllBookings, resentOtp, cancelBooking   
 } from '../controllers/user.js'    
 import { protect } from '../middleware/authMiddleware.js';   
 
@@ -16,8 +16,8 @@ router.post('/guideBooking', guideBooking)
 router.post('/verifyPayment', verifyPayment)
 router.get('/getAllBookings/:id', getAllBookings)
 router.post('/resentOtp', resentOtp)
+router.post('/cancelBooking', cancelBooking)
 
-resentOtp
 
 
 export default router;

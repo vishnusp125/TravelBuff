@@ -36,24 +36,22 @@ function GuideHome() {
   useEffect(() => {
     const guide = JSON.parse(localStorage.getItem('guide'));
     setDetails(guide)
-    if (guide) {
-      navigate('/guideHome');
-    } else {
+    if (!guide) {
       navigate('/guideSignin');
+    } else {
+      navigate('/guideHome');
     }
   }, [navigate]);
 
   useEffect(() => {
     const Curguide = JSON.parse(localStorage.getItem("guide"));
-    // console.log("1111",guide);
     const guideId = Curguide.result._id
-    console.log("useEffectt", guideId);
     fetchData(guideId)
   }, []);
 
-  useEffect(() => {
-    fetchData()
-  }, [])
+  // useEffect(() => {
+  //   fetchData()
+  // }, [])
 
   async function fetchData(id) {
     const token = localStorage.getItem('guide');

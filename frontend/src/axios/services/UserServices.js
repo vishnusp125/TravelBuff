@@ -174,8 +174,25 @@ export const resendOTP = async (values) => {
   if (data) {
     return data
   }
-
 }
+
+export const cancelBooking = async (bookingid,guideid) => {
+
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ',
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const { data } = await axiosUserInstance.post('/cancelBooking', {bookingid,guideid, config})
+  if (data) {
+    return data
+  }
+}
+
+
 
 
 
