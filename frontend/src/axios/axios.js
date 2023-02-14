@@ -4,6 +4,7 @@ export const axiosUserInstance = axios.create({baseURL:"http://localhost:5000/us
 export const axiosAdminInstance = axios.create({baseURL:"http://localhost:5000/admin"});
 export const axiosGuideInstance = axios.create({baseURL:"http://localhost:5000/guide"});
 export const axiosConversationInstance = axios.create({baseURL:"http://localhost:5000/conversations"});
+export const axiosMessageInstance = axios.create({baseURL:"http://localhost:5000/messages"});
 
 
 
