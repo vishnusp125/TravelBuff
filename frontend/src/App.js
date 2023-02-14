@@ -21,6 +21,7 @@ import Bookings from './pages/UserPages/MyBookings/Bookings';
 import ResendOTP from './pages/UserPages/ResendOTP/ResendOTP';
 import ErrorPage from './pages/UserPages/404/ErrorPage';
 import GuideBookings from './pages/GuidePages/Bookings/GuideBookings';
+import ChatPage from './pages/UserPages/ChatPage/ChatPage';
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
         <Route path='/guideSearch/:id' element={<GuideSearch/>} />
         <Route path='/bookingPage/:id/:from/:to' element={<BookingPage/>} />
         <Route path='/bookings' element={<Bookings/>} />
+        <Route path='/chat' element={<ChatPage/>} />
 
 
         <Route path="/admin" element={<AdminHome />}/>

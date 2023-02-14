@@ -6,6 +6,9 @@ import morgan from 'morgan';
 import userRouter from "./routes/user.js";
 import adminRouter from "./routes/admin.js";
 import guideRouter from "./routes/guide.js";
+import conversationRouter from "./routes/conversation.js";
+import messageRouter from "./routes/messages.js";
+// import chatRouter from "./routes/chat.js";
 import fileUpload from 'express-fileupload'
 import { connect } from "mongoose";
 
@@ -29,7 +32,10 @@ app.use(fileUpload({
 
 app.use('/users', userRouter);
 app.use('/admin', adminRouter);
-app.use('/guide', guideRouter);           
+app.use('/guide', guideRouter); 
+app.use('/conversations', conversationRouter);
+app.use('/messages', messageRouter);
+// app.use('/chat', chatRouter);           
  
 
 const PORT = process.env.PORT || 5000

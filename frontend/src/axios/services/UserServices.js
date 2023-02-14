@@ -170,13 +170,13 @@ export const resendOTP = async (values) => {
     },
   };
 
-  const { data } = await axiosUserInstance.post('/resentOtp', {values, config})
+  const { data } = await axiosUserInstance.post('/resentOtp', { values, config })
   if (data) {
     return data
   }
 }
 
-export const cancelBooking = async (bookingid,guideid) => {
+export const cancelBooking = async (bookingid, guideid) => {
 
   const config = {
     headers: {
@@ -186,11 +186,31 @@ export const cancelBooking = async (bookingid,guideid) => {
     },
   };
 
-  const { data } = await axiosUserInstance.post('/cancelBooking', {bookingid,guideid, config})
+  const { data } = await axiosUserInstance.post('/cancelBooking', { bookingid, guideid, config })
   if (data) {
     return data
   }
 }
+
+// export const getConversations = async (userid) => {
+//   const config = {
+//     headers: {
+//       Accept: 'application/json',
+//       Authorization: 'Bearer ',
+//       'Content-Type': 'application/json',
+//     },
+//   };
+//   try {
+//     const { data } = await axiosUserInstance.get('/conversations/' +userid, config)
+//     if (data) {
+//       return data
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
+
+
 
 
 
