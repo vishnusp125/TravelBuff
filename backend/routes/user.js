@@ -19,5 +19,4 @@ router.post('/resentOtp', resentOtp)
 router.post('/cancelBooking',protect, cancelBooking)
 
 
-
 export default router;

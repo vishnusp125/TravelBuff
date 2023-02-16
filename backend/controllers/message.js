@@ -13,8 +13,6 @@ export const postMessage = async (req, res) => {
 }
 
 export const getMessage = async (req, res) => {
-    console.log('in backenddd');
-    console.log(req.params.conversationId);
     try {
         const messages = await message.find({
             conversationId: req.params.conversationId

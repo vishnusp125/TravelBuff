@@ -26,8 +26,37 @@ export const guideDetails = async (guideId) => {
       'Content-Type': 'application/json',
     },
   };
-  const { data } = await axiosConversationInstance.get('/guidedetails/'+guideId, config);
+  const { data } = await axiosConversationInstance.get('/guidedetails/' + guideId, config);
   if (data) {
     return data;
   }
 };
+
+export const userDetails = async (userId) => {
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ',
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosConversationInstance.get('/userdetails/' + userId, config);
+  if (data) {
+    return data;
+  }
+};
+
+export const postConversation = async (userid, guideid) => {
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ',
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosConversationInstance.post('/', { userid, guideid, config })
+  if (data) {
+    return data
+  }
+}
+

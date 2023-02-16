@@ -59,13 +59,13 @@ function Footer() {
 
         <div className="footerLinks">
           <span className="linkTitle">
-           Contact
+           Credits
           </span>
           <li>
-            <a href="#">+ 123 456 789  </a>
+            <a href="#">Made by Vishnu S Prakash</a>
           </li>
           <li>
-            <a href="#">travelbuff@support.com</a>
+          <a href="https://github.com/vishnusp125/TravelBuff" target="_blank">Github Link</a>
           </li>
         
         </div>

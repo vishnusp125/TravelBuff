@@ -196,7 +196,6 @@ export const signin = async (req, res) => {
 export const getGuides = async (req, res) => {
     try {
         const guides = await Guides.find({ isVerified: true });
-        console.log(guides);
         res.status(200).json(guides)
     } catch (error) {
         res.status(404).json({ message: "Something went wrong" })
@@ -293,7 +292,6 @@ export const verifyPayment = async (req, res) => {
         var response = { signatureIsValid: "false" }
         if (generated_signature === req.body.res.razorpay_signature) {
             response = { signatureIsValid: "true" }
-            console.log('signatureIsValid');
             changeStatus(req.body.order, res)
             // res.json(response)
         } else {
@@ -318,11 +316,10 @@ export const changeStatus = async (req, res) => {
     }
 }
 
-
 export const getAllBookings = async (req, res) => {
     try {
         const userid = req.params.id
-        const bookings = await Booking.find({ userid })
+        const bookings = await Booking.find({ userid }).sort({createdAt: -1})
         res.status(200).send(bookings)
 
     } catch (error) {

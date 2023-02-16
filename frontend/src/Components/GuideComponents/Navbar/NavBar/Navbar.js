@@ -23,7 +23,7 @@ function NavbarGuide() {
 
         <MDBNavbar expand='lg' light bgColor='light'>
             <MDBContainer fluid>
-                <Link to="/"> <MDBNavbarBrand style={{ color: "#551a8b" }}> 
+                <Link to="/guideHome"> <MDBNavbarBrand style={{ color: "#551a8b" }}> 
                     <h1><SiYourtraveldottv className="icon" />
                         Travel Buff
                     </h1>
@@ -56,7 +56,7 @@ function NavbarGuide() {
                         <MDBNavbarItem>
                         <Link to="/guideAddPost">
                             <a active aria-current='page' className='p-3'>
-                                Add Post
+                                Add Details
                             </a>
                             </Link>
                         </MDBNavbarItem>
@@ -69,12 +69,20 @@ function NavbarGuide() {
                             </Link>
                         </MDBNavbarItem>
 
-
                         <MDBNavbarItem>
+                        <Link to="/guideMessages">
+                            <a active aria-current='page' className='p-3'>
+                                Messages
+                            </a>
+                            </Link>
+                        </MDBNavbarItem>
+
+
+                        {/* <MDBNavbarItem>
                             <a active aria-current='page' className='p-3'>
                                 Payments
                             </a>
-                        </MDBNavbarItem>
+                        </MDBNavbarItem> */}
                         
 
                         <MDBNavbarItem>

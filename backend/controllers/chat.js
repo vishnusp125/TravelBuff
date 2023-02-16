@@ -175,10 +175,7 @@ import user from "../models/user.js";
 
 export const accessChat = asyncHandler(async (req, res) => {
     const { guideId } = req.body;
-    console.log(guideId);
-
     if (!guideId) {
-        console.log("guideId Not found");
         return res.sendStatus(400);
     }
 
@@ -192,9 +189,6 @@ export const accessChat = asyncHandler(async (req, res) => {
 
     const userDetails = await user.findOne({ _id: req.user._id }, "name email");
     const guideDetails = await guide.findOne({ _id: guideId }, "name location");
-    console.log(userDetails);
-    console.log(guideDetails);
-
     // const chatDetails = await Chat.findOne({
     //     $and: [
     //         { user: { $elemMatch: { $eq: req.user._id } } },

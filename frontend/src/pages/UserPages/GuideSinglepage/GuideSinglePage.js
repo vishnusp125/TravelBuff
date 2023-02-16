@@ -16,6 +16,7 @@ import {
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { postConversation } from '../../../axios/services/ConversationServices';
 const { RangePicker } = DatePicker;
 
 
@@ -129,6 +130,12 @@ function GuideSinglePage() {
   //     }
   //   }
   // };
+  async function postConversatn () {
+    const userid = JSON.parse(localStorage.getItem("profile"))
+    const userId = userid?.result?._id
+    const guideId = details?._id
+    const data = await postConversation(userId, guideId);
+  }
 
   return (
     <>
@@ -159,7 +166,7 @@ function GuideSinglePage() {
                               style={{ width: "150px", zIndex: 1 }} />
                             {/* <button type="button" className="btn btn-outline-dark" data-mdb-ripple-color="dark"
                                 style={{ zIndex: "1" }}>
-                                Book Now
+                                Message Me
                               </button> */}
                           </div>
                           <div className="ms-3" style={{ marginTop: "130px" }}>
@@ -186,18 +193,13 @@ function GuideSinglePage() {
 
                         <div className='d-flex justify-content-between'>
                           <h4 style={{ textAlign: 'left' }} className="my-5 mx-5">Explore {details.location} with {details.name} !!!</h4>
+
                           <div style={{ textAlign: 'right' }} className="m-3">
                             <h4 style={{ textAlign: 'right' }} className="mx-5 mb-3">Pick your date</h4>
                             {/* <form action=""> */}
                             <Space direction="vertical" size={12}>
                               <RangePicker format="DD-MM-YYYY" disabledDate={disabledDate} onChange={filterByDates} />
                             </Space>
-                            {/* <div className='mt-4' style={{ marginRight: "80px" }}>
-                              <button type="button" className="btn btn-outline-dark" data-mdb-ripple-color="dark"
-                                style={{ zIndex: "1" }} onClick={availabilityCheck}>
-                                Check Availability
-                              </button>
-                            </div> */}
                             <div style={{ marginRight: "100px" }}>
                               {/* {(fromDate && toDate) && ( */}
                               <Link to={`/bookingPage/${details._id}/${fromDate}/${toDate}`}>
@@ -216,6 +218,9 @@ function GuideSinglePage() {
                             </div>
                             {/* </form>  */}
                           </div>
+                        </div>
+                        <div>
+                          <Link to="/chat" onClick={postConversatn}><button className='btn mx-5' >Message Me</button></Link>
                         </div>
                         <div className="card-body p-4 text-black">
                           <div className="mb-5">

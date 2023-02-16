@@ -53,7 +53,6 @@ export const Adminsignin = async (req, res) => {
         const token = jwt.sign({ email: oldAdmin.email, id: oldAdmin._id }, process.env.ADMIN_JWTSECRET, { expiresIn: "3h" })
         res.status(200).json({ result: oldAdmin._id, token })
     } catch (error) {   
-        console.log('in error');
         res.status(500).json({ message: "Something went wrong" });
         console.log(error);
     }
@@ -72,24 +71,20 @@ export const blockUser = async (req, res) => {
     try{
         const userId = req.params.id
         const user = await Users.findByIdAndUpdate({ _id: userId }, { isBlocked: true })
-        console.log('in tryyyy');
         res.json({status: 'ok',block: true, userDetails: user});
     } catch(error) {
         console.log(error);
-        console.log('in catchhh');
     }
 }
 
 export const unblockUser = async (req, res) => {
     try{
-        console.log('in tryyyy');
+   
         const userId = req.params.id
-        console.log(userId);
         const user = await Users.findByIdAndUpdate({ _id: userId }, { isBlocked: false })
         res.json({status: 'ok',block: false, userDetails: user});
     } catch(error) {
         console.log(error);
-        console.log('in catchhh');
     }
 }
 
@@ -105,27 +100,20 @@ export const getAllGuides = async (req, res) => {
 export const blockGuide = async (req, res) => {
     try{
         const guideId = req.params.id
-        console.log(guideId);
         const guide = await Guides.findByIdAndUpdate({ _id: guideId }, { isBlocked: true })
-        console.log(guide);
-        console.log('in tryyyy');
         res.json({status: 'ok',block: true, guideDetails: guide});
     } catch(error) {
         console.log(error);
-        console.log('in catchhh');
     }
 }
 
 export const unblockGuide = async (req, res) => {
     try{
-        console.log('in tryyyy');
         const guideId = req.params.id
-        console.log(guideId);
         const guide = await Guides.findByIdAndUpdate({ _id: guideId }, { isBlocked: false })
         res.json({status: 'ok',block: false, guideDetails: guide});
     } catch(error) {
         console.log(error);
-        console.log('in catchhh');
     }
 }
 
@@ -142,21 +130,16 @@ export const approveGuide = async (req, res) => {
 export const verifyGuide = async (req, res) => {
     try{
         const guideId = req.params.id
-        console.log(guideId);
         const guide = await Guides.findByIdAndUpdate({ _id: guideId }, { isVerified: true })
-        console.log("backend",guide);
-        console.log('in tryyyy');
         res.json({status: 'ok',verified: true, guideDetails: guide});
     } catch(error) {
         console.log(error);
-        console.log('in catchhh');
     }
 }  
 
 export const getAllBookings = async (req, res) => {
     try {
-        const bookings = await Booking.find()
-        console.log(bookings);
+        const bookings = await Booking.find().sort({createdAt: -1})
         res.send(bookings)
 
     }catch (error) {

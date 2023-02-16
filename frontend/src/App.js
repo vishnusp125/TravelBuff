@@ -22,6 +22,9 @@ import ResendOTP from './pages/UserPages/ResendOTP/ResendOTP';
 import ErrorPage from './pages/UserPages/404/ErrorPage';
 import GuideBookings from './pages/GuidePages/Bookings/GuideBookings';
 import ChatPage from './pages/UserPages/ChatPage/ChatPage';
+import Chat from './pages/GuidePages/Chat/Chat';
+import UserProfile from './pages/UserPages/UserProfile/UserProfile';
+import EditProfile from './pages/GuidePages/EditProfile/EditProfile';
 
 
 function App() {
@@ -50,16 +53,20 @@ function App() {
         <Route path='/bookingPage/:id/:from/:to' element={<BookingPage/>} />
         <Route path='/bookings' element={<Bookings/>} />
         <Route path='/chat' element={<ChatPage/>} />
+        <Route path='/profile' element={<UserProfile/>} />
 
 
         <Route path="/admin" element={<AdminHome />}/>
         <Route path="/adminLogin" element={<AdminLogin />}/>
+
 
         <Route path='/guideSignup' element={<GuideSignup />} />
         <Route path='/guideSignin' element={<GuideLogin />} />
         <Route path='/guideHome' element={<GuideHome />} />
         <Route path='/guideAddPost' element={<AddPost/>} />
         <Route path='/guideBookings' element={<GuideBookings/>} />
+        <Route path='/guideMessages' element={<Chat/>} />
+        <Route path='/editProfile' element={<EditProfile/>} />
         
         
         <Route path='/*' element={<ErrorPage/>} /> 

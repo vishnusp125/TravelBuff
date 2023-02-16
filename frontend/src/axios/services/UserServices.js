@@ -135,7 +135,6 @@ export const orderVerifyPayment = async (token, res, order) => {
     value.order = order;
     const { data } = await axiosUserInstance.post('/verifyPayment', value, config);
     if (data) {
-      console.log("orderverify axios", data)
       return data;
     }
   } catch (error) {
@@ -192,23 +191,6 @@ export const cancelBooking = async (bookingid, guideid) => {
   }
 }
 
-// export const getConversations = async (userid) => {
-//   const config = {
-//     headers: {
-//       Accept: 'application/json',
-//       Authorization: 'Bearer ',
-//       'Content-Type': 'application/json',
-//     },
-//   };
-//   try {
-//     const { data } = await axiosUserInstance.get('/conversations/' +userid, config)
-//     if (data) {
-//       return data
-//     }
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
 
 
 

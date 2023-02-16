@@ -39,13 +39,11 @@ export const signIn = (formData) => axiosGuideInstance.post('/guideSignin', form
 export const Guidesignin = createAsyncThunk("guide/guideSignin", async ({ formValue, navigate, toast }, { rejectWithValue }) => {
   try {
     const response = await signIn(formValue)
-    console.log("success from guideservicessss");
     toast.success("Login Successfully");
     navigate('/GuideHome')
     return response.data;
 
   } catch (err) {
-    console.log('error from guide servicessss');
     return rejectWithValue(err.response.data)
   }
 });

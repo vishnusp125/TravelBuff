@@ -24,7 +24,6 @@ export const Guidesignup = async (req, res) => {
         const { firstName, lastName, email, password, phone, image1, image2, location } = req.body;
 
         const values = req.body.values;
-        console.log(values);
         const image = req.body.img1;
         const certificate = req.body.img2;
 
@@ -56,7 +55,6 @@ export const Guidesignup = async (req, res) => {
             });
 
             const token = jwt.sign({ email: result.email, id: result._id }, process.env.GUIDE_JWTSECRET, { expiresIn: "1h" });
-            console.log('signup success');
             res.status(201).json({ status: 'success' })
         }
 
@@ -91,7 +89,6 @@ export const Guidesignin = async (req, res) => {
         }
 
     } catch (error) {
-        console.log('in error');
         console.log(error);
         res.status(500).json({ message: "Something went wrong" });
     }
@@ -131,7 +128,7 @@ export const languagePost = async (req, res) => {
             await Guide.updateOne({ _id: guideId }, { $push: { languages: getLanguage } })
             res.status(200).json({ message: "Language added successfully" })
         }
-        
+
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: 'Server Error' });
@@ -141,10 +138,7 @@ export const languagePost = async (req, res) => {
 export const guideDetails = async (req, res) => {
     try {
         const guideId = req.params.id;
-        console.log('at backenddd');
-        console.log(guideId);
         const guide = await Guide.findOne({ _id: guideId });
-        console.log(guide);
         if (!guide) return res.status(404).send('Guide not found');
         res.json(guide);
     } catch (err) {
@@ -176,9 +170,6 @@ export const descriptionPost = async (req, res) => {
     try {
         const { description, guideId } = req.body;
         const guide = guideId;
-        console.log(11111);
-        console.log(description);
-        console.log(22222);
         const getDescription = description;
         await Guide.updateOne({ _id: guideId }, { description: getDescription })
         res.json({ message: "Description added successfully" })
@@ -193,12 +184,11 @@ export const guideBookings = async (req, res) => {
 
     try {
         const guideId = req.params.id;
-        console.log('at backenddd');
-        const guide = await Booking.find({ guideid: guideId });
+        const guide = await Booking.find({ guideid: guideId }).sort({createdAt: -1});
         if (!guide) return res.status(404).send('Guide not found');
         res.json(guide);
     } catch (err) {
-        res.status(500).send(err.message);    
+        res.status(500).send(err.message);
     }
 }
 

@@ -14,12 +14,12 @@ import { useNavigate } from 'react-router-dom';
 function Home() {
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
-    }, 500)
-  }, [])
+    useEffect(() => {
+      setLoading(true)
+      setTimeout(() => {
+        setLoading(false)
+      }, 500)
+    }, [])
 
   const navigate = useNavigate();
 

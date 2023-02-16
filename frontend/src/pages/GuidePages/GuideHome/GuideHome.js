@@ -15,21 +15,28 @@ import {
   MDBCardSubTitle,
 } from 'mdb-react-ui-kit';
 import NavbarGuide from '../../../Components/GuideComponents/Navbar/NavBar/Navbar';
-import { useNavigate } from 'react-router-dom';
-import { guideDetails } from '../../../axios/services/GuideServices';
+import { Link, useNavigate } from 'react-router-dom';
+import { guideDetails, guideBookings } from '../../../axios/services/GuideServices';
 
 
 function GuideHome() {
   const [loading, setLoading] = useState(false);
   const [details, setDetails] = useState([]);
   const [guideData, setGuideData] = useState([]);
+  const [bookings, setBookings] = useState([])
+  const [bookingsToShow, setBookingsToShow] = useState([]);
 
-      useEffect(() => {
-        setLoading(true)
-        setTimeout(() => {
-            setLoading(false)
-        }, 500)
-    }, [])
+  
+  useEffect(() => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+    }, 500)
+  }, [])
+  const filteredBookings = bookings.filter(booking => booking.status === "Booked");
+  useEffect(() => {
+    setBookingsToShow(filteredBookings);
+  }, [bookings]);
 
 
   const navigate = useNavigate();
@@ -49,24 +56,27 @@ function GuideHome() {
     fetchData(guideId)
   }, []);
 
-  // useEffect(() => {
-  //   fetchData()
-  // }, [])
-
   async function fetchData(id) {
     const token = localStorage.getItem('guide');
     const data = await guideDetails(token, id);
     setGuideData(data);
-    console.log("loggg", data);
-    if (data) {
-      // fetchData()
-    }
   }
   const activities = guideData?.activities;
-  console.log("helooo", activities);
   const languages = guideData?.languages;
 
-  console.log("guideDatraaa", guideData);
+
+
+  const guideId = JSON.parse(localStorage.getItem('guide')).result._id
+  const token = JSON.parse(localStorage.getItem('guide')).guide
+
+  async function getBookings() {
+    const data = await guideBookings(token, guideId);
+    setBookings(data)
+  }
+
+  useEffect(() => {
+    getBookings()
+  }, [])
 
   return (
     <>
@@ -102,8 +112,7 @@ function GuideHome() {
                 <p className="mb-1" style={{ fontSize: "35px", color: "Black" }}>{guideData?.name}</p>
                 <p className="mb-4" style={{ fontSize: "20px", color: "Black" }}>{guideData?.location}</p>
                 <div className="d-flex justify-content-center mb-2">
-                  <MDBBtn>EDIT PROFILE</MDBBtn>
-                  {/* <MDBBtn outline className="ms-1">Message</MDBBtn> */}
+                 <Link to="/editProfile"><MDBBtn>EDIT PROFILE</MDBBtn></Link>
                 </div>
               </MDBCardBody>
             </MDBCard>
@@ -113,9 +122,14 @@ function GuideHome() {
               <MDBCardBody className="p-0">
                 <MDBListGroup flush className="rounded-3">
                   <MDBListGroupItem className=" text-align-center p-3">
-                    <MDBCardText>Upcoming Bookings</MDBCardText>
+                    <MDBCardText style={{color:"Black"}} tag="h4">Upcoming Bookings</MDBCardText>
                   </MDBListGroupItem>
-
+                  {bookingsToShow?.length > 0
+                      ? bookingsToShow?.map((booking, index) => (
+                        <MDBCardSubTitle key={index} className='mx-3 my-3 text-success'>- {booking?.username} booked from {booking?.fromDate} to {booking?.toDate}</MDBCardSubTitle>
+                      ))
+                      : <MDBCardSubTitle>No Bookings to show</MDBCardSubTitle>
+                    }
                 </MDBListGroup>
               </MDBCardBody>
             </MDBCard>
@@ -165,7 +179,6 @@ function GuideHome() {
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText className="text-muted">
-                    {/* {guideData?.description} */}
                     {guideData && guideData.description ? guideData.description : "Please enter your description"}
                     </MDBCardText>
                   </MDBCol>
@@ -181,7 +194,7 @@ function GuideHome() {
                     <MDBCardTitle style={{ color: "black", fontWeight: "600", fontSize: "25px" }}>Activities</MDBCardTitle>
                     {activities?.length > 0
                       ? activities?.map((activity, index) => (
-                        <MDBCardSubTitle key={index} style={{ color: "green", fontWeight: "500" }}> - {activity}</MDBCardSubTitle>
+                        <MDBCardSubTitle key={index} className="my-2" style={{ color: "green", fontWeight: "500" }}> - {activity}</MDBCardSubTitle>
                       ))
                       : <MDBCardSubTitle>No Activities to show please Complete your profile</MDBCardSubTitle>
                     }
@@ -189,46 +202,13 @@ function GuideHome() {
 
                 </MDBCard>
               </MDBCol>
-              {/* 
-              <MDBCol md="6">
-                <MDBCard className="mb-4 mb-md-0">
-                  <MDBCardBody>
-                    <MDBCardText className="mb-4"><span className="text-primary font-italic me-1">assigment</span> Project Status</MDBCardText>
-                    <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>Web Design</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={80} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Website Markup</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={72} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>One Page</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={89} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Mobile Template</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={55} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Backend API</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={66} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol> */}
-
               <MDBCol md="6">
                 <MDBCard className="mb-4 mb-md-0">
                   <MDBCardBody>
                     <MDBCardTitle style={{ color: "black", fontWeight: "600", fontSize: "25px" }}>Languages</MDBCardTitle>
                     {languages?.length > 0
                       ? languages?.map((language, index) => (
-                        <MDBCardSubTitle key={index} style={{ color: "green", fontWeight: "500" }}> - {language}</MDBCardSubTitle>
+                        <MDBCardSubTitle key={index} className="my-2" style={{ color: "green", fontWeight: "500" }}> - {language}</MDBCardSubTitle>
                       ))
                       : <MDBCardSubTitle>No Languages to show please Complete your profile</MDBCardSubTitle>
                     }

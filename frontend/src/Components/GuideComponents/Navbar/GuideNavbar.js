@@ -8,7 +8,7 @@ function GuideNavbar() {
     <div>
 <MDBNavbar light bgColor='light'>
                 <MDBContainer fluid>
-                    <MDBNavbarBrand style={{ color: "#551a8b" }} href='/'>
+                    <MDBNavbarBrand style={{ color: "#551a8b" }} href='/guideHome'>
                         <h1><SiYourtraveldottv className="icon" />
                             Travel Buff
                         </h1>

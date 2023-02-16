@@ -72,7 +72,11 @@ const Navbar = () => {
                 </li>
 
                 <li className="navItem">
-                <li href="" className='navLink'>Travel Tips</li>
+                <Link to="/profile"><li className='navLink'>Profile</li></Link>
+                </li>
+
+                <li className="navItem">
+                 <Link to="/chat"><li href="" className='navLink'>Messages</li></Link>
               </li>
                 
                 <li className="navItem">
