@@ -1,5 +1,6 @@
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardText, MDBCardTitle, MDBCol, MDBContainer, MDBInput, MDBRow, MDBSpinner } from 'mdb-react-ui-kit'
 import React, { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import PulseLoader from "react-spinners/PulseLoader";
 import { toast } from 'react-toastify';
 import { activityPost, descriptionPost, languagePost, pricePost } from '../../../axios/services/GuideServices';
@@ -15,6 +16,7 @@ function AddPost() {
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const formRef = useRef(null);
+    const navigate = useNavigate()
 
     useEffect(() => {
         setLoading(true)
@@ -23,11 +25,14 @@ function AddPost() {
         }, 500)
     }, [])
 
-
+    const token = JSON?.parse(localStorage?.getItem("guide"))?.guide;
     useEffect(() => {
-        const guide = JSON.parse(localStorage.getItem("guide"))
-        const guideId = guide.result._id
-        setGuideId(guideId)
+        if (!token) {
+            navigate("/guideSignin")
+        } else {
+            const guideId = JSON.parse(localStorage.getItem("guide")).result._id
+            setGuideId(guideId)
+        }
     }, [])
 
     const handleChange = (e) => {
@@ -43,7 +48,7 @@ function AddPost() {
         const activityData = { activity, guideId };
 
         try {
-            const response = await activityPost(activityData);
+            const response = await activityPost(activityData, token);
             if (response.message) {
                 toast.success(response.message)
             } else {
@@ -62,7 +67,7 @@ function AddPost() {
         const languageData = { language, guideId };
 
         try {
-            const response = await languagePost(languageData);
+            const response = await languagePost(languageData, token);
             if (response.message) {
                 toast.success(response.message)
             } else {
@@ -81,7 +86,7 @@ function AddPost() {
         const descriptionData = { description, guideId }
 
         try {
-            const response = await descriptionPost(descriptionData)
+            const response = await descriptionPost(descriptionData, token)
             console.log(response);
             const message = response.message;
             toast.success(message)
@@ -100,7 +105,7 @@ function AddPost() {
         const priceData = { price, guideId };
 
         try {
-            const response = await pricePost(priceData);
+            const response = await pricePost(priceData, token);
             console.log(response);
             // const message = response.message
             if (response.message) {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PulseLoader from "react-spinners/PulseLoader";
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { guideSingle } from '../../../axios/services/UserServices';
 import Navbar from '../../../Components/UserComponents/Navbar/Navbar';
 import image from '../../../assets/images/istockphoto-958510852-170667a.jpg';
@@ -28,14 +28,20 @@ function GuideSinglePage() {
   const [toDate, settoDate] = useState()
   const [bookButton, setBookButton] = useState(false)
 
-  const jwtToken = JSON.parse(localStorage.getItem('profile')).token
+  const jwtToken = JSON?.parse(localStorage?.getItem('profile'))?.token
   const { id } = useParams();
+  const navigate = useNavigate()
+
+  useEffect(()=>{
+    if(!jwtToken){
+      navigate('/login')
+    }
+  },[])
 
   async function guideDetails() {
     const data = await guideSingle(id, jwtToken);
     setDetails(data);
   }
-  // console.log("details",details.bookings);
 
   useEffect(() => {
     setLoading(true)
@@ -47,34 +53,6 @@ function GuideSinglePage() {
   useEffect(() => {
     guideDetails()
   }, [])
-
-  // function filterByDates(dates) {
-  //   setfromDate(dates[0].format("DD-MM-YYYY"))
-  //   settoDate(dates[1].format("DD-MM-YYYY"))
-
-  //   var availability = false;
-  //   if (details.bookings.length > 0) {
-  //     for (const booking of details.bookings) {
-
-  //       if (!moment(moment(dates[0].format("DD-MM-YYYY")).isBetween(booking.fromDate, booking.toDate))
-  //         && !moment(moment(dates[1].format("DD-MM-YYYY")).isBetween(booking.fromDate, booking.toDate))
-  //       ) {
-  //         if (
-  //           moment(dates[0]).format("DD-MM-YYYY") !== booking.fromDate &&
-  //           moment(dates[0]).format("DD-MM-YYYY") !== booking.toDate &&
-  //           moment(dates[1]).format("DD-MM-YYYY") !== booking.fromDate &&
-  //           moment(dates[1]).format("DD-MM-YYYY") !== booking.toDate
-  //         ) {
-  //           availability = true;
-  //         }
-  //       }
-  //       // if(availability = true || details.bookings.length==0) {
-
-  //       // }
-  //     }
-  //   }
-  //   console.log("helloo",availability);
-  // }
 
   function filterByDates(dates) {
     setfromDate(dates[0].format("DD-MM-YYYY"))
@@ -114,22 +92,7 @@ function GuideSinglePage() {
     // Disable all days that are earlier than today
     return current && current < moment().endOf('day');
   };
-  // const disabledDate = (current) => {
-  //   // for (const booking of details.bookings) {
-  //   //   if (moment(current).isBetween(booking.fromDate, booking.toDate)) {
-  //   //     return false;
-  //   //   }
-  //   //   console.log(booking.fromDate);
-  //   // }
-  //   if (current < moment().endOf('day')) {
-  //     for (const booking of details.bookings) {
-  //       if (moment(current).isBetween(booking.fromDate, booking.toDate)) {
-  //         return true;
-  //       }
-  //       return true
-  //     }
-  //   }
-  // };
+
   async function postConversatn () {
     const userid = JSON.parse(localStorage.getItem("profile"))
     const userId = userid?.result?._id

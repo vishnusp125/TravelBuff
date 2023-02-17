@@ -230,7 +230,7 @@ export const guideSearch = async (req, res) => {
 
 export const guideBooking = async (req, res) => {
     try {
-        const { username, guidedetails, userid, fromDate, toDate, totalAmount, totalDays } = req.body.bookingDetails;
+        const  {username, guidedetails, userid, fromDate, toDate, totalAmount,totalDays}  = req.body;
         const newBooking = new Booking({
             username,
             guidename: guidedetails.name,
@@ -239,7 +239,7 @@ export const guideBooking = async (req, res) => {
             userid,
             fromDate: moment(fromDate).format('DD-MM-YYYY'),
             toDate: moment(toDate).format('DD-MM-YYYY'),
-            totalAmount,
+            totalAmount,     
             totalDays,
         })
         const booking = await newBooking.save()

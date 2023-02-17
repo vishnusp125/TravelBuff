@@ -4,21 +4,25 @@ import { guideDetails } from '../../../axios/services/GuideServices';
 import './EditProfile.css';
 
 function EditProfile() {
-
-    const [guideData, setGuideData] = useState("")
-
+    
+    const guideId = JSON.parse(localStorage.getItem("guide")).result._id
+    const Token = JSON.parse(localStorage.getItem("guide")).guide
+    
     useEffect(() => {
-        const Curguide = JSON.parse(localStorage.getItem("guide"));
-        const guideId = Curguide.result._id
         fetchData(guideId)
     }, []);
-
+    const [guideData, setGuideData] = useState("")
     async function fetchData(id) {
-        const token = localStorage.getItem('guide');
-        const data = await guideDetails(token, id);
+        const data = await guideDetails(Token, id);
         setGuideData(data);
     }
-    console.log(guideData);
+    
+    const handleChange = (event) => {
+        setName(event.target.value);
+    };
+    if(guideData) {}
+    const [name, setName] = useState(""||guideData?.name);
+    
 
     return (
         <>
@@ -32,8 +36,8 @@ function EditProfile() {
                                     <div className="user-profile">
                                         <div className="user-avatar">
                                             <img src={guideData?.image} alt="Maxwell Admin" />
-                                            <div className='mx-3 my-3' style={{width:"250px",height:"30px"}}>
-                                            <input style={{height:"400px"}} type="file" class="form-control" placeholder='choose'/>
+                                            <div className='mx-3 my-3' style={{ width: "250px", height: "30px" }}>
+                                                <input style={{ height: "400px" }} type="file" class="form-control" placeholder='choose' />
                                             </div>
                                         </div>
                                         <h5 className="user-name">{guideData?.name}</h5>
@@ -55,9 +59,10 @@ function EditProfile() {
                                         <h6 className="mb-2 text-primary">Personal Details</h6>
                                     </div>
                                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 my-3">
-                                        <div className="form-group">
+                                        <div className="form-group">    
                                             <label for="fullName">Full Name</label>
-                                            <input type="text" className="form-control" value={guideData.name} id="fullName" placeholder="Enter full name"/>
+                                            <input type="text" className="form-control" value={name} id="fullName" placeholder="Enter full name"
+                                            onChange={handleChange} />
                                         </div>
                                     </div>
                                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 my-3">

@@ -50,7 +50,7 @@ export const Adminsignin = async (req, res) => {
         if (!isPasswordCorrect) 
         return res.status(400).json({ message: "Invalid credentials" });
 
-        const token = jwt.sign({ email: oldAdmin.email, id: oldAdmin._id }, process.env.ADMIN_JWTSECRET, { expiresIn: "3h" })
+        const token = jwt.sign({ email: oldAdmin.email, id: oldAdmin._id }, process.env.ADMIN_JWTSECRET, { expiresIn: "3d" })
         res.status(200).json({ result: oldAdmin._id, token })
     } catch (error) {   
         res.status(500).json({ message: "Something went wrong" });

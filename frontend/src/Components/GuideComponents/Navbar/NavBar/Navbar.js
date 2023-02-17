@@ -13,7 +13,6 @@ function NavbarGuide() {
   const handleLogout = () => {
     dispatch(setLogout());
   }
-
   
   const guide = JSON.parse(localStorage.getItem("guide"));
 
@@ -43,7 +42,7 @@ function NavbarGuide() {
                     <MDBNavbarNav className='mr-auto mb-2 mb-lg-0 justify-content-end mx-5 '>
 
                     <MDBNavbarItem>
-                            <p style={{color:"#551a8b",fontWeight:"500"}}> Welcome {guide.result.name}</p>
+                            <p style={{color:"#551a8b",fontWeight:"500"}}> Welcome {guide?.result?.name}</p>
                         </MDBNavbarItem>
                         <MDBNavbarItem>
                         <Link to ="/guideHome">

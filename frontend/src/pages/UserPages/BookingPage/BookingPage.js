@@ -17,6 +17,8 @@ function BookingPage() {
     const { from } = useParams();
     const { to } = useParams();
 
+    const jwtToken = JSON.parse(localStorage.getItem('profile')).token
+
 
     const [loading, setLoading] = useState(false);
     useEffect(() => {
@@ -25,19 +27,23 @@ function BookingPage() {
             setLoading(false)
         }, 500)
     }, [])
+    useEffect(() => {
+        if (!jwtToken) {
+            navigate('/login')
+        } else {
+            guideDetails()
+        }
+    }, [])
 
     async function guideDetails() {
         const data = await guideSingle(id, jwtToken);
         setGuideDetails(data);
     }
-    useEffect(() => {
-        guideDetails()
-    }, [])
+
 
     const toDate = moment(to, "DD-MM-YYYY")
     const fromDate = moment(from, "DD-MM-YYYY")
     const totalDays = moment.duration(toDate.diff(fromDate)).asDays() + 1;
-    const jwtToken = JSON.parse(localStorage.getItem('profile')).token
     const userid = JSON.parse(localStorage.getItem('profile')).result._id
     const username = JSON.parse(localStorage.getItem('profile')).result.name
 
@@ -59,7 +65,7 @@ function BookingPage() {
 
         try {
 
-            const result = await guideBooking(bookingDetails, jwtToken)
+            const result = await guideBooking(jwtToken, bookingDetails)
             const options = {
                 key: 'rzp_test_BBlNJOeGGPkzYf',
                 amount: result.order.amount,

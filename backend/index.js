@@ -8,7 +8,6 @@ import adminRouter from "./routes/admin.js";
 import guideRouter from "./routes/guide.js";
 import conversationRouter from "./routes/conversation.js";
 import messageRouter from "./routes/messages.js";
-// import chatRouter from "./routes/chat.js";
 import fileUpload from 'express-fileupload'
 import { Server } from 'socket.io';
 
@@ -35,7 +34,7 @@ app.use('/admin', adminRouter);
 app.use('/guide', guideRouter);
 app.use('/conversations', conversationRouter);
 app.use('/messages', messageRouter);
-// app.use('/chat', chatRouter);           
+          
 
 
 const PORT = process.env.PORT || 5000
@@ -59,7 +58,6 @@ const adduser = (userId, socketId) => {
 }
 
 const getUser = (userId) => {
-  console.log("users",users);
   return users.find(user => user.userId === userId)
 }
 
@@ -85,7 +83,6 @@ io.on('connection', (socket) => {
   //send and get message
   socket.on("sendMessage", ({ senderId, receiverId, text }) => {
     const user = getUser(receiverId);
-    console.log(111,user);
     io.to(user?.socketId).emit("getMessage", {
       senderId,
       text,

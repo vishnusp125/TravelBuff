@@ -5,8 +5,6 @@ import { v2 as cloudinary } from 'cloudinary';
 import dotenv from 'dotenv'
 import Booking from '../models/booking.js'
 
-
-const secret = "testguide";
 dotenv.config();
 
 cloudinary.config({
@@ -62,7 +60,7 @@ export const Guidesignup = async (req, res) => {
         res.status(500).json({ message: "Something went wrong" });
         console.log(error);
     }
-}
+}    
 
 export const Guidesignin = async (req, res) => {
     const { email, password } = req.body;
@@ -82,7 +80,7 @@ export const Guidesignin = async (req, res) => {
 
         const isPasswordCorrect = await bcrypt.compare(password, oldGuide.password);
         if (isPasswordCorrect) {
-            const token = jwt.sign({ name: oldGuide.name, email: oldGuide.email, id: oldGuide._id }, secret, { expiresIn: "3h" });
+            const token = jwt.sign({ name: oldGuide.name, email: oldGuide.email, id: oldGuide._id }, process.env.GUIDE_JWTSECRET, { expiresIn: "3h" });
             return res.status(200).json({ status: 'login success', guide: token, result: oldGuide });
         } else {
             return res.status(400).json({ message: "Invalid credentials" });

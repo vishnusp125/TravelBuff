@@ -6,11 +6,11 @@ import {
 } from '../controllers/user.js'    
 import { protect } from '../middleware/authMiddleware.js';   
 
-router.post('/signup', signup);
+router.post('/signup', signup);    
 router.post('/verifyOtp', verifyOtp)
 router.post('/signin', signin);
 router.get('/getGuides', getGuides);
-router.get('/guideSingle/:id', guideSingle);
+router.get('/guideSingle/:id',protect, guideSingle);
 router.get('/guideSearch', guideSearch)
 router.post('/guideBooking',protect, guideBooking)
 router.post('/verifyPayment',protect, verifyPayment)

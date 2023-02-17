@@ -1,11 +1,8 @@
-import { useEffect } from 'react'
 import { ToastContainer } from 'react-toastify'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Login from './pages/UserPages/Login';
 import Home from './pages/UserPages/Home';
 import Register from './pages/UserPages/Register';
-import { useDispatch, useSelector } from 'react-redux'
-import { setUser } from './redux/features/authSlice';
 import GuideList from './pages/UserPages/GuideList';
 import AdminHome from './pages/AdminPages/AdminHome/AdminHome';
 import AdminLogin from './pages/AdminPages/AdminLogin/AdminLogin';
@@ -28,16 +25,6 @@ import EditProfile from './pages/GuidePages/EditProfile/EditProfile';
 
 
 function App() {
-  // const dispatch = useDispatch();
-  // const user = JSON.parse(localStorage.getItem("profile"));
-  // const isUserAuth = Boolean(window.localStorage.getItem("profile"));
-  // const isAdminAuth = Boolean(useSelector((state) => state.admin.token));
-  // const isAdminAuth = Boolean(useSelector((state) => state.admin.token));
-
-  // useEffect(() => {
-  //   // dispatch(setUser(user));
-  //   const isUserAuth = JSON.parse(localStorage.getItem("profile"));
-  // }, []);
   return (
     <div className="App">
       <ToastContainer />
@@ -47,29 +34,29 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/verification/:id' element={<OTPVerification />} />
         <Route path='/resentOtp' element={<ResendOTP />} />
-        <Route path='/guideList' element={<GuideList/>} />
-        <Route path='/guideSingle/:id' element={<GuideSinglePage/>} />
-        <Route path='/guideSearch/:id' element={<GuideSearch/>} />
-        <Route path='/bookingPage/:id/:from/:to' element={<BookingPage/>} />
-        <Route path='/bookings' element={<Bookings/>} />
-        <Route path='/chat' element={<ChatPage/>} />
-        <Route path='/profile' element={<UserProfile/>} />
+        <Route path='/guideList' element={<GuideList />} />
+        <Route path='/guideSingle/:id' element={<GuideSinglePage />} />
+        <Route path='/guideSearch/:id' element={<GuideSearch />} />
+        <Route path='/bookingPage/:id/:from/:to' element={<BookingPage />} />
+        <Route path='/bookings' element={<Bookings />} />
+        <Route path='/chat' element={<ChatPage />} />
+        <Route path='/profile' element={<UserProfile />} />
 
 
-        <Route path="/admin" element={<AdminHome />}/>
-        <Route path="/adminLogin" element={<AdminLogin />}/>
+        <Route path="/admin" element={<AdminHome />} />
+        <Route path="/adminLogin" element={<AdminLogin />} />
 
 
         <Route path='/guideSignup' element={<GuideSignup />} />
         <Route path='/guideSignin' element={<GuideLogin />} />
         <Route path='/guideHome' element={<GuideHome />} />
-        <Route path='/guideAddPost' element={<AddPost/>} />
-        <Route path='/guideBookings' element={<GuideBookings/>} />
-        <Route path='/guideMessages' element={<Chat/>} />
-        <Route path='/editProfile' element={<EditProfile/>} />
-        
-        
-        <Route path='/*' element={<ErrorPage/>} /> 
+        <Route path='/guideAddPost' element={<AddPost />} />
+        <Route path='/guideBookings' element={<GuideBookings />} />
+        <Route path='/guideMessages' element={<Chat />} />
+        <Route path='/editProfile' element={<EditProfile />} />
+
+
+        <Route path='/*' element={<ErrorPage />} />
       </Routes>
     </div>
   );

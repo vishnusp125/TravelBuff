@@ -8,9 +8,8 @@ function GuideProfile() {
   const [details, setDetails] = useState([]);
 
   async function fetchData() {
-    const token = localStorage.getItem('admin');
+    const token = JSON?.parse(localStorage.getItem('admin')).token;
     const data = await approveGuides(token);
-    console.log("data", data);
     setDetails(data.guideDetails);
   }
 

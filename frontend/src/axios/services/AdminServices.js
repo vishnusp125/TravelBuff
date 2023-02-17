@@ -11,7 +11,6 @@ export const adminlogin = createAsyncThunk("admin/login", async ({ formValue, na
     toast.success("Login Successfully");
     navigate('/admin')
     return response.data;
-
   } catch (err) {
     return rejectWithValue(err.response.data)
   }
@@ -21,7 +20,7 @@ export const getUserInfo = async (token) => {
   const config = {
     headers: {
       Accept: 'application/json',
-      Authorization: 'Bearer ' + token,
+      Authorization: 'Bearer ' +token,
       'Content-Type': 'application/json',
     },
   };
@@ -35,7 +34,7 @@ export const blockUser = async (token, id) => {
   const config = {
     headers: {
       Accept: 'application/json',
-      Authorization: 'Bearer ' + token,
+      Authorization: 'Bearer ' +token,
       'Content-Type': 'application/json',
     },
   };
@@ -50,7 +49,7 @@ export const unblockUser = async (token, id) => {
   const config = {
     headers: {
       Accept: 'application/json',
-      Authorization: 'Bearer ' + token,
+      Authorization: 'Bearer ' +token,
       'Content-Type': 'application/json',
     },
   };
@@ -65,7 +64,7 @@ export const getGuidesInfo = async (token) => {
   const config = {
     headers: {
       Accept: 'application/json',
-      Authorization: 'Bearer ' + token,
+      Authorization: 'Bearer ' +token,
       'Content-Type': 'application/json',
     },
   };
@@ -80,7 +79,7 @@ export const blockGuide = async (token, id) => {
   const config = {
     headers: {
       Accept: 'application/json',
-      Authorization: 'Bearer ' + token,
+      Authorization: 'Bearer ' +token,
       'Content-Type': 'application/json',
     },
   };
@@ -95,7 +94,7 @@ export const unblockGuide = async (token, id) => {
   const config = {
     headers: {
       Accept: 'application/json',
-      Authorization: 'Bearer ' + token,
+      Authorization: 'Bearer ' +token,
       'Content-Type': 'application/json',
     },
   };
@@ -110,7 +109,7 @@ export const approveGuides = async (token) => {
   const config = {
     headers: {
       Accept: 'application/json',
-      Authorization: 'Bearer ' + token,
+      Authorization: 'Bearer ' +token,
       'Content-Type': 'application/json',
     },
   };
@@ -124,7 +123,7 @@ export const verifyGuide = async (token, id) => {
   const config = {
     headers: {
       Accept: 'application/json',
-      Authorization: 'Bearer ' + token,
+      Authorization: 'Bearer ' +token,
       'Content-Type': 'application/json',
     },
   };
@@ -141,7 +140,7 @@ export const getAllBookings = async (token) => {
   const config = {
     headers: {
       Accept: 'application/json',
-      Authorization: 'Bearer ' + token,
+      Authorization: 'Bearer '+token,
       'Content-Type': 'application/json',
     },
   };
@@ -149,5 +148,5 @@ export const getAllBookings = async (token) => {
   if (data) {
     return data;
   }
-} 
+}
 

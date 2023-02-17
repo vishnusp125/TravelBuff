@@ -31,16 +31,15 @@ export const register = createAsyncThunk("auth/register",
   })
 
 
-export const getGuides = async (token) => {
+export const getGuides = async () => {
 
   const config = {
     headers: {
       Accept: 'application/json',
-      Authorization: 'Bearer ' + token,
+      Authorization: 'Bearer ',
       'Content-Type': 'application/json',
     },
   };
-
   const { data } = await axiosUserInstance.get('/getGuides', config);
   if (data) {
     return data;
@@ -101,7 +100,8 @@ export const guideSearch = async (location) => {
   }
 }
 
-export const guideBooking = async (bookingDetails, token) => {
+export const guideBooking = async (token,bookingDetails) => {
+  console.log("in axios", token);
   const config = {
     headers: {
       Accept: 'application/json',
@@ -110,7 +110,7 @@ export const guideBooking = async (bookingDetails, token) => {
     },
   };
   try {
-    const response = await axiosUserInstance.post('/guideBooking', { config, bookingDetails });
+    const response = await axiosUserInstance.post('/guideBooking',bookingDetails,config );
     if (response.data) {
       return response.data;
     }
@@ -184,7 +184,6 @@ export const cancelBooking = async (bookingid, guideid) => {
       'Content-Type': 'application/json',
     },
   };
-
   const { data } = await axiosUserInstance.post('/cancelBooking', { bookingid, guideid, config })
   if (data) {
     return data

@@ -18,22 +18,6 @@ export const Guidesignup = async (value) => {
   }
 };
 
-// export const Guidesignin = async (value) => {
-//   const config = {
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//   };
-//   const { data } = await axiosGuideInstance.post(
-//     '/guidesignin',
-//     value,
-//     config
-//   );
-//   if (data.status) {
-//     return data;
-//   }
-// }; 
-
 export const signIn = (formData) => axiosGuideInstance.post('/guideSignin', formData);
 
 export const Guidesignin = createAsyncThunk("guide/guideSignin", async ({ formValue, navigate, toast }, { rejectWithValue }) => {
@@ -48,9 +32,17 @@ export const Guidesignin = createAsyncThunk("guide/guideSignin", async ({ formVa
   }
 });
 
-export const activityPost = async (value) => {
+export const activityPost = async (value, token) => {
+
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
   try {
-    const { data } = await axiosGuideInstance.post('/activityPost', value);
+    const { data } = await axiosGuideInstance.post('/activityPost', value,config);
     if (data) {
       return data;
     }
@@ -60,9 +52,18 @@ export const activityPost = async (value) => {
   }
 };
 
-export const languagePost = async (value) => {
+export const languagePost = async (value, token) => {
+
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+
   try {
-    const { data } = await axiosGuideInstance.post('/languagePost', value);
+    const { data } = await axiosGuideInstance.post('/languagePost', value, config);
     if (data) {
       return data;
     }
@@ -72,9 +73,17 @@ export const languagePost = async (value) => {
   }
 };
 
-export const descriptionPost = async (value) => {
+export const descriptionPost = async (value, token) => {
+
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
   try {
-    const { data } = await axiosGuideInstance.post('/descriptionPost', value);
+    const { data } = await axiosGuideInstance.post('/descriptionPost', value, config);
     if (data.message) {
       return data;
     }
@@ -86,9 +95,17 @@ export const descriptionPost = async (value) => {
 
 
 
-export const pricePost = async (value) => {
+export const pricePost = async (value, token) => {
+
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
   try {
-    const { data } = await axiosGuideInstance.post('/pricePost', value);
+    const { data } = await axiosGuideInstance.post('/pricePost', value, config);
     if (data) {
       return data;
     }
@@ -118,7 +135,7 @@ export const guideBookings = async (token, id) => {
   const config = {
     headers: {
       Accept: 'application/json',
-      Authorization: 'Bearer ' +token,
+      Authorization: 'Bearer ' + token,
       'Content-Type': 'application/json',
     },
   };

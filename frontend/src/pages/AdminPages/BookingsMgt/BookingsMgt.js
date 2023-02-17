@@ -12,6 +12,7 @@ function BookingsMgt() {
 
   async function fetchData() {
     const jwtToken = JSON.parse(localStorage.getItem('admin')).token
+    console.log(jwtToken);
     const data = await getAllBookings(jwtToken);
     setDetails(data);
   }
