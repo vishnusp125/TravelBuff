@@ -17,6 +17,7 @@ import moment from 'moment';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { postConversation } from '../../../axios/services/ConversationServices';
+import Footer from '../../../Components/UserComponents/Footer/Footer';
 const { RangePicker } = DatePicker;
 
 
@@ -32,11 +33,11 @@ function GuideSinglePage() {
   const { id } = useParams();
   const navigate = useNavigate()
 
-  useEffect(()=>{
-    if(!jwtToken){
+  useEffect(() => {
+    if (!jwtToken) {
       navigate('/login')
     }
-  },[])
+  }, [])
 
   async function guideDetails() {
     const data = await guideSingle(id, jwtToken);
@@ -93,7 +94,7 @@ function GuideSinglePage() {
     return current && current < moment().endOf('day');
   };
 
-  async function postConversatn () {
+  async function postConversatn() {
     const userid = JSON.parse(localStorage.getItem("profile"))
     const userId = userid?.result?._id
     const guideId = details?._id
@@ -297,6 +298,7 @@ function GuideSinglePage() {
             </div>
           </div>
       }
+      <Footer />
     </>
 
   )

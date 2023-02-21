@@ -230,7 +230,7 @@ export const guideSearch = async (req, res) => {
 
 export const guideBooking = async (req, res) => {
     try {
-        const  {username, guidedetails, userid, fromDate, toDate, totalAmount,totalDays}  = req.body;
+        const { username, guidedetails, userid, fromDate, toDate, totalAmount, totalDays } = req.body;
         const newBooking = new Booking({
             username,
             guidename: guidedetails.name,
@@ -239,7 +239,7 @@ export const guideBooking = async (req, res) => {
             userid,
             fromDate: moment(fromDate).format('DD-MM-YYYY'),
             toDate: moment(toDate).format('DD-MM-YYYY'),
-            totalAmount,     
+            totalAmount,
             totalDays,
         })
         const booking = await newBooking.save()
@@ -319,7 +319,7 @@ export const changeStatus = async (req, res) => {
 export const getAllBookings = async (req, res) => {
     try {
         const userid = req.params.id
-        const bookings = await Booking.find({ userid }).sort({createdAt: -1})
+        const bookings = await Booking.find({ userid }).sort({ createdAt: -1 })
         res.status(200).send(bookings)
 
     } catch (error) {
@@ -370,6 +370,36 @@ export const cancelBooking = async (req, res) => {
         return res.status(400).json({ error })
     }
 }
+
+export const userDetails = async (req, res) => {
+    try {
+        const userDetails = await User.findOne({ _id: req.params.id });
+        if (!userDetails) return res.status(404).send('User not found');
+        res.json(userDetails);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
+
+export const UserEditProfile = async (req, res) => {
+
+    try {
+        // const data = await User.findOne({ _id: req.params.id });
+        await User.updateOne({ _id: req.params.id }, {
+            $set: {
+                name: req.body.name,
+                phone: req.body.phone,
+            }
+        });
+        res.status(200).json({ status: 'ok', message: 'Updated Successfully' })
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+
+
+
 
 
 

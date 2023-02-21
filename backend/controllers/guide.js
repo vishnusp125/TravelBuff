@@ -5,6 +5,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import dotenv from 'dotenv'
 import Booking from '../models/booking.js'
 
+
 dotenv.config();
 
 cloudinary.config({
@@ -60,7 +61,7 @@ export const Guidesignup = async (req, res) => {
         res.status(500).json({ message: "Something went wrong" });
         console.log(error);
     }
-}    
+}
 
 export const Guidesignin = async (req, res) => {
     const { email, password } = req.body;
@@ -182,13 +183,87 @@ export const guideBookings = async (req, res) => {
 
     try {
         const guideId = req.params.id;
-        const guide = await Booking.find({ guideid: guideId }).sort({createdAt: -1});
+        const guide = await Booking.find({ guideid: guideId }).sort({ createdAt: -1 });
         if (!guide) return res.status(404).send('Guide not found');
         res.json(guide);
     } catch (err) {
         res.status(500).send(err.message);
     }
 }
+
+export const editProfile = async (req, res) => {
+
+    try {
+        const guideId = req.params.id
+        const file = req.body.image
+
+        const data = await Guide.findOne({ _id: guideId });
+
+        if (file) {
+            const imageUrl = data.image
+            const publicId = imageUrl.match(/\/([^\/]*)$/)[1].split('.')[0];
+            cloudinary.uploader.destroy(publicId, function (error, result) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log(result);
+                }
+            });
+        }
+
+        const file1 = await cloudinary.uploader.upload(file, {
+            folder: "guides"
+        })
+
+        await Guide.updateOne({ _id: guideId }, {
+            $set: {
+                name: req.body.name,
+                email: req.body.email,
+                phone: req.body.phone,
+                location: req.body.location,
+                image: file1.url
+            }
+        });
+        res.status(200).json({ status: 'ok', message: 'Updated Successfully' })
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export const activityDelete = async (req, res) => {
+    try {
+        const { guideId, activityIndex } = req.params;
+        const guide = await Guide.findById(guideId);
+
+        guide.activities.splice(activityIndex, 1);
+        await guide.save();
+        res.status(200).json({message:"Deleted Successfully"});
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error' });
+    }
+
+}
+
+export const languageDelete = async (req, res) => {
+    try {
+        const { guideId, languageIndex } = req.params;
+        const guide = await Guide.findById(guideId);
+
+        guide.languages.splice(languageIndex, 1);
+        await guide.save();
+        res.status(200).json({message:"Deleted Successfully"});
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error' });
+    }
+}
+
+
+
+
+
+
 
 
 

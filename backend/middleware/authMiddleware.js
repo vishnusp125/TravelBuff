@@ -62,8 +62,6 @@ export const adminProtect = asyncHandler(async (req, res, next) => {
 
 export const guideProtect = asyncHandler(async (req, res, next) => {
     let token
-    console.log("in guide protect");
-
     if (
         req.headers.authorization &&
         req.headers.authorization.startsWith('Bearer')

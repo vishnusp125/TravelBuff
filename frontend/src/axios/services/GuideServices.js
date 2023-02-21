@@ -42,7 +42,7 @@ export const activityPost = async (value, token) => {
     },
   };
   try {
-    const { data } = await axiosGuideInstance.post('/activityPost', value,config);
+    const { data } = await axiosGuideInstance.post('/activityPost', value, config);
     if (data) {
       return data;
     }
@@ -145,6 +145,59 @@ export const guideBookings = async (token, id) => {
     return data;
   }
 };
+
+export const editProfile = async (token, values, id) => {
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosGuideInstance.post(`/editProfile/${id}`, values, config);
+  if (data) {
+    return data;
+  }
+};
+
+export const activityDelete = async (guideId, index, token) => {
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  };
+  try {
+    const { data } = await axiosGuideInstance.delete(`/${guideId}/activities/${index}`, config);
+    if (data) {
+      return data.message;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export const languageDelete = async (guideId, index, token) => {
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  };
+  try {
+    const { data } = await axiosGuideInstance.delete(`/${guideId}/languages/${index}`, config);
+    if (data) {
+      return data.message;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+
+
 
 
 

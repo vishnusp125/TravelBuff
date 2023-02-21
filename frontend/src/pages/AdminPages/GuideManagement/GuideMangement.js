@@ -7,8 +7,8 @@ function GuideMangement() {
 
   const [details, setDetails] = useState([]);
 
+  const token = JSON?.parse(localStorage.getItem('admin')).token;
   useEffect(() => {
-    const token = JSON?.parse(localStorage.getItem('admin')).token;
     fetchData();
     async function fetchData() {
       const data = await getGuidesInfo(token);
@@ -18,8 +18,8 @@ function GuideMangement() {
 
 
   async function unBlock(id) {
-    const token = localStorage.getItem('admin');
-    const data = await unblockGuide(token, id);
+    // const token = localStorage.getItem('admin');
+    const data = await unblockGuide(token,id);
 
     if (data.guideDetails) {
       const newDetails = details.map(guide => {
@@ -33,7 +33,6 @@ function GuideMangement() {
   }
 
   async function block(id) {
-    const token = localStorage.getItem('admin');
     const data = await blockGuide(token, id);
     if (data.guideDetails) {
       const newDetails = details.map(guide => {

@@ -32,15 +32,14 @@ const AdminHome = () => {
 
   const AppGlass = styled.div`
   display: grid;
-  height: 97%;
-  width: 97%;
+  height: 100%;
+  width: 100%;
   background-image: linear-gradient(to top, #eee5fc 0%, #eee5fc 100%);
-  border-radius: 2rem;
-  gap: 16px;
-  grid-template-columns: 11rem auto 1rem;
+  ${'' /* gap: 16px;x */}
+  grid-template-columns: 11rem auto 2rem;
   overflow-y:scroll;
 @media screen and (max-width: 1200px) {
-    grid-template-columns: 20% 50% auto;
+    ${'' /* grid-template-columns: 20% 50% auto; */}
     overflow-y: scroll;
 }
 @media screen and (max-width: 768px) {
@@ -48,20 +47,21 @@ const AdminHome = () => {
     overflow-y:scroll;
 }
 `;
-
   return (
-    <>
-      <App>
-        <AppGlass>
-          <Sidebar setPage={setPage} />
-          {pages === 'dashboard' && <MainDash />}
-          {pages === 'users' && <UserManagement />}
-          {pages === 'guides' && <GuideMangement />}
-          {pages === 'approvals' && <GuideProfile />}
-          {pages === 'bookings' && <BookingsMgt />}
-        </AppGlass>
-      </App>
-    </>
+    <div>
+      <Sidebar setPage={setPage} />
+      <div style={{ marginLeft: "210px" }}>
+        {/* <App> */}
+          {/* <AppGlass> */}
+            {pages === 'dashboard' && <MainDash />}
+            {pages === 'users' && <UserManagement />}
+            {pages === 'guides' && <GuideMangement />}
+            {pages === 'approvals' && <GuideProfile />}
+            {pages === 'bookings' && <BookingsMgt />}
+          {/* </AppGlass> */}
+        {/* </App> */}
+      </div>
+    </div>
   );
 };
 

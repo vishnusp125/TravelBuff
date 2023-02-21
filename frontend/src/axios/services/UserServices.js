@@ -190,6 +190,38 @@ export const cancelBooking = async (bookingid, guideid) => {
   }
 }
 
+export const userDetails = async (token, id) => {
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const { data } = await axiosUserInstance.get(`/userProfile/${id}`, config);
+  if (data) {
+    return data;
+  }
+};
+
+export const UserEditProfile = async (token, values, id) => {
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axiosUserInstance.post(`/UserEditProfile/${id}`, values, config);
+  if (data) {
+    return data;
+  }
+};
+
+
+
+
 
 
 

@@ -1,7 +1,11 @@
+
 .sidebar {
     display: flex;
     flex-direction: column;
-    position: relative;
+    position: fixed;
+    height: 90%;
+    width: 13%;
+    border-radius: .5rem;
     padding-top: 4rem;
     transition: all 300ms ease;
     background:#ad1ddd;
@@ -61,7 +65,7 @@
   }
   
   .active {
-    /* background: lightslategray; */
+    background: lightslategray;
     margin-left: 0;
   }
   .active::before {

@@ -20,8 +20,7 @@ function UserManagement() {
   }
 
   async function unBlock(id) {
-    const token = localStorage.getItem('admin');
-    const data = await unblockUser(token, id)
+    const data = await unblockUser(jwtToken, id)
     if (data.userDetails) {
         const newDetails = details.map(user => {
             if(user._id === id) {
@@ -34,8 +33,7 @@ function UserManagement() {
   }
 
   async function block(id) {
-    const token = localStorage.getItem('admin');
-    const data = await blockUser(token, id);
+    const data = await blockUser(jwtToken, id);
     if (data.userDetails) {
         const newDetails = details.map(user => {
             if(user._id === id) {
@@ -89,7 +87,7 @@ function UserManagement() {
   ]
 
   return (
-    <div >
+    <div>
     <h1 style={{color:"black"}} className='text-center m-5'>User Management</h1>
       <DataTable
         columns={columns}

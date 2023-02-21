@@ -27,7 +27,7 @@ const Sidebar = ({setPage}) => {
       left: '-60%'
     }
   }
-  console.log(window.innerWidth)
+
   return (
     <>
       <div className="bars" style={expanded ? { left: '60%' } : { left: '5%' }} onClick={() => setExpaned(!expanded)}>
@@ -70,7 +70,6 @@ const Sidebar = ({setPage}) => {
         <Link to="/adminLogin"
           onClick={() => HandleLogout()}>
           <MDBBtn style={{ marginLeft: "25px", marginTop: "25px" ,background:"black"}}> Log Out</MDBBtn>
-            {/* <UilSignOutAlt /> */}
         </Link>
         </div>
       </motion.div>

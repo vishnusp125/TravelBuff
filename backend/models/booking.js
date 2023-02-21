@@ -36,7 +36,7 @@ const bookingSchema = new Schema({
     required: true,
   },
   totalAmount: {
-    type: String,
+    type: Number,
     required: true,
   },
   // transactionId: {

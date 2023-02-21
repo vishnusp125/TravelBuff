@@ -3,6 +3,7 @@ import { adminProtect } from '../middleware/authMiddleware.js';
 import {
     Adminsignin, Adminsignup, approveGuide, blockGuide, blockUser,
     getAllBookings,
+    getAllDetails,
     getAllGuides, getAllUsers, unblockGuide, unblockUser, verifyGuide,
 } from '../controllers/admin.js'
 const router = express.Router();
@@ -18,6 +19,7 @@ router.get('/unblockGuides/:id', adminProtect, unblockGuide);
 router.get('/approveGuides', adminProtect, approveGuide);
 router.get('/verifyGuides/:id', adminProtect, verifyGuide);
 router.get('/getAllBookings', adminProtect, getAllBookings);
+router.get('/getAllDetails', adminProtect, getAllDetails);
 
 
 export default router;
