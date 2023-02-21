@@ -10,7 +10,7 @@ function GuideNavbar() {
                 <MDBContainer fluid>
                     <MDBNavbarBrand style={{ color: "#551a8b" }} href='/guideHome'>
                         <h1><SiYourtraveldottv className="icon" />
-                            Travel Buff
+                            Travel Buff Guide 
                         </h1>
                     </MDBNavbarBrand>
                 </MDBContainer>

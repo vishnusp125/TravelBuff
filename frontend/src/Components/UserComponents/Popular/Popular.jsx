@@ -3,38 +3,38 @@ import "./popular.scss"
 import { BsArrowLeftShort, BsArrowRightShort, BsDot } from "react-icons/bs"
 
 //image import
-import img1 from '../../../assets/images/place1.jpg'
-import img2 from '../../../assets/images/place2.jpg'
-import img3 from '../../../assets/images/place3.jpg'
-import img4 from '../../../assets/images/place4.jpg'
+import img1 from '../../../assets/images/banglore.jpg'
+import img2 from '../../../assets/images/kerala.jpeg'
+import img3 from '../../../assets/images/pune.jpg'
+import img4 from '../../../assets/images/chennai.jpeg'
 
 const Data = [
     {
         id:1,
         imgSrc:img1,
         descTitle:'Machu Picchu',
-        location:'Tokyo',
+        location:'Banglore',
         grade:'Cultural Relax'
     },
     {
         id:2,
         imgSrc:img2,
         descTitle:'Machu Picchu',
-        location:'Peru',
+        location:'Kerala',
         grade:'Cultural Relax'
     },
     {
         id:3,
         imgSrc:img3,
         descTitle:'Machu Picchu',
-        location:'New Orleans',
+        location:'Pune',
         grade:'Cultural Relax'
     },
     {
         id:4,
         imgSrc:img4,
         descTitle:'Machu Picchu',
-        location:'New Zealand',
+        location:'Chennai',
         grade:'Cultural Relax'
     }
 ]

@@ -147,6 +147,7 @@ export const getAllDetails = async (req, res) => {
         const numUsers = await Users.countDocuments();
         const numGuides = await Guides.countDocuments();
         const numBookings = await Booking.countDocuments();
+        const bookingDetails = await Booking.find()
         const result = await Booking.aggregate([
             { $match: { status: { $ne: 'Cancelled' } } },
             {
@@ -210,7 +211,7 @@ export const getAllDetails = async (req, res) => {
             if (err) throw err;
             totalAmounts = result.map(item => item.totalAmount);
             createdAtDates = result.map(item => item.createdAt);
-            res.json({ numUsers, numGuides, numBookings, bookingTotal,totalAmounts, createdAtDates });
+            res.json({ numUsers, numGuides, numBookings, bookingTotal, totalAmounts, createdAtDates, bookingDetails });
         });
         // console.log(totalAmounts);
         // console.log(createdAtDates);

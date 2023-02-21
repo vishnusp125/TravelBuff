@@ -1,9 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { getAllDetails } from "../../../axios/services/AdminServices";
 import BarChart from "../../GuideComponents/BarChart/BarChart";
 import Card from "../Card/Card";
+import DataTable from 'react-data-table-component';
 import "./MainDash.css";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import 'jspdf-autotable';
+
 const MainDash = () => {
+  const tableRef = useRef(null);
 
   // const Userdata = [
   //   {
@@ -57,7 +63,49 @@ const MainDash = () => {
       }
     ]
   };
-  console.log(details);
+  // console.log(details);
+
+  const columns = [
+    {
+      name: "No",
+      selector: (row, i) => i + 1,
+    },
+    {
+      name: "Guide Name",
+      selector: (row) => row?.username
+    },
+  ]
+ 
+ 
+    // const generatePDF = () => {
+    //   const input = tableRef.current;
+    //   html2canvas(input)
+    //     .then(canvas => {
+    //       const pdf = new jsPDF();
+    //       // const columns = [
+    //       //   { header: 'No', dataKey: 'no' },
+    //       //   { header: 'Guide Name', dataKey: 'guideName' },
+    //       // ];
+
+    //       const data = details?.bookingDetails.map((row, index) => ({
+    //         no: index + 1,
+    //         guideName: row.username,
+    //       }));
+    //       pdf.autoTable({ head: [columns], body: data });
+    //       pdf.save('my-data-table.pdf');
+    //     });
+    // };
+
+    // useEffect(() => {
+    //   if (tableRef.current) {
+    //     generatePDF();
+    //   }
+    // }, [tableRef]);
+
+    const generatePDF = () => {
+      
+    }
+  
 
   return (
     <div style={{ whiteSpace: 'nowrap' }}>
@@ -70,9 +118,21 @@ const MainDash = () => {
         <Card data={`Total Bookings : ${details?.numBookings}`} />
         <Card data={`Total Revenue : Rs. ${details?.bookingTotal}`} />
       </div>
-      <div className="mt-5" style={{ width: "1200px" }}>
+      <div className="mt-5 text-center mx-5" style={{ width: "1000px" }}>
         <h3 className="text-center m-5"> Bookings Bar  Chart </h3>
         <BarChart chartData={data} />
+      </div>
+      <div>
+      <h2 className="text-center my-5">Bookings Details</h2>
+         {/* <button onClick={generatePDF}>Export as PDF</button> */}
+        <DataTable
+          columns={columns}
+          data={details?.bookingDetails}
+          pagination
+          highlightOnHover
+          ref={tableRef} 
+          actions={<button className="btn" onClick={generatePDF}>Export</button>}
+        />
       </div>
     </div>
   );
