@@ -27,7 +27,5 @@ verification (Nodemailer) and used JWT authentication.
 
 ![Capture5](https://us![Capture6](https://user-images.githubusercontent.com/103351267/220297755-80ec36e6-410e-434d-991d-c7960c98a3c0.PNG)
 
-er-images.githubusercontent.com/103351267/220297743-8f13ee02-f3b8-4a6c-bdc4-8edf69f7b071.PNG)
-
 ![Capture7](https://user-images.githubusercontent.com/103351267/220297776-6d7800ff-7757-4101-98dc-9ea3b28fbcc3.PNG)
 
