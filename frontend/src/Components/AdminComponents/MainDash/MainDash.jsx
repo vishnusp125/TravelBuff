@@ -5,11 +5,11 @@ import Card from "../Card/Card";
 import DataTable from 'react-data-table-component';
 import "./MainDash.css";
 import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 import 'jspdf-autotable';
+// import html2canvas from 'html2canvas';
 
 const MainDash = () => {
-  const tableRef = useRef(null);
+  // const tableRef = useRef(null);
 
   // const Userdata = [
   //   {
@@ -75,37 +75,57 @@ const MainDash = () => {
       selector: (row) => row?.username
     },
   ]
- 
- 
-    // const generatePDF = () => {
-    //   const input = tableRef.current;
-    //   html2canvas(input)
-    //     .then(canvas => {
-    //       const pdf = new jsPDF();
-    //       // const columns = [
-    //       //   { header: 'No', dataKey: 'no' },
-    //       //   { header: 'Guide Name', dataKey: 'guideName' },
-    //       // ];
 
-    //       const data = details?.bookingDetails.map((row, index) => ({
-    //         no: index + 1,
-    //         guideName: row.username,
-    //       }));
-    //       pdf.autoTable({ head: [columns], body: data });
-    //       pdf.save('my-data-table.pdf');
-    //     });
-    // };
 
-    // useEffect(() => {
-    //   if (tableRef.current) {
-    //     generatePDF();
-    //   }
-    // }, [tableRef]);
+  // const generatePDF = () => {
+  //   const input = tableRef.current;
+  //   html2canvas(input)
+  //     .then(canvas => {
+  //       const pdf = new jsPDF();
+  //       // const columns = [
+  //       //   { header: 'No', dataKey: 'no' },
+  //       //   { header: 'Guide Name', dataKey: 'guideName' },
+  //       // ];
 
-    const generatePDF = () => {
-      
-    }
-  
+  //       const data = details?.bookingDetails.map((row, index) => ({
+  //         no: index + 1,
+  //         guideName: row.username,
+  //       }));
+  //       pdf.autoTable({ head: [columns], body: data });
+  //       pdf.save('my-data-table.pdf');
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   if (tableRef.current) {
+  //     generatePDF();
+  //   }
+  // }, [tableRef]);
+
+  const generatePDF = () => {
+    const doc = new jsPDF()
+    doc.text("Travel Buff Booking Details", 80, 10)
+    const tableColumn = ["No", "Guide Name"];
+  const tableRows = [];
+
+
+  // Iterate over the details and add rows to the table
+  details?.bookingDetails.forEach((row, index) => {
+    const rowData = [
+      index + 1,
+      row.username,
+    ];
+    tableRows.push(rowData);
+  });
+
+  // Add the table to the PDF document
+  doc.autoTable({
+    head: [tableColumn],
+    body: tableRows,
+  });
+    doc.save('table.pdf')
+  }
+
 
   return (
     <div style={{ whiteSpace: 'nowrap' }}>
@@ -123,14 +143,14 @@ const MainDash = () => {
         <BarChart chartData={data} />
       </div>
       <div>
-      <h2 className="text-center my-5">Bookings Details</h2>
-         {/* <button onClick={generatePDF}>Export as PDF</button> */}
+        <h2 className="text-center my-5">Bookings Details</h2>
+        {/* <button onClick={generatePDF}>Export as PDF</button> */}
         <DataTable
           columns={columns}
           data={details?.bookingDetails}
           pagination
           highlightOnHover
-          ref={tableRef} 
+          // ref={tableRef}
           actions={<button className="btn" onClick={generatePDF}>Export</button>}
         />
       </div>

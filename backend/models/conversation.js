@@ -7,7 +7,6 @@ const conversationSchema = new Schema({
         type:Array,
         
     }
-
 }, {
     timestamps: true
 });

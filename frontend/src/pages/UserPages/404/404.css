@@ -1,5 +1,4 @@
 body {
-    background-color: white;
     text-decoration: none;
   }
 
@@ -8,7 +7,6 @@ body {
   }
 
   .mainbox {
-    background-color: white;
     margin: auto;
     height: 600px;
     width: 600px;

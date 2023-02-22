@@ -30,7 +30,6 @@ export const Guidesignup = async (req, res) => {
         const existingPhone = await Guide.findOne({ phone: values.phone })
 
         if (oldGuide !== null && existingPhone !== null) {
-            console.log('duplicate');
             return res.status(400).json({ message: "Guide already exists" })
         } else {
 
@@ -206,7 +205,7 @@ export const editProfile = async (req, res) => {
                 if (error) {
                     console.log(error);
                 } else {
-                    console.log(result);
+                    // console.log(result);
                 }
             });
         }
@@ -237,7 +236,7 @@ export const activityDelete = async (req, res) => {
 
         guide.activities.splice(activityIndex, 1);
         await guide.save();
-        res.status(200).json({message:"Deleted Successfully"});
+        res.status(200).json({ message: "Deleted Successfully" });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Server error' });
@@ -252,7 +251,7 @@ export const languageDelete = async (req, res) => {
 
         guide.languages.splice(languageIndex, 1);
         await guide.save();
-        res.status(200).json({message:"Deleted Successfully"});
+        res.status(200).json({ message: "Deleted Successfully" });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Server error' });

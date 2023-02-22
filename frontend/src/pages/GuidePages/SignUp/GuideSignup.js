@@ -89,7 +89,6 @@ function GuideSignup() {
       validationSchema: guideSchema,
       onSubmit,
     });
-  console.log(errors);
 
   return (
     <>

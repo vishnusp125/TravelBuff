@@ -11,7 +11,6 @@ function GuideBookings() {
 
   const guideId = JSON.parse(localStorage.getItem('guide')).result._id
   const token = JSON.parse(localStorage.getItem('guide')).guide
-  console.log(111,token);
 
   async function getBookings() {
     const data = await guideBookings(token, guideId);

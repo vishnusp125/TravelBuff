@@ -101,7 +101,7 @@ export const guideSearch = async (location) => {
 }
 
 export const guideBooking = async (token,bookingDetails) => {
-  console.log("in axios", token);
+
   const config = {
     headers: {
       Accept: 'application/json',

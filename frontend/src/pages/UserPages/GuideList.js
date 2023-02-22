@@ -3,7 +3,6 @@ import Navbar from '../../Components/UserComponents/Navbar/Navbar'
 import Guides from '../../Components/UserComponents/Guides/Guides'
 import Footer from '../../Components/UserComponents/Footer/Footer'
 import PulseLoader from "react-spinners/PulseLoader";
-import SearchFilter from '../../Components/UserComponents/SearchFilter/SearchFilter';
 
 
 function GuideList() {
@@ -32,7 +31,7 @@ function GuideList() {
           />
           :
           <div>
-            <Navbar/>
+            <Navbar />
             <Guides />
             <Footer />
           </div>

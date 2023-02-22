@@ -17,7 +17,7 @@ function ChatPage() {
     const [arrivalMessage, setArrivalMessage] = useState(null)
     const socket = useRef();
     const scrollRef = useRef();
-    console.log(socket);
+
 
     useEffect(() => {
         setLoading(true)
@@ -33,7 +33,6 @@ function ChatPage() {
     useEffect(() => {
         if (socket.current) {
             socket.current.on("getMessage", (data) => {
-                console.log(data);
                 setArrivalMessage({
                     sender: data.senderId,
                     text: data.text,
@@ -81,7 +80,6 @@ function ChatPage() {
         };
 
         const receiverId = currentChat.members.find(member => member !== userid)
-        console.log(receiverId);
         socket.current.emit("sendMessage", {
             senderId: userid,
             receiverId,

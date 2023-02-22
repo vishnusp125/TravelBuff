@@ -45,7 +45,7 @@ const bookingSchema = new Schema({
   // },
   status: {
     type: String,
-    required: true, default: "pending"
+    required: true, default: "Pending"
   }
 }, {
   timestamps: true

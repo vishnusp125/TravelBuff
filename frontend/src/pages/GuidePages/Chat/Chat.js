@@ -15,7 +15,6 @@ function Chat() {
     const [arrivalMessage, setArrivalMessage] = useState(null)
     const socket = useRef();
     const scrollRef = useRef()
-    console.log(socket);
 
     useEffect(() => {
         socket.current = io("ws://localhost:5000");
@@ -24,7 +23,6 @@ function Chat() {
     useEffect(() => {
         if (socket.current) {
             socket.current.on("getMessage", (data) => {
-                console.log("dfdfde",data);
                 setArrivalMessage({
                     sender: data.senderId,
                     text: data.text,

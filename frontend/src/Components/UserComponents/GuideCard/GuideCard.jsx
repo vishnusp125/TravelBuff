@@ -5,17 +5,7 @@ import { Link } from 'react-router-dom'
 
 function GuideCard(props) {
 
-    // console.log("child",props.guide[0]);
     const details = props.guide;
-    console.log(details);
-
-
-    // console.log("in childd");
-    // console.log(details);
-
-    // function ChildComponent(props) {
-    //     const { name, title, location } = props.guide;
-
 
     return (
         <div>
