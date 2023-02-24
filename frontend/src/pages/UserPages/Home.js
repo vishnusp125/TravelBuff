@@ -7,19 +7,18 @@ import Popular from '../../Components/UserComponents/Popular/Popular'
 import PopularGuides from '../../Components/UserComponents/PopularGuides/PopularGuides'
 import TravelTips from '../../Components/UserComponents/Travel Tips/TravelTips'
 import Footer from '../../Components/UserComponents/Footer/Footer'
-// import jwt from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 
 
 function Home() {
   const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-      setLoading(true)
-      setTimeout(() => {
-        setLoading(false)
-      }, 500)
-    }, [])
+  useEffect(() => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+    }, 500)
+  }, [])
 
   const navigate = useNavigate();
 
@@ -28,9 +27,6 @@ function Home() {
     if (jwtToken) {
       navigate('/');
     }
-    //  else {
-    //   navigate('/');
-    // }
   }, []);
   return (
     <>

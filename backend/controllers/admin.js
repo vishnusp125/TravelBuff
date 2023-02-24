@@ -121,7 +121,6 @@ export const approveGuide = async (req, res) => {
     }
 }
 
-
 export const verifyGuide = async (req, res) => {
     try {
         const guideId = req.params.id
@@ -144,6 +143,35 @@ export const getAllBookings = async (req, res) => {
 
 export const getAllDetails = async (req, res) => {
     try {
+        const tableData = await Guides.aggregate([
+            {
+              $unwind: "$bookings"
+            },
+            {
+              $group: {
+                _id: "$_id",
+                name: { $first: "$name" },
+                no_of_bookings: { $sum: 1 },
+                total_booking_amount: {
+                  $sum: {
+                    $multiply: [
+                      {
+                        $divide: [
+                          { $subtract: [
+                            { $toDate: "$bookings.toDate" },
+                            { $toDate: "$bookings.fromDate" }
+                          ] },
+                          86400000
+                        ]
+                      },
+                      { $toInt: "$price" }
+                    ]
+                  }
+                }
+              }
+            }
+          ])
+
         const numUsers = await Users.countDocuments();
         const numGuides = await Guides.countDocuments();
         const numBookings = await Booking.countDocuments();
@@ -158,35 +186,6 @@ export const getAllDetails = async (req, res) => {
             }
         ]);
         const bookingTotal = result[0].totalAmount;
-        // Booking.aggregate([
-        //     {
-        //       $group: {
-        //         _id: { day: { $dayOfYear: "$createdAt" }, year: { $year: "$createdAt" } },
-        //         totalAmount: { $sum: "$totalAmount" },
-        //         count: { $sum: 1 }
-        //       }
-        //     },
-        //     {
-        //       $project: {
-        //         _id: 0,
-        //         date: { $dateFromParts: { year: "$_id.year", dayOfYear: "$_id.day" } },
-        //         totalAmount: 1,
-        //         count: 1
-        //       }
-        //     }
-        //   ]).toArray((err, result) => {
-        //     if (err) throw err;
-        //     console.log(result);
-        //     // Do something with the query result here
-        //   });
-
-        // Booking.aggregate([
-        //     { $project: { createdAt: 1, totalAmount: 1, _id: 0 } }
-        //   ]).exec((err, result) => {
-        //     if (err) throw err;
-        //     console.log(result);
-        //     // Do something with the query result here
-        //   });
         var totalAmounts
         var createdAtDates
 
@@ -211,13 +210,8 @@ export const getAllDetails = async (req, res) => {
             if (err) throw err;
             totalAmounts = result.map(item => item.totalAmount);
             createdAtDates = result.map(item => item.createdAt);
-            res.json({ numUsers, numGuides, numBookings, bookingTotal, totalAmounts, createdAtDates, bookingDetails });
+            res.json({ numUsers, numGuides, numBookings, bookingTotal, totalAmounts, createdAtDates, bookingDetails, tableData });
         });
-        // console.log(totalAmounts);
-        // console.log(createdAtDates);
-
-
-
 
     } catch (err) {
         console.error(err);

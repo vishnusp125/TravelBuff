@@ -17,7 +17,8 @@ dotenv.config();
 connectDB();
 const corsOptions = {
   origin: 'http://localhost:3000',
-  credentials: true, // access-control-allow-credentials:true
+  credentials: true, 
+  // access-control-allow-credentials:true,
   optionSuccessStatus: 200,
 };
 
@@ -35,7 +36,9 @@ app.use('/guide', guideRouter);
 app.use('/conversations', conversationRouter);
 app.use('/messages', messageRouter);
           
-
+app.use('/',(req,res)=>{
+  res.send("From backend")
+})
 
 const PORT = process.env.PORT || 5000
 
@@ -43,7 +46,7 @@ const server = app.listen(PORT, console.log(`Server started on PORT ${PORT}`));
 
 
 const io = new Server(server, {
-  // pingTimeout: 60000,
+  pingTimeout: 60000,
   cors: {
     origin: "http://localhost:3000",
     cors:true,

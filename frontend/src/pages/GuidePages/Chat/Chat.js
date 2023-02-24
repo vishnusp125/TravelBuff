@@ -17,7 +17,8 @@ function Chat() {
     const scrollRef = useRef()
 
     useEffect(() => {
-        socket.current = io("ws://localhost:5000");
+        // socket.current = io("ws://localhost:5000");
+        // https://travelbuffbackend.onrender.com
     },[])
 
     useEffect(() => {

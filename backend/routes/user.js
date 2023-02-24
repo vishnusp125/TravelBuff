@@ -21,5 +21,4 @@ router.get('/userProfile/:id',protect, userDetails);
 router.post('/UserEditProfile/:id',protect, UserEditProfile)
 
 
-
 export default router;

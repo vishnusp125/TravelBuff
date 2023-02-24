@@ -22,12 +22,13 @@ function ChatPage() {
     useEffect(() => {
         setLoading(true)
         setTimeout(() => {
-          setLoading(false)
+            setLoading(false)
         }, 500)
-      }, [])
+    }, [])
 
     useEffect(() => {
         socket.current = io("ws://localhost:5000");
+        // socket.current = io("https://travelbuffbackend.onrender.com");
     }, [])
 
     useEffect(() => {
@@ -73,25 +74,31 @@ function ChatPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const message = {
-            sender: userid,
-            text: newMessage,
-            conversationId: currentChat._id
-        };
 
-        const receiverId = currentChat.members.find(member => member !== userid)
-        socket.current.emit("sendMessage", {
-            senderId: userid,
-            receiverId,
-            text: newMessage,
-        })
-        try {
-            const response = await postMessages(message)
-            setMessages([...messages, response])
-            setNewMessage("")
+        const trimmedMessage = newMessage.trim()
+        if (trimmedMessage !== "") {
 
-        } catch (err) {
-            console.log(err);
+
+            const message = {
+                sender: userid,
+                text: newMessage,
+                conversationId: currentChat._id
+            };
+
+            const receiverId = currentChat.members.find(member => member !== userid)
+            socket.current.emit("sendMessage", {
+                senderId: userid,
+                receiverId,
+                text: newMessage,
+            })
+            try {
+                const response = await postMessages(message)
+                setMessages([...messages, response])
+                setNewMessage("")
+
+            } catch (err) {
+                console.log(err);
+            }
         }
     }
 
