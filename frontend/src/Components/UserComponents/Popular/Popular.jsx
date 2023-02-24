@@ -12,28 +12,28 @@ const Data = [
     {
         id:1,
         imgSrc:img1,
-        descTitle:'Machu Picchu',
+        descTitle:'The Silicon Valley of India',
         location:'Banglore',
         grade:'Cultural Relax'
     },
     {
         id:2,
         imgSrc:img2,
-        descTitle:'Machu Picchu',
+        descTitle:'God\'s Own Country',
         location:'Kerala',
         grade:'Cultural Relax'
     },
     {
         id:3,
         imgSrc:img3,
-        descTitle:'Machu Picchu',
+        descTitle:'Queen of the Deccan',
         location:'Pune',
         grade:'Cultural Relax'
     },
     {
         id:4,
         imgSrc:img4,
-        descTitle:'Machu Picchu',
+        descTitle:'Gateway to South India',
         location:'Chennai',
         grade:'Cultural Relax'
     }
@@ -69,7 +69,7 @@ function Popular() {
                             <div className="overlayInfo">
                                 <h3>{location}</h3>
                                 <p>
-                                    Lorem ipsum dolor sit amet.
+                                    {descTitle}
                                 </p>
                                 {/* <BsArrowRightShort className='icon' /> */}
                             </div>
