@@ -13,13 +13,13 @@ function Chat() {
     const [messages, setMessages] = useState([])
     const [newMessage, setNewMessage] = useState("")
     const [arrivalMessage, setArrivalMessage] = useState(null)
-    const socket = useRef();
+    const socket = useRef()
     const scrollRef = useRef()
 
     useEffect(() => {
-        // socket.current = io("ws://localhost:5000");
-        // https://travelbuffbackend.onrender.com
-    },[])
+        socket.current = io("ws://localhost:5000");
+        // socket.current = io("https://travelbuffbackend.onrender.com");
+    }, [])
 
     useEffect(() => {
         if (socket.current) {
@@ -31,12 +31,12 @@ function Chat() {
                 })
             })
         }
-      
-    },[socket.current])
+
+    }, [socket.current])
 
     useEffect(() => {
-        arrivalMessage && 
-        currentChat?.members.includes(arrivalMessage?.sender) &&
+        arrivalMessage &&
+            currentChat?.members.includes(arrivalMessage?.sender) &&
             setMessages((prev) => [...prev, arrivalMessage])
     }, [arrivalMessage, currentChat])
 
@@ -66,27 +66,32 @@ function Chat() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const message = {
-            sender: userid,
-            text: newMessage,
-            conversationId: currentChat._id
-        };
 
-        const receiverId = currentChat.members.find(member => member !== userid)
+        const trimmedMessage = newMessage.trim()
+        if (trimmedMessage !== "") {
 
-        socket.current.emit("sendMessage", {
-            senderId: userid,
-            receiverId,
-            text: newMessage,
-        })
+            const message = {
+                sender: userid,
+                text: newMessage,
+                conversationId: currentChat._id
+            };
 
-        try {
-            const response = await postMessages(message)
-            setMessages([...messages, response])
-            setNewMessage("")
+            const receiverId = currentChat.members.find(member => member !== userid)
 
-        } catch (err) {
-            console.log(err);
+            socket.current.emit("sendMessage", {
+                senderId: userid,
+                receiverId,
+                text: newMessage,
+            })
+
+            try {
+                const response = await postMessages(message)
+                setMessages([...messages, response])
+                setNewMessage("")
+
+            } catch (err) {
+                console.log(err);
+            }
         }
     }
 

@@ -45,18 +45,22 @@ function AddPost() {
     const activityPst = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const activityData = { activity, guideId };
 
-        try {
-            const response = await activityPost(activityData, token);
-            if (response.message) {
-                toast.success(response.message)
-            } else {
-                toast.error(response.error)
+        const trimmedActivity = activity.trim();
+        if (trimmedActivity !== '') {
+            const activityData = { activity, guideId };
+
+            try {
+                const response = await activityPost(activityData, token);
+                if (response.message) {
+                    toast.success(response.message)
+                } else {
+                    toast.error(response.error)
+                }
+                formRef.current.reset()
+            } catch (error) {
+                console.log(error);
             }
-            formRef.current.reset()
-        } catch (error) {
-            console.log(error);
         }
         setLoading(false);
     }
@@ -64,18 +68,22 @@ function AddPost() {
     const languagePst = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const languageData = { language, guideId };
 
-        try {
-            const response = await languagePost(languageData, token);
-            if (response.message) {
-                toast.success(response.message)
-            } else {
-                toast.error(response.error)
+        const trimmedLanguage = language.trim();
+        if (trimmedLanguage !== '') {
+            const languageData = { language, guideId };
+
+            try {
+                const response = await languagePost(languageData, token);
+                if (response.message) {
+                    toast.success(response.message)
+                } else {
+                    toast.error(response.error)
+                }
+                formRef.current.reset()
+            } catch (error) {
+                console.log(error);
             }
-            formRef.current.reset()
-        } catch (error) {
-            console.log(error);
         }
         setLoading(false);
     }
@@ -83,17 +91,21 @@ function AddPost() {
     const descriptnPst = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const descriptionData = { description, guideId }
 
-        try {
-            const response = await descriptionPost(descriptionData, token)
-            console.log(response);
-            const message = response.message;
-            toast.success(message)
-            formRef.current.reset()
+        const trimmedDescription = description.trim();
+        if (trimmedDescription !== '') {
+            const descriptionData = { description, guideId }
 
-        } catch (error) {
-            console.log(error);
+            try {
+                const response = await descriptionPost(descriptionData, token)
+                console.log(response);
+                const message = response.message;
+                toast.success(message)
+                formRef.current.reset()
+
+            } catch (error) {
+                console.log(error);
+            }
         }
         setLoading(false);
     }
@@ -102,20 +114,25 @@ function AddPost() {
     const pricePst = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const priceData = { price, guideId };
 
-        try {
-            const response = await pricePost(priceData, token);
-            console.log(response);
-            // const message = response.message
-            if (response.message) {
-                toast.success(response.message)
-            } else {
-                toast.error(response.error)
+
+        const trimmedPrice = price.trim();
+        if (trimmedPrice !== '') {
+            const priceData = { price, guideId };
+
+            try {
+                const response = await pricePost(priceData, token);
+                console.log(response);
+                // const message = response.message
+                if (response.message) {
+                    toast.success(response.message)
+                } else {
+                    toast.error(response.error)
+                }
+                formRef.current.reset()
+            } catch (error) {
+                console.log(error);
             }
-            formRef.current.reset()
-        } catch (error) {
-            console.log(error);
         }
         setLoading(false);
     }

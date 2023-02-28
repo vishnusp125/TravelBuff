@@ -16,7 +16,7 @@ router.post('/guideBooking',protect, guideBooking)
 router.post('/verifyPayment',protect, verifyPayment)
 router.get('/getAllBookings/:id',protect, getAllBookings)
 router.post('/resentOtp', resentOtp)
-router.post('/cancelBooking',protect, cancelBooking)
+router.post('/cancelBooking', cancelBooking)
 router.get('/userProfile/:id',protect, userDetails);
 router.post('/UserEditProfile/:id',protect, UserEditProfile)
 

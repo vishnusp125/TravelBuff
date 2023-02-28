@@ -39,10 +39,6 @@ const bookingSchema = new Schema({
     type: Number,
     required: true,
   },
-  // transactionId: {
-  //   type: String,
-  //   required: true,
-  // },
   status: {
     type: String,
     required: true, default: "Pending"

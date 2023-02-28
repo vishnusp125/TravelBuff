@@ -63,7 +63,7 @@ function BookingPage() {
             totalDays,
         }
 
-        try {
+        try {  
 
             const result = await guideBooking(jwtToken, bookingDetails)
             const options = {
@@ -78,7 +78,7 @@ function BookingPage() {
                     verifyPayment(res, result.order);
                 },
                 prefill: {
-                    name: 'Piyush Garg',
+                    name: 'travelbuff',
                     email: 'youremail@example.com',
                     contact: '9999999999',
                 },

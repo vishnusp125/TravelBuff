@@ -100,7 +100,7 @@ export const guideSearch = async (location) => {
   }
 }
 
-export const guideBooking = async (token,bookingDetails) => {
+export const guideBooking = async (token, bookingDetails) => {
 
   const config = {
     headers: {
@@ -110,7 +110,7 @@ export const guideBooking = async (token,bookingDetails) => {
     },
   };
   try {
-    const response = await axiosUserInstance.post('/guideBooking',bookingDetails,config );
+    const response = await axiosUserInstance.post('/guideBooking', bookingDetails, config);
     if (response.data) {
       return response.data;
     }
@@ -129,7 +129,7 @@ export const orderVerifyPayment = async (token, res, order) => {
     },
   };
 
-  try {
+  try {   
     const value = {}
     value.res = res;
     value.order = order;
@@ -175,12 +175,11 @@ export const resendOTP = async (values) => {
   }
 }
 
-export const cancelBooking = async (bookingid, guideid) => {
-
+export const cancelBooking = async (bookingid, guideid, token) => {
   const config = {
     headers: {
       Accept: 'application/json',
-      Authorization: 'Bearer ',
+      Authorization: 'Bearer ' + token,
       'Content-Type': 'application/json',
     },
   };

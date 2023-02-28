@@ -42,9 +42,9 @@ function GuideCard(props) {
                                         }
                                     </div>
 
-                                    <div className="location flex">
-                                        <MdLocationOn className='icon' />
-                                        <small>
+                                    <div className="location">
+                                        <MdLocationOn className='icon' style={{color:"red"}}/>
+                                        <small style={{color:"green"}}>
                                             {location}
                                         </small>
                                     </div>

@@ -255,7 +255,7 @@ const generateRazorpay = async (id, amount, res) => {
                 res.json({ status: true, order: order })
             })
     } catch (error) {
-        res.json({ status: "Failed", message: error.message })
+        res.json({ status:"Failed", message: error.message })
     }
 }
 
@@ -266,6 +266,7 @@ export const verifyPayment = async (req, res) => {
 
         //passing the data to be hashed
         hmac.update(req.body.res.razorpay_order_id + "|" + req.body.res.razorpay_payment_id)
+
         //creating the hmac in the required format
         const generated_signature = hmac.digest('hex')
 
@@ -273,7 +274,6 @@ export const verifyPayment = async (req, res) => {
         if (generated_signature === req.body.res.razorpay_signature) {
             response = { signatureIsValid: "true" }
             changeStatus(req.body.order, res)
-            // res.json(response)
         } else {
             res.send(response)
         }

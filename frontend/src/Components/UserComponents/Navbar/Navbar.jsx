@@ -91,7 +91,6 @@ const Navbar = () => {
 
               {user? (
                 <div className="headerBtns flex">
-
                   <button className='btn loginBtn' onClick={handleLogout}>
                     <Link to="/login">Logout</Link> 
                   </button>

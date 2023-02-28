@@ -29,9 +29,9 @@ function GuideProfile() {
 
   return (
     <div>
-      <h1 style={{color:"black"}} className='text-center m-5'>Guides To Approve</h1>
+      <h1 style={{ color: "black" }} className='text-center m-5'>Guides To Approve</h1>
       {details.length === 0 ? (
-        <div style={{display: "flex", alignItems: "center", justifyContent: "center" ,height:"500px",color:"red" }}>No Guide requests found</div>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "500px", color: "red" }}>No Guide requests found</div>
       ) : (
         details.map(item => {
           return (

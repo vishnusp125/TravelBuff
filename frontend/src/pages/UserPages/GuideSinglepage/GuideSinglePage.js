@@ -140,10 +140,10 @@ function GuideSinglePage() {
                         </div>
                         <div className="p-4 text-black" style={{ backgroundColor: "#f8f9fa" }}>
                           <div className="d-flex justify-content-end text-center py-1">
-                            <div>
+                            {/* <div>
                               <p className="mb-1 h5">-/10</p>
                               <p className="small text-muted mb-0">Rating</p>
-                            </div>
+                            </div> */}
                             {/* <div className="px-3">
                           <p className="mb-1 h5">1026</p>
                           <p className="small text-muted mb-0">Followers</p>
