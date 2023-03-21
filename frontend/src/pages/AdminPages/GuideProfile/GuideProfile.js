@@ -1,16 +1,19 @@
-import { height } from '@mui/system';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import PulseLoader from "react-spinners/PulseLoader";
 import { approveGuides, verifyGuide } from '../../../axios/services/AdminServices';
 
 
 function GuideProfile() {
 
   const [details, setDetails] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   async function fetchData() {
+    setLoading(true)
     const token = JSON?.parse(localStorage.getItem('admin')).token;
     const data = await approveGuides(token);
     setDetails(data.guideDetails);
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -26,6 +29,18 @@ function GuideProfile() {
   }
 
   return (
+    <>
+    {
+      loading ?
+          <PulseLoader
+            color={"#551a8b"}
+            loading={loading}
+            style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+            size={30}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        :
     <div>
       <h1 style={{ color: "black" }} className='text-center m-5'>Guides To Approve</h1>
       {details.length === 0 ? (
@@ -62,6 +77,8 @@ function GuideProfile() {
         })
       )}
     </div>
+    }
+    </>
 
   )
 }

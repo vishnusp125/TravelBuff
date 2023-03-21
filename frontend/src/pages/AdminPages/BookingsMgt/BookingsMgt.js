@@ -1,19 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import PulseLoader from "react-spinners/PulseLoader";
 import DataTable from 'react-data-table-component';
 import { getAllBookings } from '../../../axios/services/AdminServices';
 
 function BookingsMgt() {
 
   const [details, setDetails] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchData();
   }, []);
 
   async function fetchData() {
+    setLoading(true)
     const jwtToken = JSON.parse(localStorage.getItem('admin')).token
     const data = await getAllBookings(jwtToken);
     setDetails(data);
+    setLoading(false)
   }
 
   const columns = [
@@ -75,6 +79,18 @@ function BookingsMgt() {
   ];
 
   return (
+    <>
+    {
+      loading ?
+          <PulseLoader
+            color={"#551a8b"}
+            loading={loading}
+            style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+            size={30}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        :
     <div>
       <h1 style={{ color: "black" }} className='text-center m-5'>Booking Details</h1>
       <DataTable
@@ -87,6 +103,8 @@ function BookingsMgt() {
         pagination 
       />
     </div>
+    }
+    </>
   )
 }
 
