@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PulseLoader from "react-spinners/PulseLoader";
 import { getAllDetails } from "../../../axios/services/AdminServices";
 import BarChart from "../../GuideComponents/BarChart/BarChart";
 import Card from "../Card/Card";
@@ -11,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 const MainDash = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
 
@@ -26,8 +28,10 @@ const MainDash = () => {
   const [details, setDetails] = useState([]);
   const jwtToken = JSON?.parse(localStorage.getItem('admin'))?.token
   async function fetchData() {
+    setLoading(true)
     const data = await getAllDetails(jwtToken);
     setDetails(data);
+    setLoading(false)
   }
 
   const createdAtDates = details?.createdAtDates
@@ -116,37 +120,50 @@ const MainDash = () => {
     doc.save('table.pdf')
   }
 
-
   return (
-    <div style={{ whiteSpace: 'nowrap' }}>
-      <div className="text-center m-5">
-        <h1 style={{ color: "black" }}>Admin Dashboard</h1>
-      </div>
-      <div className="d-flex flex-row justify-content-between" style={{ marginRight: "50px", gap: "20px" }}>
-        <Card data={`Total Users : ${details?.numUsers}`} />
-        <Card data={`Total Guides : ${details?.numGuides}`} />
-        <Card data={`Total Bookings : ${details?.numBookings}`} />
-        <Card data={`Total Revenue : Rs. ${total}`} />
-      </div>
-      <div className="mt-5 text-center mx-5" style={{ width: "1000px" }}>
-        <h3 className="text-center m-5"> Bookings Bar  Chart </h3>
-        <BarChart chartData={data} />
-      </div>
-      <div>
-        <h2 className="text-center my-5">Bookings Details</h2>
-        <div className="mt-5 mx-5">
-          <DataTable
-            columns={columns}
-            data={details?.tableData}
-            // pagination
-            highlightOnHover
-            footer="footer"
-            actions=<button className="btn" onClick={generatePDF}>Export</button>
-          />
-        </div>
-        <div className="text-end text-danger mb-5 mt-2" style={{ marginRight: "250px" }}>Total : Rs.{total}</div>
-      </div>
-    </div>
+    <>
+      {
+        loading ?
+            <PulseLoader
+              color={"#551a8b"}
+              loading={loading}
+              style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+              size={30}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          :
+          <div style={{ whiteSpace: 'nowrap' }}>
+            <div className="text-center m-5">
+              <h1 style={{ color: "black" }}>Admin Dashboard</h1>
+            </div>
+            <div className="d-flex flex-row justify-content-between" style={{ marginRight: "50px", gap: "20px" }}>
+              <Card data={`Total Users : ${details?.numUsers}`} />
+              <Card data={`Total Guides : ${details?.numGuides}`} />
+              <Card data={`Total Bookings : ${details?.numBookings}`} />
+              <Card data={`Total Revenue : Rs. ${total}`} />
+            </div>
+            <div className="mt-5 text-center mx-5" style={{ width: "1000px" }}>
+              <h3 className="text-center m-5"> Bookings Bar  Chart </h3>
+              <BarChart chartData={data} />
+            </div>
+            <div>
+              <h2 className="text-center my-5">Bookings Details</h2>
+              <div className="mt-5 mx-5">
+                <DataTable
+                  columns={columns}
+                  data={details?.tableData}
+                  // pagination
+                  highlightOnHover
+                  footer="footer"
+                  actions=<button className="btn" onClick={generatePDF}>Export</button>
+                />
+              </div>
+              <div className="text-end text-danger mb-5 mt-2" style={{ marginRight: "250px" }}>Total : Rs.{total}</div>
+            </div>
+          </div>
+      }
+    </>
   );
 };
 

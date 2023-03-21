@@ -39,7 +39,7 @@ const AdminHome = () => {
   return (
     <div>
       <Sidebar setPage={setPage} />
-      <div style={{ marginLeft: "210px" }}>
+      <div style={{ marginLeft: "210px",marginTop:"50px"}}>
         {/* <App> */}
         {/* <AppGlass> */}
         {pages === 'dashboard' && <MainDash />}

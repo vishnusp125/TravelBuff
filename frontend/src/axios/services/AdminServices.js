@@ -127,6 +127,7 @@ export const verifyGuide = async (token, id) => {
       'Content-Type': 'application/json',
     },
   };
+  console.log("axios",token);
 
   const { data } = await axiosAdminInstance.get(`/verifyGuides/${id}`, config);
 

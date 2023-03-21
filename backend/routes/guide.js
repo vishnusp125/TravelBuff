@@ -16,9 +16,4 @@ router.post('/editProfile/:id', guideProtect, editProfile)
 router.delete('/:guideId/activities/:activityIndex', guideProtect, activityDelete)
 router.delete('/:guideId/languages/:languageIndex', guideProtect, languageDelete)
 
-
-
-
-
-
 export default router;   

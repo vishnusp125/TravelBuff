@@ -1,33 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { Guidesignin  } from '../../axios/services/GuideServices'
+import { Guidesignin } from '../../axios/services/GuideServices'
 
 
 const guideSlice = createSlice({
     name: "guide",
     initialState: {
         guide: null,
-        error: "",
+        error: null,
         loading: false
-    },  
-    reducers:{
+    },
+    reducers: {
         // setGuide:(state, action) => {
         //     state.guide = action.payload;
         // },
-        setLogout:(state, action) => {
+        setLogout: (state, action) => {
             localStorage.removeItem("guide");
             state.guide = null;
+            state.error = null;
         },
     },
-    extraReducers:{
-        [Guidesignin.pending]: (state, action) =>{
+    extraReducers: {
+        [Guidesignin.pending]: (state, action) => {
             state.loading = true;
         },
-        [Guidesignin.fulfilled]: (state,action) =>{
+        [Guidesignin.fulfilled]: (state, action) => {
             state.loading = false;
-            localStorage.setItem("guide",JSON.stringify({...action.payload}));
+            localStorage.setItem("guide", JSON.stringify({ ...action.payload }));
             state.guide = action.payload
         },
-        [Guidesignin.rejected]:(state, action) => {
+        [Guidesignin.rejected]: (state, action) => {
             state.loading = false;
             state.error = action.payload.message;
         },

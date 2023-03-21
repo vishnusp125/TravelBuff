@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { getGuides } from '../../../axios/services/UserServices'
-// import SearchFilter from '../SearchFilter/SearchFilter'
 import { MDBCard, MDBCardBody, MDBInput } from 'mdb-react-ui-kit'
-// import { DatePicker, Space } from 'antd'
-// import moment from 'moment';
+import PulseLoader from "react-spinners/PulseLoader";
 import GuideCard from '../GuideCard/GuideCard'
-// const { RangePicker } = DatePicker;
 
 function Guides() {
-
+    const [loading, setLoading] = useState(false);
     const [details, setDetails] = useState([])
     const [query, setQuery] = useState("")
 
     async function fetchData() {
+        setLoading(true)
         const data = await getGuides()
         setDetails(data);
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -51,7 +49,22 @@ function Guides() {
                             </MDBCardBody>
                         </MDBCard>
                     </div>
-                    <GuideCard guide={search(details)} />
+                    {
+                        loading ?
+                            <div style={{ position: "relative", width: "100%", height: "100%" }}>
+
+                                <PulseLoader
+                                    color={"#551a8b"}
+                                    loading={loading}
+                                    style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+                                    size={30}
+                                    aria-label="Loading Spinner"
+                                    data-testid="loader"
+                                />
+                            </div>
+                            :
+                            <GuideCard guide={search(details)} />
+                    }
                 </div>
             </section>
         </div>

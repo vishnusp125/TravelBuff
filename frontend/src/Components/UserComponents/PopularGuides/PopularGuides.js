@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import PulseLoader from "react-spinners/PulseLoader";
 import './PopularGuides.css'
 import { MdLocationOn } from 'react-icons/md'
 import { BsArrowRightShort } from 'react-icons/bs'
@@ -7,13 +8,15 @@ import { getGuides } from '../../../axios/services/UserServices'
 
 
 function PopularGuides(props) {
-
+    const [loading, setLoading] = useState(false);
     const [details, setDetails] = useState([])
     const navigate = useNavigate();
 
     async function fetchData() {
+        setLoading(true)
         const data = await getGuides()
         setDetails(data);
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -22,6 +25,20 @@ function PopularGuides(props) {
 
     return (
         <>
+         {
+        loading ?
+        <div style={{ position: "relative", width: "100%", height: "100%" }}>
+
+          <PulseLoader
+            color={"#551a8b"}
+            loading={loading}
+            style={{position:"absolute",top:"50%", left: "50%" ,transform: "translate(-50%, -50%)"}}
+            size={30}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+          </div>
+          :
             <section className='offer container section'>
                 <div className="secContainer">
                     <div className="secIntro">
@@ -88,6 +105,7 @@ function PopularGuides(props) {
                 </div>
 
             </section>
+         }
         </>
     )
 }

@@ -34,17 +34,21 @@ function ChatPage() {
     useEffect(() => {
         if (socket.current) {
             socket.current.on("getMessage", (data) => {
+                console.log('in socket',data);
                 setArrivalMessage({
                     sender: data.senderId,
                     text: data.text,
                     createdAt: Date.now(),
                 })
+                console.log('in get msg');
+                console.log(arrivalMessage);
             })
         }
 
     }, [socket.current])
 
     useEffect(() => {
+        console.log('triggered', arrivalMessage);
         arrivalMessage && currentChat?.members.includes(arrivalMessage?.sender) &&
             setMessages((prev) => [...prev, arrivalMessage])
     }, [arrivalMessage, currentChat])

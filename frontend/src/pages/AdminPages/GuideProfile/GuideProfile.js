@@ -18,10 +18,8 @@ function GuideProfile() {
   }, []);
 
   async function verify(id) {
-    const token = localStorage.getItem('admin');
+    const token = JSON?.parse(localStorage.getItem('admin')).token;
     const data = await verifyGuide(token, id);
-    console.log(data);
-    console.log("approvedd", data);
     if (data.guideDetails) {
       fetchData()
     }

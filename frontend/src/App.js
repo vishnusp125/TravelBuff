@@ -56,8 +56,8 @@ function App() {
         <Route path='/guideMessages' element={<Chat />} />
         <Route path='/editProfile' element={<EditProfile />} />
 
-
         <Route path='/*' element={<ErrorPage />} />
+
       </Routes>
     </div>
   );

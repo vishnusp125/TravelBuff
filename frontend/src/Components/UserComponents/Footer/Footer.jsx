@@ -6,7 +6,7 @@ import { ImFacebook, ImInstagram, ImTwitter } from 'react-icons/im'
 
 function Footer() {
   return (
-    <div className="footer">
+    <div className="footer" style={{marginTop:"90px"}}>
       <div className="secContainer container grid">
         <div className="logoDiv"> 
           <div className="footerLogo">

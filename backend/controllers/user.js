@@ -11,6 +11,7 @@ import nodemailer from 'nodemailer'
 import dotenv from 'dotenv'
 import moment from 'moment'
 import { raw } from 'express';
+import { truncateSync } from 'fs';
 
 
 dotenv.config();
@@ -175,7 +176,7 @@ export const signin = async (req, res) => {
 
 export const getGuides = async (req, res) => {
     try {
-        const guides = await Guides.find({ isVerified: true });
+        const guides = await Guides.find({ isVerified: true,isRejected:false });
         res.status(200).json(guides)
     } catch (error) {
         res.status(404).json({ message: "Something went wrong" })

@@ -20,16 +20,18 @@ function UserProfile() {
     const navigate = useNavigate();
 
     async function fetchData() {
+        setLoading(true)
         const data = await userDetails(Token, userid);
         setUserData(data);
+        setLoading(false)
     }
 
-    useEffect(() => {
-        setLoading(true)
-        setTimeout(() => {
-            setLoading(false)
-        }, 500)
-    }, [])
+    // useEffect(() => {
+    //     setLoading(true)
+    //     setTimeout(() => {
+    //         setLoading(false)
+    //     }, 500)
+    // }, [])
 
     useEffect(() => {
         fetchData()
@@ -38,7 +40,16 @@ function UserProfile() {
     const [showEditProfile, setShowEditProfile] = useState(false);
 
     if (!userData) {
-        return <div>Loading....</div>
+        return <div>
+            <PulseLoader
+                color={"#551a8b"}
+                loading={loading}
+                style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+                size={30}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+            />
+        </div>
     }
 
     const handleEditProfile = () => {
